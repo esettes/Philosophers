@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/07/28 00:02:07 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/08/03 22:23:52 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,31 @@
 # include <stdlib.h>
 # include <sys/time.h>
 
-typedef struct s_state
+typedef struct s_log
 {
-}				t_state;
+}				t_log;
 
+/**
+ * @brief eat --> sleep --> think
+ * 
+ */
 typedef struct s_philo
 {
-	int			id;
-	useconds_t	t_to_die;
-	useconds_t	t_to_eat;
-	useconds_t	t_to_sleep;
-	int			many_times_to_eat;
+	int				id;
+	int				thread_id;
+	pthread_mutex_t	*fork;
+	useconds_t		t_to_die;
+	useconds_t		t_to_eat;
+	useconds_t		t_to_sleep;
+	size_t			many_times_to_eat;
+	size_t			is_eating;
+	size_t			is_thinking;
+	size_t			is_sleeping;
 }				t_philo;
 
-typedef struct s_simulation
+typedef struct s_data
 {
-	t_philo		*philos;
-}				t_simulation;
+	t_philo		*philo;
+}				t_data;
 
 #endif
