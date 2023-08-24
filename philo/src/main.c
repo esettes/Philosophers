@@ -12,17 +12,15 @@
 
 #include "philo.h"
 
-
-
-void	*work_philo(void *data)
-{
+// void	*work_philo(void *data)
+// {
 	
-}
+// }
 
 int	main(int argc, char *argv[])
 {
 	pthread_t	*thread;
 	t_data		*data;
 
-	pthread_create(thread, NULL, work_philo, NULL);
+	//pthread_create(thread, NULL, work_philo, NULL);
 }

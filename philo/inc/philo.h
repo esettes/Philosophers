@@ -18,6 +18,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/time.h>
+# include <stdint.h>
+
+struct	s_data;
 
 typedef struct s_log
 {
@@ -29,12 +32,10 @@ typedef struct s_log
  */
 typedef struct s_philo
 {
+	struct s_data	*data;
 	int				id;
 	int				thread_id;
-	pthread_mutex_t	*fork;
-	useconds_t		t_to_die;
-	useconds_t		t_to_eat;
-	useconds_t		t_to_sleep;
+	pthread_mutex_t	fork;
 	size_t			many_times_to_eat;
 	size_t			is_eating;
 	size_t			is_thinking;
@@ -44,6 +45,9 @@ typedef struct s_philo
 typedef struct s_data
 {
 	t_philo		*philo;
+	useconds_t	t_to_die;
+	useconds_t	t_to_eat;
+	useconds_t	t_to_sleep;
 }				t_data;
 
 #endif
