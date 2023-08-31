@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/08/03 22:23:52 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/08/31 20:25:58 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@
 
 struct	s_data;
 
-typedef struct s_log
-{
-}				t_log;
-
 /**
  * @brief eat --> sleep --> think
  * 
@@ -35,8 +31,8 @@ typedef struct s_philo
 	struct s_data	*data;
 	int				id;
 	int				thread_id;
-	pthread_mutex_t	fork;
-	size_t			many_times_to_eat;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
 	size_t			is_eating;
 	size_t			is_thinking;
 	size_t			is_sleeping;
@@ -48,6 +44,7 @@ typedef struct s_data
 	useconds_t	t_to_die;
 	useconds_t	t_to_eat;
 	useconds_t	t_to_sleep;
+	useconds_t	many_times_to_eat;
 }				t_data;
 
 #endif
