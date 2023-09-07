@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/07 00:06:29 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:01:05 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	t_philo		*philo;
+	t_philo		*philos;
 	int			num_philos;
 	int			aux_var;
 	useconds_t	t_to_die;
@@ -58,6 +58,7 @@ typedef struct s_data
 }				t_data;
 
 void	ft_putendlc_fd(char *color, char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
 char	*ft_itoa(int n);
 int		f_usleep(useconds_t time);
 

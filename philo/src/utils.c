@@ -40,3 +40,12 @@ void	ft_putendlc_fd(char *color, char *s, int fd)
 	write (fd, "\n", 1);
 	color = "\x1b[0m";
 }
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	if (!s || fd < 0)
+		return ;
+	while (*s)
+		write (fd, s++, 1);
+	write (fd, "\n", 1);
+}
