@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/12 23:15:35 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/12 23:35:37 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	*work_philo(void *philo)
 		% ph->data->num_philos]) == 0)
 	{
 		// start eating
-		//take forks
+		//take forks, lock
 
 		// unlock
 	}
-	// start sleeping
+	// start sleeping (t_to_sleep--)
 
-	// start thinking
+	// start thinking (t_to_die--)
 	
 	ft_putendlc_fd(BLUE_, ft_itoa(ph->tid), 1);
 	ft_putendl_fd("aux: ", 1);
