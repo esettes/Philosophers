@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/12 23:12:33 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/13 23:58:14 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,15 @@ typedef struct s_philo
 	struct s_data	*data;
 	pthread_t		tid;
 	int				id;
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
-	size_t			start_time;
-	size_t			start_eating;
-	size_t			start_thinking;
-	size_t			start_sleeping;
+	useconds_t		start_time;
+	useconds_t		start_eating;
+	useconds_t		start_thinking;
+	useconds_t		start_sleeping;
 	useconds_t		t_to_die;
 	useconds_t		t_to_eat;
 	useconds_t		t_to_sleep;
-	useconds_t		many_times_to_eat;
+	size_t			many_times_to_eat;
+	size_t			times_eaten;
 }				t_philo;
 
 typedef struct s_data
@@ -70,6 +69,8 @@ void	ft_resetcolor_fd(int fd);
 void	ft_putendl_fd(char *s, int fd);
 
 char	*ft_itoa(int n);
+int		ft_atoi(const char *str);
+
 int		f_usleep(useconds_t time);
 void	print_status(t_philo *philo);
 

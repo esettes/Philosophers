@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 22:08:34 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/12 22:09:12 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/14 00:05:44 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	ft_putstrc_fd(char *color, char *s, int fd)
 		write(fd, color++, 1);
 	while (*s)
 		write (fd, s++, 1);
-	write (fd, "\n", 1);
 	color = "\x1b[0m";
 }
 
