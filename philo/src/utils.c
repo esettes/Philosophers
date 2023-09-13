@@ -30,6 +30,8 @@ int	f_usleep(useconds_t time)
 
 void	print_time_and_id_actions(char *time_, char *id, char *action)
 {
+	// if (!time_ || !id || !action)
+	// 	return ;
 	ft_putstrc_fd(BLUE_, time_, 1);
 	//ft_putstrc_fd(BLUE_, " [", 1);
 	ft_putstrc_fd(GREEN_, id, 1);
@@ -42,6 +44,8 @@ void	print_status(t_philo *philo)
 	char	*p_id;
 	char	*str;
 
+	//pthread_mutex_init(philo->mut, NULL);
+	//pthread_mutex_lock(philo->mut);
 	time_ = ft_itoa(get_time()) - philo->start_time;
 	p_id = ft_itoa(philo->id);
 	print_time_and_id_actions(time_, p_id, " has taken a fork");
@@ -53,6 +57,8 @@ void	print_status(t_philo *philo)
 	print_time_and_id_actions(time_, p_id, " is thinking");
 	time_ = ft_itoa(get_time());
 	print_time_and_id_actions(time_, p_id, " died");
+	//pthread_mutex_unlock(philo->mut);
+	//pthread_mutex_destroy(philo->mut);
 	free(p_id);
 	free(time_);
 }
