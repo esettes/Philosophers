@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/14 00:54:12 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/14 23:28:02 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_philo
 	struct s_data	*data;
 	pthread_t		tid;
 	int				id;
-	pthread_mutex_t	*mut;
+	pthread_mutex_t	mut_write;
 	useconds_t		start_time;
 	useconds_t		start_eating;
 	useconds_t		start_thinking;
@@ -53,26 +53,33 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	t_philo			*philos;
-	pthread_mutex_t	*forks;
+	t_philo			**philos;
+	pthread_mutex_t	**forks;
+	pthread_mutex_t	*mut;
 	int				num_philos;
-	int				aux_var;
+	uint64_t		start_time;
 	useconds_t		t_to_die;
 	useconds_t		t_to_eat;
 	useconds_t		t_to_sleep;
 	useconds_t		many_times_to_eat;
 }				t_data;
 
-void	ft_putendlc_fd(char *color, char *s, int fd);
-void	ft_putstrc_fd(char *color, char *s, int fd);
-void	ft_putcolor_fd(char *color, int fd);
-void	ft_resetcolor_fd(int fd);
-void	ft_putendl_fd(char *s, int fd);
+void		ft_putendlc_fd(char *color, char *s, int fd);
+void		ft_putstrc_fd(char *color, char *s, int fd);
+void		ft_putcolor_fd(char *color, int fd);
+void		ft_resetcolor_fd(int fd);
+void		ft_putendl_fd(char *s, int fd);
 
-char	*ft_itoa(int n);
-int		ft_atoi(const char *str);
+char		*ft_itoa(int n);
+int			ft_atoi(const char *str);
 
-int		f_usleep(useconds_t time);
-void	print_status(t_philo *philo);
+u_int64_t	get_time(void);
+int			f_usleep(useconds_t time);
+void		print_status(t_philo *philo);
+
+
+int			init_data(t_data **data, int n_philos, useconds_t t_to_sleep, useconds_t t_to_eat,
+						useconds_t t_to_die, useconds_t many_times_to_eat);
+int			init_philos(t_data **data);
 
 #endif

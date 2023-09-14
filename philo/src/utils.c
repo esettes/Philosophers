@@ -59,6 +59,13 @@ void	print_status(t_philo *philo)
 	// print_time_and_id_actions(time_, p_id, " died");
 	//pthread_mutex_unlock(philo->mut);
 	//pthread_mutex_destroy(philo->mut);
-	free(p_id);
-	free(time_);
+	if (time_)
+		free(time_);
+	if (p_id)
+		free(p_id);
+}
+
+void	*philo_log(void *philo)
+{
+
 }
