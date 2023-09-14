@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/14 23:28:02 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/15 00:37:10 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,6 @@ void		print_status(t_philo *philo);
 
 int			init_data(t_data **data, int n_philos, useconds_t t_to_sleep, useconds_t t_to_eat,
 						useconds_t t_to_die, useconds_t many_times_to_eat);
-int			init_philos(t_data **data);
+int			init_philos(t_data *data);
 
 #endif

@@ -65,7 +65,7 @@ void	print_status(t_philo *philo)
 		free(p_id);
 }
 
-void	*philo_log(void *philo)
-{
+// void	*philo_log(void *philo)
+// {
 
-}
+// }
