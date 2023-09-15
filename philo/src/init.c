@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/15 19:15:14 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/15 20:07:05 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	init_data(t_data **data, int n_philos, useconds_t t_to_sleep, useconds_t t_t
 		return (EXIT_FAILURE);
 	}
 	(*data)->num_philos = n_philos;
-	(*data)->forks = malloc(sizeof(pthread_mutex_t *) * (*data)->num_philos + 1);
-	//(*data)->mut = malloc(sizeof(pthread_mutex_t) * (*data)->num_philos);
+	(*data)->forks = malloc(sizeof(pthread_mutex_t *) * ((*data)->num_philos + 1));
+	(*data)->mut_write = malloc(sizeof(pthread_mutex_t) * (*data)->num_philos);
 	//data->philo = NULL;
 	
 	if (!(*data)->forks)
@@ -52,33 +52,32 @@ int	init_data(t_data **data, int n_philos, useconds_t t_to_sleep, useconds_t t_t
 	return (EXIT_SUCCESS);
 }
 
-int	set_philo(t_philo *philo, int id)
+static int	set_philo(t_philo **philo, int id, t_data **data)
 {
-	philo->id = id;
-	philo->data = NULL;
-	philo->times_eaten = 0;
-	philo->t_to_die = 0;
-	philo->t_to_eat = 0;
-	philo->t_to_sleep = 0;
-	philo->many_times_to_eat = 0;
-	philo->start_eating = 0;
-	philo->start_sleeping = 0;
-	philo->start_thinking = 0;
-	philo->start_time = 0;
-	philo->tid = malloc(sizeof(pthread_t));
-	// (*philo)->id = id;
-	// (*philo)->data = NULL;
-	// (*philo)->times_eaten = 0;
-	// (*philo)->t_to_die = 0;
-	// (*philo)->t_to_eat = 0;
-	// (*philo)->t_to_sleep = 0;
-	// (*philo)->many_times_to_eat = 0;
-	// (*philo)->start_eating = 0;
-	// (*philo)->start_sleeping = 0;
-	// (*philo)->start_thinking = 0;
-	// (*philo)->start_time = 0;
-	// (*philo)->tid = malloc(sizeof(pthread_t));
-	if (!philo->tid)
+	// philo->id = id;
+	// philo->times_eaten = 0;
+	// philo->t_to_die = 0;
+	// philo->t_to_eat = 0;
+	// philo->t_to_sleep = 0;
+	// philo->many_times_to_eat = 0;
+	// philo->start_eating = 0;
+	// philo->start_sleeping = 0;
+	// philo->start_thinking = 0;
+	// philo->start_time = 0;
+	// philo->tid = malloc(sizeof(pthread_t));
+	(*philo)->id = id;
+	(*philo)->data = *data;
+	(*philo)->times_eaten = 0;
+	(*philo)->t_to_die = 0;
+	(*philo)->t_to_eat = 0;
+	(*philo)->t_to_sleep = 0;
+	(*philo)->many_times_to_eat = 0;
+	(*philo)->start_eating = 0;
+	(*philo)->start_sleeping = 0;
+	(*philo)->start_thinking = 0;
+	(*philo)->start_time = 0;
+	(*philo)->tid = malloc(sizeof(pthread_t));
+	if (!(*philo)->tid)
 	{
 		ft_putendlc_fd(RED_, "Thread allocation error", 1);
 		return (EXIT_FAILURE);
@@ -108,7 +107,7 @@ int	init_philos(t_data *data)
 	i = data->num_philos - 1;
 	while (i >= 0)
 	{
-		if (set_philo(data->philos[i], i) == EXIT_FAILURE)
+		if (set_philo(&data->philos[i], i, &data) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		i--;
 	}

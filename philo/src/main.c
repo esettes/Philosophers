@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/15 18:54:22 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/15 20:12:59 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	*work_philo(void *philo)
 	t_philo	*ph;
 
 	ph = (t_philo *)philo;
-	
+
+	//printf("ph->data->forks[%i]: %p\n", ph->id, ph->data->forks[ph->id]);
 	if (pthread_mutex_lock(ph->data->forks[ph->id]) == 0
 		&& pthread_mutex_lock(ph->data->forks[(ph->id + 1)
 		% ph->data->num_philos]) == 0)
@@ -79,27 +80,29 @@ int	main(int argc, char *argv[])
 		pthread_mutex_init(data->forks[i], NULL);
 		i++;
 	}
+	pthread_mutex_init(data->mut_write, NULL);
 
 
 
-
-	for (int i = 0; i <= data->num_philos ; i++)
+	for (int i = 0; i < data->num_philos ; i++)
 		pthread_create(data->philos[i]->tid, NULL, work_philo, (void *)data->philos[i]);
 
-	for (int i = 0; i <= data->num_philos ; i++)
+	for (int i = 0; i < data->num_philos ; i++)
 		pthread_join(*data->philos[i]->tid, NULL);
 
 	i = 0;
-	while (i <= data->num_philos)
+	while (i < data->num_philos)
 	{
 		pthread_mutex_destroy(data->forks[i]);
 		i++;
 	}
+	pthread_mutex_destroy(data->mut_write);
 	ft_putendlc_fd(YELLOW_, "Finish program", 1);
-	for (int i = 0; i <= data->num_philos ; i++)
+	i = 0;
+	while (data->philos[i]->tid)
 	{
-		if (data->philos[i]->tid)
-			free(data->philos[i]->tid);
+		free(data->philos[i]->tid);
+		i++;
 	}
 	i = 0;
 	while (data->philos[i])
@@ -117,7 +120,7 @@ int	main(int argc, char *argv[])
 	}
 	if (data->forks)
 		free (data->forks);
-	if (data->mut)
-		free(data->mut);
+	if (data->mut_write)
+		free(data->mut_write);
 	free(data);
 }
