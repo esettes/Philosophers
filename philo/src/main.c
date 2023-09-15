@@ -85,10 +85,10 @@ int	main(int argc, char *argv[])
 
 
 	for (int i = 0; i <= data->num_philos ; i++)
-		pthread_create(&data->philos[i]->tid, NULL, work_philo, (void *)data->philos[i]);
+		pthread_create(data->philos[i]->tid, NULL, work_philo, (void *)data->philos[i]);
 
 	for (int i = 0; i <= data->num_philos ; i++)
-		pthread_join(data->philos[i]->tid, NULL);
+		pthread_join(*data->philos[i]->tid, NULL);
 
 	i = 0;
 	while (i <= data->num_philos)

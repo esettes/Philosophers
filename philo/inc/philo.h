@@ -37,7 +37,7 @@ struct	s_data;
 typedef struct s_philo
 {
 	struct s_data	*data;
-	pthread_t		tid;
+	pthread_t		*tid;
 	int				id;
 	pthread_mutex_t	mut_write;
 	useconds_t		start_time;
