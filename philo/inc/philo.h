@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/15 20:06:47 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/15 21:06:13 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,16 @@ typedef struct s_philo
 	pthread_t		*tid;
 	int				id;
 	pthread_mutex_t	mut_write;
-	useconds_t		start_time;
+	useconds_t		fork_time;
 	useconds_t		start_eating;
 	useconds_t		start_thinking;
 	useconds_t		start_sleeping;
 	useconds_t		t_to_die;
 	useconds_t		t_to_eat;
 	useconds_t		t_to_sleep;
+	size_t			eat;
+	size_t			sleep;
+	size_t			think;
 	size_t			many_times_to_eat;
 	size_t			times_eaten;
 }				t_philo;
@@ -58,6 +61,7 @@ typedef struct s_data
 	pthread_mutex_t	*mut_write;
 	int				num_philos;
 	uint64_t		start_time;
+	uint64_t		epoch_time;
 	useconds_t		t_to_die;
 	useconds_t		t_to_eat;
 	useconds_t		t_to_sleep;
@@ -70,12 +74,13 @@ void		ft_putcolor_fd(char *color, int fd);
 void		ft_resetcolor_fd(int fd);
 void		ft_putendl_fd(char *s, int fd);
 
-char		*ft_itoa(int n);
-int			ft_atoi(const char *str);
+char		*ft_itoa(u_int64_t n);
+u_int64_t	ft_atoi(const char *str);
 
 u_int64_t	get_time(void);
 int			f_usleep(useconds_t time);
-void		print_status(t_philo *philo);
+//void		print_status(t_philo *philo);
+void		print_status(t_philo *p, u_int64_t t, char *act, char *col);
 
 
 int			init_data(t_data **data, int n_philos, useconds_t t_to_sleep, useconds_t t_to_eat,
