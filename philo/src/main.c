@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/15 00:37:27 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/15 18:54:22 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	main(int argc, char *argv[])
 		i++;
 	}
 
-	pthread_mutex_init(data->mut, NULL);
 
 
 
@@ -96,7 +95,6 @@ int	main(int argc, char *argv[])
 		pthread_mutex_destroy(data->forks[i]);
 		i++;
 	}
-	pthread_mutex_destroy(data->mut);
 	ft_putendlc_fd(YELLOW_, "Finish program", 1);
 	for (int i = 0; i <= data->num_philos ; i++)
 	{

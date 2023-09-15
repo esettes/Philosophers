@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/15 00:43:34 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/15 19:15:14 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 int	init_data(t_data **data, int n_philos, useconds_t t_to_sleep, useconds_t t_to_eat,
 		useconds_t t_to_die, useconds_t many_times_to_eat)
 {
+	int	i;
+
+	i = 0;
 	(*data) = malloc(sizeof(t_data));
 	if (!*data)
 	{
@@ -22,13 +25,25 @@ int	init_data(t_data **data, int n_philos, useconds_t t_to_sleep, useconds_t t_t
 		return (EXIT_FAILURE);
 	}
 	(*data)->num_philos = n_philos;
-	(*data)->forks = malloc(sizeof(pthread_mutex_t *) * (*data)->num_philos);
-	(*data)->mut = malloc(sizeof(pthread_mutex_t) * (*data)->num_philos);
+	(*data)->forks = malloc(sizeof(pthread_mutex_t *) * (*data)->num_philos + 1);
+	//(*data)->mut = malloc(sizeof(pthread_mutex_t) * (*data)->num_philos);
 	//data->philo = NULL;
-	if (!(*data)->forks || !(*data)->mut)
+	
+	if (!(*data)->forks)
 	{
 		ft_putendlc_fd(RED_, "Data mutexes allocation error", 1);
 		return (EXIT_FAILURE);
+	}
+	(*data)->forks[(*data)->num_philos] = NULL;
+	while (i <= (*data)->num_philos)
+	{
+		(*data)->forks[i] = malloc(sizeof(pthread_mutex_t));
+		if (!(*data)->forks[i])
+		{
+			ft_putendlc_fd(RED_, "Data forks allocation error", 1);
+			return (EXIT_FAILURE);
+		}
+		i++;
 	}
 	(*data)->t_to_die = t_to_die;
 	(*data)->t_to_eat = t_to_eat;
@@ -51,6 +66,18 @@ int	set_philo(t_philo *philo, int id)
 	philo->start_thinking = 0;
 	philo->start_time = 0;
 	philo->tid = malloc(sizeof(pthread_t));
+	// (*philo)->id = id;
+	// (*philo)->data = NULL;
+	// (*philo)->times_eaten = 0;
+	// (*philo)->t_to_die = 0;
+	// (*philo)->t_to_eat = 0;
+	// (*philo)->t_to_sleep = 0;
+	// (*philo)->many_times_to_eat = 0;
+	// (*philo)->start_eating = 0;
+	// (*philo)->start_sleeping = 0;
+	// (*philo)->start_thinking = 0;
+	// (*philo)->start_time = 0;
+	// (*philo)->tid = malloc(sizeof(pthread_t));
 	if (!philo->tid)
 	{
 		ft_putendlc_fd(RED_, "Thread allocation error", 1);
@@ -68,7 +95,7 @@ int	init_philos(t_data *data)
 	data->philos = malloc(sizeof(t_philo *) * (data->num_philos + 1));
 	
 	data->philos[data->num_philos] = NULL;
-	while (i < data->num_philos)
+	while (i <= data->num_philos)
 	{
 		data->philos[i] = malloc(sizeof(t_philo));
 		i++;
