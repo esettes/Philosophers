@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/18 23:45:28 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/19 00:29:27 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ static int	set_philo(t_philo **philo, int id, t_data **data)
 	(*philo)->id = id;
 	(*philo)->data = *data;
 	(*philo)->times_eaten = 0;
-	(*philo)->t_to_die = 0;
-	(*philo)->t_to_eat = 0;
-	(*philo)->t_to_sleep = 0;
+	(*philo)->t_to_die = (*data)->t_to_die;
+	(*philo)->t_to_eat = (*data)->t_to_eat;
+	(*philo)->t_to_sleep = (*data)->t_to_sleep;
 	(*philo)->many_times_to_eat = (*data)->many_times_to_eat;
 	(*philo)->start_eating = 0;
 	(*philo)->start_sleeping = 0;

@@ -18,7 +18,7 @@ OBJS	= $(addprefix $(OBJDIR), $(SRCNAMES:.c=.o))
 HEADERS	= -I include -I ./inc/
 
 CC	= clang
-CFLAGS	= -g3 -pthread #-fsanitize=address #-Wall -Wextra -Werror -Ofast -fno-omit-frame-pointer
+CFLAGS	= -g3 -pthread -fsanitize=address #-Wall -Wextra -Werror -Ofast -fno-omit-frame-pointer
 
 ifeq ($(OS), Linux)
 	VALGRIND = valgrind --tool=memcheck --leak-check=full --track-origins=yes -s
