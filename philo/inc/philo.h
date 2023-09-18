@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/15 21:06:13 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/18 23:44:08 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_philo
 	useconds_t		t_to_die;
 	useconds_t		t_to_eat;
 	useconds_t		t_to_sleep;
+	useconds_t		die_time;
 	size_t			eat;
 	size_t			sleep;
 	size_t			think;
@@ -78,13 +79,14 @@ char		*ft_itoa(u_int64_t n);
 u_int64_t	ft_atoi(const char *str);
 
 u_int64_t	get_time(void);
+u_int64_t	get_time_in_ms(u_int64_t start_time);
 int			f_usleep(useconds_t time);
 //void		print_status(t_philo *philo);
 void		print_status(t_philo *p, u_int64_t t, char *act, char *col);
 
 
 int			init_data(t_data **data, int n_philos, useconds_t t_to_sleep, useconds_t t_to_eat,
-						useconds_t t_to_die, useconds_t many_times_to_eat);
+						useconds_t t_to_die, int many_times_to_eat);
 int			init_philos(t_data *data);
 
 #endif

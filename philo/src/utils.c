@@ -18,6 +18,19 @@ u_int64_t	get_time(void)
 	return ((curr_time.tv_sec * (u_int64_t)1000) + (curr_time.tv_usec / 1000));
 }
 
+u_int64_t	get_time_in_ms(u_int64_t start_time)
+{
+	struct timeval	curr_time;
+	u_int64_t		ret;
+
+	if (gettimeofday(&curr_time, NULL))
+		return (f_error("gettimeofday() FAILURE\n", NULL));
+	ret = (curr_time.tv_sec - start_time) * 1000;
+	ret += curr_time.tv_usec / 1000;
+	
+	return (ret);
+}
+
 int	f_usleep(useconds_t time)
 {
 	u_int64_t	start;
@@ -36,7 +49,7 @@ void	print_status(t_philo *p, u_int64_t t, char *act, char *col)
 	// 	return ;
 	pthread_mutex_lock(p->data->mut_write);
 	p_id = ft_itoa(p->id);
-	time_ = ft_itoa(get_time() - t);
+	time_ = ft_itoa(get_time() - p->data->start_time);// - t);
 	ft_putstrc_fd(col, time_, 1);
 	ft_putstrc_fd(col, "ms [", 1);
 	ft_putstrc_fd(col, p_id, 1);

@@ -6,14 +6,14 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/15 21:06:46 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/18 23:45:28 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 int	init_data(t_data **data, int n_philos, useconds_t t_to_sleep, useconds_t t_to_eat,
-		useconds_t t_to_die, useconds_t many_times_to_eat)
+		useconds_t t_to_die, int many_times_to_eat)
 {
 	int	i;
 
@@ -71,13 +71,14 @@ static int	set_philo(t_philo **philo, int id, t_data **data)
 	(*philo)->t_to_die = 0;
 	(*philo)->t_to_eat = 0;
 	(*philo)->t_to_sleep = 0;
-	(*philo)->many_times_to_eat = 0;
+	(*philo)->many_times_to_eat = (*data)->many_times_to_eat;
 	(*philo)->start_eating = 0;
 	(*philo)->start_sleeping = 0;
 	(*philo)->start_thinking = 0;
 	(*philo)->eat = 0;
 	(*philo)->sleep = 0;
 	(*philo)->think = 0;
+	(*philo)->die_time = 0;
 	(*philo)->tid = malloc(sizeof(pthread_t));
 	if (!(*philo)->tid)
 	{
