@@ -18,19 +18,6 @@ u_int64_t	get_time(void)
 	return ((curr_time.tv_sec * (u_int64_t)1000) + (curr_time.tv_usec / 1000));
 }
 
-u_int64_t	get_time_in_ms(u_int64_t start_time)
-{
-	struct timeval	curr_time;
-	u_int64_t		ret;
-
-	if (gettimeofday(&curr_time, NULL))
-		return (f_error("gettimeofday() FAILURE\n", NULL));
-	ret = (curr_time.tv_sec - start_time) * 1000;
-	ret += curr_time.tv_usec / 1000;
-	
-	return (ret);
-}
-
 int	f_usleep(u_int64_t time)
 {
 	u_int64_t	start;
@@ -90,3 +77,47 @@ void	print_status(t_philo *p, u_int64_t t, char *act, char *col)
 // {
 
 // }
+
+void	*ft_exit(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	for (int i = 0; i < data->num_philos ; i++)
+		pthread_join(*data->philos[i]->tid, NULL);
+
+	i = 0;
+	while (i < data->num_philos)
+	{
+		pthread_mutex_destroy(data->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(data->mut_write);
+	ft_putendlc_fd(YELLOW_, "Finish program", 1);
+	i = 0;
+	while (data->philos[i]->tid)
+	{
+		free(data->philos[i]->tid);
+		i++;
+	}
+	i = 0;
+	while (data->philos[i])
+	{
+		free(data->philos[i]);
+		i++;
+	}
+	if (data->philos)
+		free(data->philos);
+	i = 0;
+	while (data->forks)
+	{
+		free(data->forks[i]);
+		i++;
+	}
+	if (data->forks)
+		free (data->forks);
+	if (data->mut_write)
+		free(data->mut_write);
+	free(data);
+	exit (EXIT_SUCCESS);
+}

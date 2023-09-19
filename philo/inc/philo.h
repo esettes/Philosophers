@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/19 19:35:37 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/19 20:59:34 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_philo
 	pthread_mutex_t	mut_write;
 	u_int64_t		fork_time;
 	u_int64_t		start_eating;
+	u_int64_t		finish_eat;
 	u_int64_t		start_thinking;
 	u_int64_t		start_sleeping;
 	u_int64_t		t_to_die;
@@ -88,5 +89,6 @@ void		print_status(t_philo *p, u_int64_t t, char *act, char *col);
 int			init_data(t_data **data, int n_philos, u_int64_t t_to_sleep, u_int64_t t_to_eat,
 						u_int64_t t_to_die, int many_times_to_eat);
 int			init_philos(t_data *data);
+void		*ft_exit(t_data *data);
 
 #endif
