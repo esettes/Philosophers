@@ -31,7 +31,7 @@ u_int64_t	get_time_in_ms(u_int64_t start_time)
 	return (ret);
 }
 
-int	f_usleep(useconds_t time)
+int	f_usleep(u_int64_t time)
 {
 	u_int64_t	start;
 

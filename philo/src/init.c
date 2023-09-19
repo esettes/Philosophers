@@ -6,14 +6,14 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/19 00:29:27 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/19 19:49:14 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_data(t_data **data, int n_philos, useconds_t t_to_sleep, useconds_t t_to_eat,
-		useconds_t t_to_die, int many_times_to_eat)
+int	init_data(t_data **data, int n_philos, u_int64_t t_to_sleep, u_int64_t t_to_eat,
+		u_int64_t t_to_die, int many_times_to_eat)
 {
 	int	i;
 
@@ -110,6 +110,7 @@ int	init_philos(t_data *data)
 	i = data->num_philos - 1;
 	while (i >= 0)
 	{
+		
 		if (set_philo(&data->philos[i], i, &data) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		i--;
