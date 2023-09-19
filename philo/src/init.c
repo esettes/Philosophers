@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/19 19:49:14 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/19 22:40:49 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static int	set_philo(t_philo **philo, int id, t_data **data)
 	(*philo)->sleep = 0;
 	(*philo)->think = 0;
 	(*philo)->die_time = 0;
+	(*philo)->is_die = 0;
 	(*philo)->tid = malloc(sizeof(pthread_t));
 	if (!(*philo)->tid)
 	{

@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/19 20:59:34 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/19 22:40:30 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_philo
 	struct s_data	*data;
 	pthread_t		*tid;
 	int				id;
+	pthread_t		log;
 	pthread_mutex_t	mut_write;
 	u_int64_t		fork_time;
 	u_int64_t		start_eating;
@@ -54,6 +55,7 @@ typedef struct s_philo
 	size_t			think;
 	size_t			many_times_to_eat;
 	size_t			times_eaten;
+	size_t			is_die;
 }				t_philo;
 
 typedef struct s_data

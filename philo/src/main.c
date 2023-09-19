@@ -6,11 +6,22 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/19 21:10:36 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/19 22:45:46 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*log_checker(void *philo)
+{
+	t_philo		*ph;
+
+	ph = (t_philo *)philo;
+	while (ph->is_die == 0)
+	{
+		
+	}
+}
 
 void	*work_philo(void *philo)
 {
@@ -31,6 +42,7 @@ void	*work_philo(void *philo)
 				pthread_mutex_unlock(ph->data->forks[ph->id]);
 				pthread_mutex_unlock(ph->data->forks[(ph->id + 1)
 					% ph->data->num_philos]);
+				ph->is_die = 1;
 				return ((void *)0);
 			}
 			ph->fork_time = get_time();
@@ -50,11 +62,13 @@ void	*work_philo(void *philo)
 		if (ph->t_to_die < ph->t_to_sleep)
 		{
 			print_status(ph, get_time(), "died sleeping > dying", RED_);
+			ph->is_die = 1;
 			return ((void *)0);
 		}
 		if (ph->times_eaten >= ph->many_times_to_eat)
 		{
 			print_status(ph, get_time(), "died for eat many times", RED_);
+			ph->is_die = 1;
 			return ((void *)0);
 		}
 
@@ -69,12 +83,14 @@ void	*work_philo(void *philo)
 		if (((curr_time - ph->start_sleeping) > ph->t_to_die) || (ph->t_to_sleep > ph->t_to_die))
 		{
 			print_status(ph, get_time(), "died for many time sleeping", RED_);
+			ph->is_die = 1;
 			return ((void *)0);
 		}
 
 		if (ph->eat == 1 && ph->sleep == 1 && ((curr_time - ph->finish_eat) + (curr_time - ph->start_sleeping)) > ph->t_to_die)
 		{
 			print_status(ph, get_time(), "died for many time eating and sleeping", RED_);
+			ph->is_die = 1;
 			return ((void *)0);
 		}
 
@@ -87,6 +103,7 @@ void	*work_philo(void *philo)
 		if ((curr_time - ph->start_thinking) > ph->t_to_die)
 		{
 			print_status(ph, get_time(), "died for many time thinking", RED_);
+			ph->is_die = 1;
 			return ((void *)0);
 		}
 
