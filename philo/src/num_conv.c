@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 21:24:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/15 20:20:24 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/19 21:17:59 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_itoa(u_int64_t n)
 	long_n = n;
 	count = count_dec(n);
 	aux = count;
-	a = (char *)malloc(sizeof(char) * count + 2);
+	a = malloc(sizeof(char) * (count + 1));
 	if (!a)
 		return (NULL);
 	while (long_n / 10 != 0)

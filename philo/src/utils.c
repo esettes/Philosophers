@@ -101,11 +101,11 @@ void	*ft_exit(t_data *data)
 		i++;
 	}
 	i = 0;
-	while (data->philos[i])
-	{
-		free(data->philos[i]);
-		i++;
-	}
+	// while (data->philos[i])
+	// {
+	// 	free(data->philos[i]);
+	// 	i++;
+	// }
 	if (data->philos)
 		free(data->philos);
 	i = 0;
