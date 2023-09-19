@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/19 19:52:48 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/19 19:53:21 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	*work_philo(void *philo)
 			print_status(ph, get_time(), "died for many time sleeping", RED_);
 			return ((void *)0);
 		}
+		
 		
 		if ((((ph->start_eating- ph->data->start_time) + (ph->start_sleeping - ph->data->start_time))) > ph->t_to_die)
 		{
