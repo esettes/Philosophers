@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/20 23:28:14 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/20 23:46:04 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ void	*log_checker(void *philo)
 
 	ph = (t_philo *)philo;
 	f_usleep(20);
+	
 	while (ph->is_die == 0)
 	{
 		curr_time = get_time();
+		if (ph->is_die == 1)
+			break ;
 		if (ph->t_to_die < ph->t_to_eat)
 		{
 			print_status(ph, "died eating > dying", RED_);
@@ -32,22 +35,6 @@ void	*log_checker(void *philo)
 			ph->is_die = 1;
 			break ;
 		}
-		// if (((curr_time - ph->start_sleeping) > ph->t_to_die))
-		// {
-		// 	pthread_mutex_lock(ph->data->mut_write);
-		// 	ft_putstrc_fd(RED_, ft_itoa(curr_time - ph->start_sleeping), 1);
-		// 	ft_putendlc_fd(RED_, "ms sleeping", 1);
-		// 	pthread_mutex_lock(ph->data->mut_write);
-		// 	print_status(ph, "died for many time sleeping", RED_);
-		// 	ph->is_die = 1;
-		// 	break ;
-		// }
-		// if (ph->eat == 1 && ph->sleep == 1 && ((curr_time - ph->finish_eat) + (curr_time - ph->start_sleeping)) > ph->t_to_die)
-		// {
-		// 	print_status(ph, "died for many time eating and sleeping", RED_);
-		// 	ph->is_die = 1;
-		// 	break ;
-		// }
 		if (ph->times_eaten >= ph->many_times_to_eat)
 		{
 			//print_status(ph, "died for eat many times", RED_);
@@ -57,7 +44,7 @@ void	*log_checker(void *philo)
 		
 		aux =  ph->finish_eat;
 		
-		if ((curr_time - ph->finish_eat) > ph->t_to_die)
+		if ((curr_time) > ph->t_to_die)
 		{
 			pthread_mutex_lock(ph->mut_eat);
 			pthread_mutex_lock(ph->data->mut_write);
@@ -153,7 +140,7 @@ int	main(int argc, char *argv[])
 	for (int i = 0; i < data->num_philos ; i++)
 		pthread_create(data->philos[i]->tid, NULL, work_philo, (void *)data->philos[i]);
 
-	pthread_create(&data->exit_, NULL, exit_checker, (void *)data);
+	//pthread_create(&data->exit_, NULL, exit_checker, (void *)data);
 
 	ft_exit(data);
 }
