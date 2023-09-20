@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/20 20:12:40 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/20 23:11:08 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,65 @@
 void	*log_checker(void *philo)
 {
 	t_philo		*ph;
+	u_int64_t	curr_time;
+	u_int64_t	aux;
 
 	ph = (t_philo *)philo;
+	f_usleep(20);
 	while (ph->is_die == 0)
 	{
-		
+		curr_time = get_time();
+		if (ph->t_to_die < ph->t_to_eat)
+		{
+			print_status(ph, "died eating > dying", RED_);
+			pthread_mutex_unlock(ph->data->forks[ph->id]);
+			pthread_mutex_unlock(ph->data->forks[(ph->id + 1)
+				% ph->data->num_philos]);
+			ph->is_die = 1;
+			break ;
+		}
+		// if (((curr_time - ph->start_sleeping) > ph->t_to_die))
+		// {
+		// 	pthread_mutex_lock(ph->data->mut_write);
+		// 	ft_putstrc_fd(RED_, ft_itoa(curr_time - ph->start_sleeping), 1);
+		// 	ft_putendlc_fd(RED_, "ms sleeping", 1);
+		// 	pthread_mutex_lock(ph->data->mut_write);
+		// 	print_status(ph, "died for many time sleeping", RED_);
+		// 	ph->is_die = 1;
+		// 	break ;
+		// }
+		// if (ph->eat == 1 && ph->sleep == 1 && ((curr_time - ph->finish_eat) + (curr_time - ph->start_sleeping)) > ph->t_to_die)
+		// {
+		// 	print_status(ph, "died for many time eating and sleeping", RED_);
+		// 	ph->is_die = 1;
+		// 	break ;
+		// }
+		if (ph->times_eaten >= ph->many_times_to_eat)
+		{
+			print_status(ph, "died for eat many times", RED_);
+			ph->is_die = 1;
+			break ;
+		}
+		pthread_mutex_lock(&ph->mut_eat);
+		aux = ph->finish_eat;
+		pthread_mutex_unlock(&ph->mut_eat);
+		if ((aux) > ph->t_to_die)
+		{
+			pthread_mutex_lock(ph->data->mut_write);
+			ft_putstrc_fd(RED_, ft_itoa(ph->t_to_die), 1);
+			ft_putendlc_fd(RED_, "ms to die", 1);
+			ft_putstrc_fd(GREEN_, ft_itoa(aux), 1);
+			ft_putendlc_fd(GREEN_, "ms last eat", 1);
+			pthread_mutex_unlock(ph->data->mut_write);
+			print_status(ph, "died for many time for last eat", RED_);
+			ph->is_die = 1;
+			break ;
+		}
 	}
+	print_status(ph, "died", RED_);
+	ph->is_die = 1;
+	ft_exit(ph->data);
+	return ((void *)0);
 }
 
 void	*work_philo(void *philo)
@@ -30,84 +83,13 @@ void	*work_philo(void *philo)
 
 	ph = (t_philo *)philo;
 
-	while (ph->eat == 0 && ph->sleep == 0 && ph->think == 0)
+	pthread_create(&ph->log, NULL, log_checker, (void *)ph);
+	while (ph->is_die == 0)
 	{
-		if (pthread_mutex_lock(ph->data->forks[ph->id]) == 0
-			&& pthread_mutex_lock(ph->data->forks[(ph->id + 1)
-			% ph->data->num_philos]) == 0)
-		{
-			if (ph->t_to_die < ph->t_to_eat) 
-			{
-				print_status(ph, get_time(), "died eating > dying", RED_);
-				pthread_mutex_unlock(ph->data->forks[ph->id]);
-				pthread_mutex_unlock(ph->data->forks[(ph->id + 1)
-					% ph->data->num_philos]);
-				ph->is_die = 1;
-				return ((void *)0);
-			}
-			ph->fork_time = get_time();
-			print_status(ph, ph->fork_time, "has taken a fork", YELLOW_);
-			ph->start_eating = get_time();
-			f_usleep(ph->t_to_eat);
-			print_status(ph, ph->start_eating, "is eating", VIOLET_);
-			ph->eat = 1;
-			ph->times_eaten++;
-			pthread_mutex_unlock(ph->data->forks[ph->id]);
-			pthread_mutex_unlock(ph->data->forks[(ph->id + 1)
-				% ph->data->num_philos]);
-			ph->finish_eat = get_time();
-			print_status(ph, ph->start_eating, "has leaving forks", BLUE_);
-		}
-		curr_time = get_time();
-		if (ph->t_to_die < ph->t_to_sleep)
-		{
-			print_status(ph, get_time(), "died sleeping > dying", RED_);
-			ph->is_die = 1;
-			return ((void *)0);
-		}
-		if (ph->times_eaten >= ph->many_times_to_eat)
-		{
-			print_status(ph, get_time(), "died for eat many times", RED_);
-			ph->is_die = 1;
-			return ((void *)0);
-		}
-
+		p_eat(ph);
+		if (ph->is_die == 1)
+			return (ft_exit(ph->data));
 		p_sleep(ph);
-
-		curr_time = get_time();
-		if (((curr_time - ph->start_sleeping) > ph->t_to_die) || (ph->t_to_sleep > ph->t_to_die))
-		{
-			print_status(ph, get_time(), "died for many time sleeping", RED_);
-			ph->is_die = 1;
-			return ((void *)0);
-		}
-
-		if (ph->eat == 1 && ph->sleep == 1 && ((curr_time - ph->finish_eat) + (curr_time - ph->start_sleeping)) > ph->t_to_die)
-		{
-			print_status(ph, get_time(), "died for many time eating and sleeping", RED_);
-			ph->is_die = 1;
-			return ((void *)0);
-		}
-
-		if (ph->sleep == 1 && ph->eat == 1 && ph->think == 0)
-		{
-			ph->start_thinking = get_time();
-			print_status(ph, ph->start_thinking, "is thinking", RESET_);
-			ph->think = 1;
-		}
-		if ((curr_time - ph->start_thinking) > ph->t_to_die)
-		{
-			print_status(ph, get_time(), "died for many time thinking", RED_);
-			ph->is_die = 1;
-			return ((void *)0);
-		}
-
-		if (ph->eat == 1 && ph->sleep == 1 && ph->think == 1)
-		{
-			ph->eat = 0;
-			ph->sleep = 0;
-			ph->think = 0;
-		}
 	}
 	return ((void *)0);
 }
@@ -122,16 +104,16 @@ int	main(int argc, char *argv[])
 	{
 		ft_putstrc_fd(YELLOW_, "./philo [num_of_philosophers] [time_to_sleep] [time_to_eat] ", 1);
 		ft_putendlc_fd(YELLOW_, "[time_to_die] opc[many_times_to_eat]", 1);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 
 	if (init_data(&data, (u_int64_t)ft_atoi(argv[1]),  (u_int64_t)ft_atoi(argv[2]),  (u_int64_t)ft_atoi(argv[3]),
 		 (u_int64_t)ft_atoi(argv[4]), ft_atoi(argv[5])) != 0)
-		exit(EXIT_FAILURE);
+		ft_exit(data);
 
 
 	if (init_philos(data) != 0)
-		exit(EXIT_FAILURE);
+		ft_exit(data);
 
 	data->start_time = get_time();
 	ft_putstrc_fd(YELLOW_, ft_itoa(data->start_time), 1);
@@ -141,6 +123,7 @@ int	main(int argc, char *argv[])
 		pthread_mutex_init(data->forks[i], NULL);
 		i++;
 	}
+	
 	pthread_mutex_init(data->mut_write, NULL);
 
 

@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/19 22:40:49 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/20 23:06:34 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,14 @@ static int	set_philo(t_philo **philo, int id, t_data **data)
 	(*philo)->many_times_to_eat = (*data)->many_times_to_eat;
 	(*philo)->start_eating = 0;
 	(*philo)->start_sleeping = 0;
-	(*philo)->start_thinking = 0;
 	(*philo)->eat = 0;
 	(*philo)->sleep = 0;
 	(*philo)->think = 0;
-	(*philo)->die_time = 0;
 	(*philo)->is_die = 0;
+	(*philo)->l_fork = 0;
+	(*philo)->r_fork = 0;
+	(*philo)->finish_eat = 0;
+	pthread_mutex_init(&(*philo)->mut_eat, NULL);
 	(*philo)->tid = malloc(sizeof(pthread_t));
 	if (!(*philo)->tid)
 	{

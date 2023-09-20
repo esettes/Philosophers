@@ -28,7 +28,7 @@ int	f_usleep(u_int64_t time)
 	return (0);
 }
 
-void	print_status(t_philo *p, u_int64_t t, char *act, char *col)
+void	print_status(t_philo *p, char *act, char *col)
 {
 	char	*time_;
 	char	*p_id;
@@ -85,6 +85,9 @@ void	*ft_exit(t_data *data)
 	i = 0;
 	for (int i = 0; i < data->num_philos ; i++)
 		pthread_join(*data->philos[i]->tid, NULL);
+	
+	for (int i = 0; i < data->num_philos ; i++)
+		pthread_join(data->philos[i]->log, NULL);
 
 	i = 0;
 	while (i < data->num_philos)
@@ -93,7 +96,7 @@ void	*ft_exit(t_data *data)
 		i++;
 	}
 	pthread_mutex_destroy(data->mut_write);
-	ft_putendlc_fd(YELLOW_, "Finish program", 1);
+	ft_putendlc_fd(GREEN_, "Finish program", 1);
 	i = 1;
 	while (i <= data->num_philos)
 	{
@@ -108,6 +111,12 @@ void	*ft_exit(t_data *data)
 	// }
 	if (data->philos)
 		free(data->philos);
+	i = 0;
+	while (i < data->num_philos)
+	{
+		pthread_mutex_destroy(&data->philos[i]->mut_eat);
+		i++;
+	}
 	i = 0;
 	while (data->forks)
 	{
