@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/19 22:45:46 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/20 20:12:40 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,8 @@ void	*work_philo(void *philo)
 			return ((void *)0);
 		}
 
-		if (ph->sleep == 0 && ph->eat == 1 && ph->think == 0)
-		{
-			ph->start_sleeping = get_time();
-			f_usleep(ph->t_to_sleep);
-			print_status(ph, ph->start_sleeping, "is sleeping", CYAN_);
-			ph->sleep = 1;
-		}
+		p_sleep(ph);
+
 		curr_time = get_time();
 		if (((curr_time - ph->start_sleeping) > ph->t_to_die) || (ph->t_to_sleep > ph->t_to_die))
 		{
@@ -120,7 +115,6 @@ void	*work_philo(void *philo)
 int	main(int argc, char *argv[])
 {
 	t_data		*data;
-	u_int64_t	t;
 	int	i;
 
 	i = 0;
@@ -138,9 +132,7 @@ int	main(int argc, char *argv[])
 
 	if (init_philos(data) != 0)
 		exit(EXIT_FAILURE);
-	
-	t = get_time();
-	data->epoch_time = get_time();
+
 	data->start_time = get_time();
 	ft_putstrc_fd(YELLOW_, ft_itoa(data->start_time), 1);
 	ft_putendlc_fd(YELLOW_, "ms start_time -------------------", 1);

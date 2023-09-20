@@ -94,8 +94,8 @@ void	*ft_exit(t_data *data)
 	}
 	pthread_mutex_destroy(data->mut_write);
 	ft_putendlc_fd(YELLOW_, "Finish program", 1);
-	i = 0;
-	while (data->philos[i]->tid)
+	i = 1;
+	while (i <= data->num_philos)
 	{
 		free(data->philos[i]->tid);
 		i++;

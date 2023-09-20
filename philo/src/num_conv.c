@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 21:24:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/19 21:17:59 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/20 20:17:39 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static size_t	ft_is_neg(int n)
 	return (0);
 }
 
-static size_t	count_dec(int n)
+static size_t	count_dec(u_int64_t n)
 {
 	size_t	count;
 
@@ -42,7 +42,7 @@ char	*ft_itoa(u_int64_t n)
 	long_n = n;
 	count = count_dec(n);
 	aux = count;
-	a = malloc(sizeof(char) * (count + 1));
+	a = malloc(sizeof(char) * (count + 2));
 	if (!a)
 		return (NULL);
 	while (long_n / 10 != 0)

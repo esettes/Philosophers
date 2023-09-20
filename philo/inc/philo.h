@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/19 22:40:30 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/20 20:14:12 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_data
 	pthread_mutex_t	*mut_write;
 	int				num_philos;
 	uint64_t		start_time;
-	uint64_t		epoch_time;
 	u_int64_t		t_to_die;
 	u_int64_t		t_to_eat;
 	u_int64_t		t_to_sleep;
@@ -82,9 +81,7 @@ char		*ft_itoa(u_int64_t n);
 u_int64_t	ft_atoi(const char *str);
 
 u_int64_t	get_time(void);
-u_int64_t	get_time_in_ms(u_int64_t start_time);
 int			f_usleep(u_int64_t time);
-//void		print_status(t_philo *philo);
 void		print_status(t_philo *p, u_int64_t t, char *act, char *col);
 
 
@@ -92,5 +89,7 @@ int			init_data(t_data **data, int n_philos, u_int64_t t_to_sleep, u_int64_t t_t
 						u_int64_t t_to_die, int many_times_to_eat);
 int			init_philos(t_data *data);
 void		*ft_exit(t_data *data);
+
+void		p_sleep(t_philo *ph);
 
 #endif
