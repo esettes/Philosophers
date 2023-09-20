@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/20 23:11:08 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/20 23:28:14 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,29 @@ void	*log_checker(void *philo)
 		// }
 		if (ph->times_eaten >= ph->many_times_to_eat)
 		{
-			print_status(ph, "died for eat many times", RED_);
+			//print_status(ph, "died for eat many times", RED_);
 			ph->is_die = 1;
 			break ;
 		}
-		pthread_mutex_lock(&ph->mut_eat);
-		aux = ph->finish_eat;
-		pthread_mutex_unlock(&ph->mut_eat);
-		if ((aux) > ph->t_to_die)
+		
+		aux =  ph->finish_eat;
+		
+		if ((curr_time - ph->finish_eat) > ph->t_to_die)
 		{
+			pthread_mutex_lock(ph->mut_eat);
 			pthread_mutex_lock(ph->data->mut_write);
-			ft_putstrc_fd(RED_, ft_itoa(ph->t_to_die), 1);
-			ft_putendlc_fd(RED_, "ms to die", 1);
-			ft_putstrc_fd(GREEN_, ft_itoa(aux), 1);
+			ft_putstrc_fd(GREEN_, ft_itoa(ph->finish_eat), 1);
 			ft_putendlc_fd(GREEN_, "ms last eat", 1);
 			pthread_mutex_unlock(ph->data->mut_write);
-			print_status(ph, "died for many time for last eat", RED_);
+			pthread_mutex_unlock(ph->mut_eat);
+			//print_status(ph, "died for many time for last eat", RED_);
 			ph->is_die = 1;
 			break ;
 		}
+		
 	}
 	print_status(ph, "died", RED_);
-	ph->is_die = 1;
+	//ph->is_die = 1;
 	ft_exit(ph->data);
 	return ((void *)0);
 }
@@ -90,6 +91,27 @@ void	*work_philo(void *philo)
 		if (ph->is_die == 1)
 			return (ft_exit(ph->data));
 		p_sleep(ph);
+	}
+	return ((void *)0);
+}
+
+void	*exit_checker(void *data)
+{
+	t_data	*d;
+	int		i;
+
+	d = (t_data *)data;
+	while (1)
+	{
+		i = 0;
+		while (i < d->num_philos)
+		{
+			if (d->philos[i]->is_die == 1)
+			{
+				ft_exit(d);
+			}
+			i++;
+		}
 	}
 	return ((void *)0);
 }
@@ -130,6 +152,8 @@ int	main(int argc, char *argv[])
 
 	for (int i = 0; i < data->num_philos ; i++)
 		pthread_create(data->philos[i]->tid, NULL, work_philo, (void *)data->philos[i]);
+
+	pthread_create(&data->exit_, NULL, exit_checker, (void *)data);
 
 	ft_exit(data);
 }

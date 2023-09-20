@@ -89,6 +89,7 @@ void	*ft_exit(t_data *data)
 	for (int i = 0; i < data->num_philos ; i++)
 		pthread_join(data->philos[i]->log, NULL);
 
+	pthread_join(data->exit_, NULL);
 	i = 0;
 	while (i < data->num_philos)
 	{
@@ -114,7 +115,7 @@ void	*ft_exit(t_data *data)
 	i = 0;
 	while (i < data->num_philos)
 	{
-		pthread_mutex_destroy(&data->philos[i]->mut_eat);
+		pthread_mutex_destroy(data->philos[i]->mut_eat);
 		i++;
 	}
 	i = 0;

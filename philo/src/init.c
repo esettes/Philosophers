@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/20 23:06:34 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/20 23:14:08 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ static int	set_philo(t_philo **philo, int id, t_data **data)
 	(*philo)->l_fork = 0;
 	(*philo)->r_fork = 0;
 	(*philo)->finish_eat = 0;
-	pthread_mutex_init(&(*philo)->mut_eat, NULL);
+	(*philo)->mut_eat = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init((*philo)->mut_eat, NULL);
 	(*philo)->tid = malloc(sizeof(pthread_t));
 	if (!(*philo)->tid)
 	{

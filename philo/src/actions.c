@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 21:16:58 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/20 23:08:53 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/20 23:23:11 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	p_think(t_philo *ph)
 
 		//ph->start_thinking = get_time();
 		print_status(ph, "is thinking", RESET_);
-		ph->sleep = 0;
+		//ph->sleep = 0;
 }
 
 void	p_sleep(t_philo *ph)
@@ -29,6 +29,7 @@ void	p_sleep(t_philo *ph)
 		print_status(ph, "is sleeping", CYAN_);
 		ph->sleep = 1;
 		ph->eat = 0;
+		ph->think = 0;
 	}
 }
 
@@ -44,26 +45,27 @@ void	p_eat(t_philo *ph)
 		if (pthread_mutex_lock(ph->data->forks[ph->id]) == 0)
 		{
 			print_status(ph, "has taken a fork", YELLOW_);
-			pthread_mutex_lock(ph->data->mut_write);
-			ft_putstrc_fd(YELLOW_, "[", 1);
-			ft_putstrc_fd(YELLOW_, ft_itoa(ph->id), 1);
-			ft_putendlc_fd(YELLOW_, "] fork", 1);
-			pthread_mutex_unlock(ph->data->mut_write);
+			// pthread_mutex_lock(ph->data->mut_write);
+			// ft_putstrc_fd(YELLOW_, "[", 1);
+			// ft_putstrc_fd(YELLOW_, ft_itoa(ph->id), 1);
+			// ft_putendlc_fd(YELLOW_, "] fork", 1);
+			// pthread_mutex_unlock(ph->data->mut_write);
 			ph->r_fork = 1;
 		}
 		if (pthread_mutex_lock(ph->data->forks[(ph->id + 1)
-			% ph->data->num_philos]) == 0);// && ph->r_fork == 1)
+			% ph->data->num_philos]) == 0)// && ph->r_fork == 1)
 		{
 			print_status(ph, "has taken a fork", YELLOW_);
-			pthread_mutex_lock(ph->data->mut_write);
-			ft_putstrc_fd(YELLOW_, "[", 1);
-			ft_putstrc_fd(YELLOW_, ft_itoa(ph->id + 1), 1);
-			ft_putendlc_fd(YELLOW_, "] fork", 1);
-			pthread_mutex_unlock(ph->data->mut_write);
+			// pthread_mutex_lock(ph->data->mut_write);
+			// ft_putstrc_fd(YELLOW_, "[", 1);
+			// ft_putstrc_fd(YELLOW_, ft_itoa(ph->id + 1), 1);
+			// ft_putendlc_fd(YELLOW_, "] fork", 1);
+			// pthread_mutex_unlock(ph->data->mut_write);
 			ph->l_fork = 1;
 		}
 		if (ph->r_fork == 1 && ph->l_fork == 1)
 		{
+			pthread_mutex_lock(ph->mut_eat);
 			//ph->start_eating = get_time();
 			f_usleep(ph->t_to_eat);
 			// when philo finish eat or when starts?
@@ -73,9 +75,8 @@ void	p_eat(t_philo *ph)
 			pthread_mutex_unlock(ph->data->forks[ph->id]);
 			pthread_mutex_unlock(ph->data->forks[(ph->id + 1)
 				% ph->data->num_philos]);
-			pthread_mutex_lock(&ph->mut_eat);
 			ph->finish_eat = get_time();
-			pthread_mutex_unlock(&ph->mut_eat);
+			pthread_mutex_unlock(ph->mut_eat);
 			print_status(ph, "has leaving forks", BLUE_);
 			ph->think = 1;
 			ph->sleep = 0;
