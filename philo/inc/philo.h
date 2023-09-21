@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/20 23:24:28 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/21 19:17:51 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@
 # define CYAN_		"\x1b[36m"
 # define RESET_		"\x1b[0m"
 
+# define FORK		"has taken a fork"
+# define EAT		"is eating"
+# define SLEEP		"is sleeping"
+# define THINK		"is thinking"
+# define DIE		"died"
+# define ALLOC_ERR	"Allocation error"
+
 struct	s_data;
 
 /**
@@ -39,18 +46,14 @@ typedef struct s_philo
 	struct s_data	*data;
 	pthread_t		*tid;
 	int				id;
-	pthread_t		log;
-
+	//pthread_t		log;
 	pthread_mutex_t	*mut_eat;
+	pthread_mutex_t	*mut_write;
 	u_int64_t		fork_time;
 	u_int64_t		start_eating;
-	u_int64_t		finish_eat;
-	u_int64_t		start_thinking;
-	u_int64_t		start_sleeping;
 	u_int64_t		t_to_die;
 	u_int64_t		t_to_eat;
 	u_int64_t		t_to_sleep;
-	u_int64_t		die_time;
 	size_t			r_fork;
 	size_t			l_fork;
 	size_t			eat;
@@ -66,7 +69,7 @@ typedef struct s_data
 	t_philo			**philos;
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	*mut_write;
-	pthread_t		exit_;
+	pthread_t		controller;
 	int				num_philos;
 	uint64_t		start_time;
 	u_int64_t		t_to_die;
@@ -96,5 +99,6 @@ void		*ft_exit(t_data *data);
 
 void		p_sleep(t_philo *ph);
 void		p_eat(t_philo *ph);
+void		set_triggers(t_philo *p, size_t eat, size_t think, size_t sleep);
 
 #endif
