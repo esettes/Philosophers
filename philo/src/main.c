@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/21 22:50:30 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/21 23:32:17 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*work_philo(void *philo)
 
 	while (ph->is_die == 0)
 	{
-		p_eat(ph, ph->data->forks[ph->id], ph->data->forks[(ph->id + 1)
+		p_eat(ph->data, ph->id, ph->data->forks[ph->id], ph->data->forks[(ph->id + 1)
 			% ph->data->num_philos]);
 		// if (ph->is_die == 1)
 		//  	return (ft_exit(ph->data));
@@ -29,6 +29,25 @@ void	*work_philo(void *philo)
 	}
 	return ((void *)0);
 }
+
+// void	status_controller(t_philo *p, size_t eat, size_t sleep, size_t think)
+// {
+// 	if (p->data->print_act[p->id]->eat != eat)
+// 	{
+// 		print_status(p, EAT, VIOLET_);
+// 		p->data->print_act[p->id]->eat = eat;
+// 	}
+// 	if (p->data->print_act[p->id]->sleep != sleep)
+// 	{
+// 		print_status(p, SLEEP, CYAN_);
+// 		p->data->print_act[p->id]->sleep = sleep;
+// 	}
+// 	// if (p->data->print_act->think != think)
+// 	// {
+// 	// 	print_status(p, THINK, RESET_);
+// 	// 	p->data->print_act->think = think;
+// 	// }
+// }
 
 void	*exit_checker(void *data)
 {
@@ -39,7 +58,6 @@ void	*exit_checker(void *data)
 
 	
 	d = (t_data *)data;
-	//ft_putendlc_fd(BLUE_, "o oo o o oooooo o o oo O O O OO O O", 1);
 	//f_usleep(10);
 	while (1)
 	{
@@ -47,6 +65,7 @@ void	*exit_checker(void *data)
 		
 		while (i < d->num_philos)
 		{
+			//status_controller(d->philos[i], d->philos[i]->eat, d->philos[i]->sleep, d->philos[i]->think);
 			if (d->t_to_die < d->t_to_eat)
 			{
 				pthread_mutex_unlock(d->forks[d->philos[i]->id]);
@@ -67,17 +86,16 @@ void	*exit_checker(void *data)
 			pthread_mutex_unlock(d->mut_eat);
 			if ((curr_time) > (aux + d->t_to_die))
 			{
-				print_status(d->philos[i], "died for many time for last eat", RED_);
+				print_status(d->philos[i]->id, d, "died for many time for last eat", RED_);
 				d->philos[i]->is_die = 1;
 				break ;
-				
 			}
 			i++;
 		}
 		if (d->philos[i]->is_die == 1)
 			break ;
 	}
-	print_status(d->philos[i], DIE, RED_);
+	print_status(d->philos[i]->id, d, DIE, RED_);
 	ft_exit(d);
 	return ((void *)0);
 }

@@ -28,15 +28,15 @@ int	f_usleep(u_int64_t time)
 	return (0);
 }
 
-void	print_status(t_philo *p, char *act, char *col)
+void	print_status(int id, t_data *data, char *act, char *col)
 {
 	char	*time_;
 	char	*p_id;
 	// if (!time_ || !id || !action)
 	// 	return ;
-	pthread_mutex_lock(p->data->mut_write);
-	p_id = ft_itoa(p->id);
-	time_ = ft_itoa(get_time() - p->data->start_time);// - t);
+	pthread_mutex_lock(data->mut_write);
+	p_id = ft_itoa(id);
+	time_ = ft_itoa(get_time() - data->start_time);// - t);
 	ft_putstrc_fd(col, time_, 1);
 	ft_putstrc_fd(col, "ms [", 1);
 	ft_putstrc_fd(col, p_id, 1);
@@ -46,14 +46,7 @@ void	print_status(t_philo *p, char *act, char *col)
 		free(time_);
 	if (p_id)
 		free(p_id);
-	pthread_mutex_unlock(p->data->mut_write);
-}
-
-void	set_triggers(t_philo *p, size_t eat, size_t think, size_t sleep)
-{
-	p->eat = eat;
-	p->think = think;
-	p->sleep = sleep;
+	pthread_mutex_unlock(data->mut_write);
 }
 
 void	*ft_exit(t_data *data)
@@ -84,11 +77,12 @@ void	*ft_exit(t_data *data)
 	while (data->philos[++i]->tid)
 		free(data->philos[i]->tid);
 	i = 0;
-	while (data->philos[++i]->mut_eat)
-		pthread_mutex_destroy(data->philos[i]->mut_eat);
-	i = 0;
-	while (data->philos[++i]->mut_write)
-		pthread_mutex_destroy(data->philos[i]->mut_write);
+	// while (i < data->num_philos)
+	// {
+	// 	free(data->print_act[i]);
+	// 	i++;
+	// }
+	// free(data->print_act);
 	// while (data->forks[++i])
 	// 	free(data->forks[i]);
 	if (data->forks)

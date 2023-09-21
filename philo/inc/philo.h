@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/21 22:53:14 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/21 23:30:20 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@
 
 struct	s_data;
 
+typedef struct s_act_trigger
+{
+	size_t	eat;
+	size_t	sleep;
+	size_t	think;
+}			t_act_trigger;
 /**
  * eat --> sleep --> think 
  * think --> eat --> sleep
@@ -46,9 +52,6 @@ typedef struct s_philo
 	struct s_data	*data;
 	pthread_t		*tid;
 	int				id;
-	//pthread_t		log;
-	pthread_mutex_t	*mut_eat;
-	pthread_mutex_t	*mut_write;
 	u_int64_t		fork_time;
 	u_int64_t		start_eating;
 	u_int64_t		t_to_die;
@@ -71,6 +74,7 @@ typedef struct s_data
 	pthread_mutex_t	*mut_write;
 	pthread_mutex_t	*mut_eat;
 	pthread_t		controller;
+	//t_act_trigger	**print_act;
 	int				num_philos;
 	uint64_t		start_time;
 	u_int64_t		t_to_die;
@@ -90,8 +94,7 @@ u_int64_t	ft_atoi(const char *str);
 
 u_int64_t	get_time(void);
 int			f_usleep(u_int64_t time);
-void		print_status(t_philo *p, char *act, char *col);
-
+void		print_status(int id, t_data *data, char *act, char *col);
 
 int			init_data(t_data **data, int n_philos, u_int64_t t_to_sleep, u_int64_t t_to_eat,
 						u_int64_t t_to_die, int many_times_to_eat);
@@ -99,7 +102,6 @@ int			init_philos(t_data *data);
 void		*ft_exit(t_data *data);
 
 void		p_sleep(t_philo *ph);
-void		p_eat(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2);
-void		set_triggers(t_philo *p, size_t eat, size_t think, size_t sleep);
+void		p_eat(t_data *d, int id, pthread_mutex_t *fork1, pthread_mutex_t *fork2);
 
 #endif
