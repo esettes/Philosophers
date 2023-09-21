@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/21 19:17:51 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/21 22:53:14 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define CYAN_		"\x1b[36m"
 # define RESET_		"\x1b[0m"
 
-# define FORK		"has taken a fork"
+# define FORK		"has taken the forks"
 # define EAT		"is eating"
 # define SLEEP		"is sleeping"
 # define THINK		"is thinking"
@@ -69,6 +69,7 @@ typedef struct s_data
 	t_philo			**philos;
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	*mut_write;
+	pthread_mutex_t	*mut_eat;
 	pthread_t		controller;
 	int				num_philos;
 	uint64_t		start_time;
@@ -98,7 +99,7 @@ int			init_philos(t_data *data);
 void		*ft_exit(t_data *data);
 
 void		p_sleep(t_philo *ph);
-void		p_eat(t_philo *ph);
+void		p_eat(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2);
 void		set_triggers(t_philo *p, size_t eat, size_t think, size_t sleep);
 
 #endif

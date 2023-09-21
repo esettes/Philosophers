@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/21 21:12:16 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/21 22:21:21 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ int	init_data(t_data **data, int n_philos, u_int64_t t_to_sleep, u_int64_t t_to_
 	}
 	(*data)->num_philos = n_philos;
 	(*data)->forks = malloc(sizeof(pthread_mutex_t *) * ((*data)->num_philos + 1));
-	(*data)->mut_write = malloc(sizeof(pthread_mutex_t));// * (*data)->num_philos);
-	if (!(*data)->forks)
+	(*data)->mut_write = malloc(sizeof(pthread_mutex_t));
+	(*data)->mut_eat = malloc(sizeof(pthread_mutex_t));
+	if (!(*data)->forks || !(*data)->mut_write || !(*data)->mut_eat)
 	{
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
@@ -52,17 +53,6 @@ int	init_data(t_data **data, int n_philos, u_int64_t t_to_sleep, u_int64_t t_to_
 
 static int	set_philo(t_philo *philo, int id, t_data **data)
 {
-	// philo->id = id;
-	// philo->times_eaten = 0;
-	// philo->t_to_die = 0;
-	// philo->t_to_eat = 0;
-	// philo->t_to_sleep = 0;
-	// philo->many_times_to_eat = 0;
-	// philo->start_eating = 0;
-	// philo->start_sleeping = 0;
-	// philo->start_thinking = 0;
-	// philo->start_time = 0;
-	// philo->tid = malloc(sizeof(pthread_t));
 	philo->id = id;
 	philo->data = *data;
 	philo->times_eaten = 0;
@@ -79,8 +69,6 @@ static int	set_philo(t_philo *philo, int id, t_data **data)
 	philo->r_fork = 0;
 	philo->mut_eat = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(philo->mut_eat, NULL);
-	philo->mut_write = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(philo->mut_write, NULL);
 	philo->tid = malloc(sizeof(pthread_t));
 	if (!philo->tid)
 	{
