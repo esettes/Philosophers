@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/20 23:46:04 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:13:01 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,18 @@ void	*log_checker(void *philo)
 	
 	while (ph->is_die == 0)
 	{
-		curr_time = get_time();
+		
+		// if (ph->r_fork == 1)
+		// 	print_status(ph, "has taken a fork", YELLOW_);
+		// if (ph->l_fork == 1)
+		// 	print_status(ph, "has taken a fork", YELLOW_);
 		if (ph->is_die == 1)
 			break ;
+		// if (ph->eat == 1)
+		// 	print_status(ph, "is eating", VIOLET_);
+		// if (ph->sleep == 1)
+		// 	print_status(ph, "is sleeping", CYAN_);
+		
 		if (ph->t_to_die < ph->t_to_eat)
 		{
 			print_status(ph, "died eating > dying", RED_);
@@ -42,16 +51,21 @@ void	*log_checker(void *philo)
 			break ;
 		}
 		
-		aux =  ph->finish_eat;
-		
-		if ((curr_time) > ph->t_to_die)
+		pthread_mutex_lock(ph->mut_eat);
+		curr_time = get_time();
+		curr_time -= ph->data->start_time;
+		aux = ph->start_eating;
+		pthread_mutex_unlock(ph->mut_eat);
+		if ((curr_time) > (aux + ph->t_to_die))
 		{
-			pthread_mutex_lock(ph->mut_eat);
+			
 			pthread_mutex_lock(ph->data->mut_write);
-			ft_putstrc_fd(GREEN_, ft_itoa(ph->finish_eat), 1);
-			ft_putendlc_fd(GREEN_, "ms last eat", 1);
+			ft_putstrc_fd(GREEN_, ft_itoa(aux + ph->t_to_die), 1);
+			ft_putendlc_fd(GREEN_, "ms to die", 1);
+			ft_putstrc_fd(GREEN_, ft_itoa(curr_time), 1);
+			ft_putendlc_fd(GREEN_, "ms current time", 1);
 			pthread_mutex_unlock(ph->data->mut_write);
-			pthread_mutex_unlock(ph->mut_eat);
+			
 			//print_status(ph, "died for many time for last eat", RED_);
 			ph->is_die = 1;
 			break ;

@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 21:16:58 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/20 23:44:33 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:05:12 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,39 +45,36 @@ void	p_eat(t_philo *ph)
 		if (pthread_mutex_lock(ph->data->forks[ph->id]) == 0)
 		{
 			print_status(ph, "has taken a fork", YELLOW_);
-			// pthread_mutex_lock(ph->data->mut_write);
-			// ft_putstrc_fd(YELLOW_, "[", 1);
-			// ft_putstrc_fd(YELLOW_, ft_itoa(ph->id), 1);
-			// ft_putendlc_fd(YELLOW_, "] fork", 1);
-			// pthread_mutex_unlock(ph->data->mut_write);
 			ph->r_fork = 1;
 		}
 		if (pthread_mutex_lock(ph->data->forks[(ph->id + 1)
 			% ph->data->num_philos]) == 0)// && ph->r_fork == 1)
 		{
 			print_status(ph, "has taken a fork", YELLOW_);
-			// pthread_mutex_lock(ph->data->mut_write);
-			// ft_putstrc_fd(YELLOW_, "[", 1);
-			// ft_putstrc_fd(YELLOW_, ft_itoa(ph->id + 1), 1);
-			// ft_putendlc_fd(YELLOW_, "] fork", 1);
-			// pthread_mutex_unlock(ph->data->mut_write);
 			ph->l_fork = 1;
 		}
 		if (ph->r_fork == 1 && ph->l_fork == 1)
 		{
+			
 			pthread_mutex_lock(ph->mut_eat);
-			//ph->start_eating = get_time();
+			ph->start_eating = get_time();
+			pthread_mutex_unlock(ph->mut_eat);
+
+
+
+			ph->eat = 1;
 			f_usleep(ph->t_to_eat);
 			// when philo finish eat or when starts?
 			print_status(ph, "is eating", VIOLET_);
-			ph->eat = 1;
 			ph->times_eaten++;
 			
-			ph->finish_eat = get_time();
-			pthread_mutex_unlock(ph->mut_eat);
+			//ph->finish_eat = get_time();
+			
 			pthread_mutex_unlock(ph->data->forks[ph->id]);
 			pthread_mutex_unlock(ph->data->forks[(ph->id + 1)
 				% ph->data->num_philos]);
+			ph->r_fork = 0;
+			ph->l_fork = 0;
 			print_status(ph, "has leaving forks", BLUE_);
 			ph->think = 1;
 			ph->sleep = 0;
