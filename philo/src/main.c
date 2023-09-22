@@ -27,7 +27,7 @@ void	*work_philo(void *philo)
 		ph->times_eaten++;
 		pthread_mutex_unlock(ph->data->forks[ph->id]);
 		pthread_mutex_unlock(ph->data->forks[(ph->id + 1)
-			% ph->data->num_philos]);
+								% ph->data->num_philos]);
 	}
 	// else
 	// {
