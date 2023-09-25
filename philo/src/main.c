@@ -21,34 +21,16 @@ void	*work_philo(void *philo)
 
 	while (ph->is_die == 0)
 	{
-		p_eat(ph->data, ph->id, ph->data->forks[ph->id], ph->data->forks[(ph->id + 1)
+		p_eat(ph, ph->data->forks[ph->id], ph->data->forks[(ph->id + 1)
 			% ph->data->num_philos]);
 		// if (ph->is_die == 1)
 		//  	return (ft_exit(ph->data));
-		p_sleep(ph);
+//		if (ph->think == 0)
+		p_think(ph);
 	}
 	return ((void *)0);
 }
-
-// void	status_controller(t_philo *p, size_t eat, size_t sleep, size_t think)
-// {
-// 	if (p->data->print_act[p->id]->eat != eat)
-// 	{
-// 		print_status(p, EAT, VIOLET_);
-// 		p->data->print_act[p->id]->eat = eat;
-// 	}
-// 	if (p->data->print_act[p->id]->sleep != sleep)
-// 	{
-// 		print_status(p, SLEEP, CYAN_);
-// 		p->data->print_act[p->id]->sleep = sleep;
-// 	}
-// 	// if (p->data->print_act->think != think)
-// 	// {
-// 	// 	print_status(p, THINK, RESET_);
-// 	// 	p->data->print_act->think = think;
-// 	// }
-// }
-
+¡
 void	*exit_checker(void *data)
 {
 	t_data		*d;
@@ -98,7 +80,7 @@ void	*exit_checker(void *data)
 	print_status(d->philos[i]->id, d, DIE, RED_);
 	ft_exit(d);
 	return ((void *)0);
-}
+}                                                               ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 
 int	main(int argc, char *argv[])
 {

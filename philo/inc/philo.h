@@ -102,6 +102,7 @@ int			init_philos(t_data *data);
 void		*ft_exit(t_data *data);
 
 void		p_sleep(t_philo *ph);
-void		p_eat(t_data *d, int id, pthread_mutex_t *fork1, pthread_mutex_t *fork2);
+void		p_eat(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2);
+void		p_think(t_philo *ph);
 
 #endif
