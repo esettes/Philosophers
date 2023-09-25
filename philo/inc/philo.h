@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/21 23:30:20 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/25 22:30:30 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int			init_philos(t_data *data);
 void		*ft_exit(t_data *data);
 
 void		p_sleep(t_philo *ph);
-void		p_eat(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2);
+void		p_eat(t_philo *ph);
 void		p_think(t_philo *ph);
 
 #endif

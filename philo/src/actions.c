@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 21:16:58 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/21 23:31:48 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/25 22:33:18 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ void	p_sleep(t_philo *ph)
 	//}
 }
 
-void	p_eat(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2)
+void	p_eat(t_philo *ph)//, pthread_mutex_t *fork1, pthread_mutex_t *fork2)
 {
 	
 	while (1)
 	{
-		if (pthread_mutex_lock(fork1) == 0)
+		if (pthread_mutex_lock(ph->data->forks[ph->id]) == 0)
 		{
 			ph->r_fork = 1;
 			print_status(ph->id, ph->data, " has taken a fork", YELLOW_);
 		}
-		if (pthread_mutex_lock(fork2) == 0)
+		if (pthread_mutex_lock(ph->data->forks[(ph->id + 1) % ph->data->num_philos]) == 0)
 		{
 			ph->l_fork = 1;
 			print_status(ph->id, ph->data, " has taken a fork", YELLOW_);
@@ -60,8 +60,8 @@ void	p_eat(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2)
 			ph->eat = 1;
 			print_status(ph->id, ph->data, EAT, VIOLET_);
 			f_usleep(ph->data->t_to_eat);
-			pthread_mutex_unlock(fork1);
-			pthread_mutex_unlock(fork2);
+			pthread_mutex_unlock(ph->data->forks[ph->id]);
+			pthread_mutex_unlock(ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
 			ph->r_fork = 0;
 			ph->l_fork = 0;
 			ph->times_eaten++;

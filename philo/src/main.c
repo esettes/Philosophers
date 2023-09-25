@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/25 22:23:55 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/25 22:30:46 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	*work_philo(void *philo)
 
 	while (ph->is_die == 0)
 	{
-		p_eat(ph, ph->data->forks[ph->id], ph->data->forks[(ph->id + 1)
-			% ph->data->num_philos]);
+		p_eat(ph);
 		// if (ph->is_die == 1)
 		//  	return (ft_exit(ph->data));
 //		if (ph->think == 0)
