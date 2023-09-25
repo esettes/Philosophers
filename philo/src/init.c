@@ -78,6 +78,8 @@ static int	set_philo(t_philo *philo, int id, t_data **data)
 	philo->sleep = 0;
 	philo->think = 0;
 	philo->is_die = 0;
+	philo->r_fork = 0;
+	philo->l_fork = 0;
 	philo->tid = malloc(sizeof(pthread_t));
 	if (!philo->tid)
 	{

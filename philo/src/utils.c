@@ -38,9 +38,9 @@ void	print_status(int id, t_data *data, char *act, char *col)
 	p_id = ft_itoa(id);
 	time_ = ft_itoa(get_time() - data->start_time);// - t);
 	ft_putstrc_fd(col, time_, 1);
-	ft_putstrc_fd(col, "ms [", 1);
+	ft_putstrc_fd(col, " ", 1);
 	ft_putstrc_fd(col, p_id, 1);
-	ft_putstrc_fd(col, "] ", 1);
+	ft_putstrc_fd(col, " ", 1);
 	ft_putendlc_fd(col, act, 1);
 	if (time_)
 		free(time_);
