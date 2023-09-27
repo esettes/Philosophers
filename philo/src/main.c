@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/25 22:30:46 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:22:35 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ void	*work_philo(void *philo)
 	return ((void *)0);
 }
 
+static int	all_philos_eats_many_times(t_philo *p, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		if (p[i].times_eaten < p[i].many_times_to_eat)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	*exit_checker(void *data)
 {
 	t_data		*d;
@@ -46,26 +60,31 @@ void	*exit_checker(void *data)
 		
 		while (i < d->num_philos)
 		{
+			//curr_time = get_time() - d->start_time;
 			//status_controller(d->philos[i], d->philos[i]->eat, d->philos[i]->sleep, d->philos[i]->think);
-			if (d->t_to_die < d->t_to_eat)
-			{
-				pthread_mutex_unlock(d->forks[d->philos[i]->id]);
-				pthread_mutex_unlock(d->forks[(d->philos[i]->id + 1)
-					% d->num_philos]);
-				d->philos[i]->is_die = 1;
-				break ;
-			}
-			// check if all philos eat n_times !!!!!!!!!! ---------------
-			if (d->philos[i]->times_eaten >= d->many_times_to_eat)
-			{
-				d->philos[i]->is_die = 1;
-				break ;
-			}
-			curr_time = get_time() - d->start_time;
-			pthread_mutex_lock(d->mut_eat);
-			aux = d->philos[i]->start_eating;
-			pthread_mutex_unlock(d->mut_eat);
-			if ((curr_time) > (aux + d->t_to_die))
+			//if (d->philos[i]->eat == 1)
+			//{
+				if (d->t_to_die < d->t_to_eat)
+				{
+					pthread_mutex_unlock(d->forks[d->philos[i]->id]);
+					pthread_mutex_unlock(d->forks[(d->philos[i]->id + 1)
+						% d->num_philos]);
+					d->philos[i]->is_die = 1;
+					break ;
+				}
+				// check if all philos eat n_times !!!!!!!!!! ---------------
+				//if (d->philos[i]->times_eaten >= d->many_times_to_eat)
+				if (all_philos_eats_many_times(*d->philos, d->num_philos) == 1)
+				{
+					d->philos[i]->is_die = 1;
+					break ;
+				}
+				curr_time = get_time() - d->start_time;
+				pthread_mutex_lock(d->mut_eat);
+				aux = d->philos[i]->start_eating;
+				pthread_mutex_unlock(d->mut_eat);
+			//}
+			if ((curr_time) > (d->philos[i]->start_eating + d->t_to_die))
 			{
 				print_status(d->philos[i]->id, d, "died for many time for last eat", RED_);
 				d->philos[i]->is_die = 1;
