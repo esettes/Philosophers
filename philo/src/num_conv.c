@@ -6,18 +6,11 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 21:24:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/20 20:17:39 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:56:55 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static size_t	ft_is_neg(int n)
-{
-	if (n < 0)
-		return (1);
-	return (0);
-}
 
 static size_t	count_dec(u_int64_t n)
 {
@@ -52,8 +45,6 @@ char	*ft_itoa(u_int64_t n)
 	}
 	a[count] = long_n % 10 + '0';
 	a[aux + 1] = '\0';
-	// if (ft_is_neg(n) == 1)
-	// 	a[0] = '-';
 	return (a);
 }
 
