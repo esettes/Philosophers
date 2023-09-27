@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/27 21:44:47 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/27 22:02:57 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
 	(*data)->forks = malloc(sizeof(pthread_mutex_t *) * ((*data)->num_philos + 1));
 	(*data)->mut_write = malloc(sizeof(pthread_mutex_t));
 	(*data)->mut_eat = malloc(sizeof(pthread_mutex_t));
+	(*data)->controller = malloc(sizeof(pthread_t));
 	if (!(*data)->forks || !(*data)->mut_write || !(*data)->mut_eat)
 	{
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
