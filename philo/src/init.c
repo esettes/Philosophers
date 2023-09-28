@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/27 22:02:57 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/28 22:06:06 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,3 +97,4 @@ int	init_philos(t_data *data)
 	}
 	return (EXIT_SUCCESS);
 }
+
