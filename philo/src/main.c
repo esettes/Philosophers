@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/21 23:32:17 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:46:25 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,28 @@ void	*work_philo(void *philo)
 
 	while (ph->is_die == 0)
 	{
-		p_eat(ph, ph->data->forks[ph->id], ph->data->forks[(ph->id + 1)
-			% ph->data->num_philos]);
-		// if (ph->is_die == 1)
-		//  	return (ft_exit(ph->data));
-//		if (ph->think == 0)
+		p_eat(ph);
 		p_think(ph);
 	}
 	return ((void *)0);
 }
-¡
+
+static int	all_philos_eats_many_times(t_philo *p, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		if (p[i].times_eaten >= p[i].data->many_times_to_eat)
+			pthread_detach(*p[i].tid);
+		else
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	*exit_checker(void *data)
 {
 	t_data		*d;
@@ -38,16 +50,13 @@ void	*exit_checker(void *data)
 	u_int64_t	curr_time;
 	u_int64_t	aux;
 
-	
 	d = (t_data *)data;
-	//f_usleep(10);
 	while (1)
 	{
 		i = 0;
 		
 		while (i < d->num_philos)
 		{
-			//status_controller(d->philos[i], d->philos[i]->eat, d->philos[i]->sleep, d->philos[i]->think);
 			if (d->t_to_die < d->t_to_eat)
 			{
 				pthread_mutex_unlock(d->forks[d->philos[i]->id]);
@@ -56,8 +65,7 @@ void	*exit_checker(void *data)
 				d->philos[i]->is_die = 1;
 				break ;
 			}
-			// check if all philos eat n_times !!!!!!!!!! ---------------
-			if (d->philos[i]->times_eaten >= d->many_times_to_eat)
+			if (all_philos_eats_many_times(*d->philos, d->num_philos) == 1)
 			{
 				d->philos[i]->is_die = 1;
 				break ;
@@ -66,7 +74,7 @@ void	*exit_checker(void *data)
 			pthread_mutex_lock(d->mut_eat);
 			aux = d->philos[i]->start_eating;
 			pthread_mutex_unlock(d->mut_eat);
-			if ((curr_time) > (aux + d->t_to_die))
+			if ((curr_time) > (d->philos[i]->start_eating + d->t_to_die))
 			{
 				print_status(d->philos[i]->id, d, "died for many time for last eat", RED_);
 				d->philos[i]->is_die = 1;
@@ -103,19 +111,11 @@ int	main(int argc, char *argv[])
 	while (i <= data->num_philos)
 	{
 		pthread_mutex_init(data->forks[i], NULL);
-		
 		i++;
 	}
-	
 	pthread_mutex_init(data->mut_write, NULL);
-
-
 	pthread_create(&data->controller, NULL, exit_checker, (void *)data);
-
 	for (int i = 0; i < data->num_philos ; i++)
 		pthread_create(data->philos[i]->tid, NULL, work_philo, (void *)data->philos[i]);
-
-	
-
 	ft_exit(data);
 }
