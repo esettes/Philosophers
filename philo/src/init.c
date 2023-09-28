@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/28 22:06:06 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/28 22:15:33 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
 	}
-	(*data)->forks[(*data)->num_philos] = NULL;
+	/*(*data)->forks[(*data)->num_philos] = NULL;
 	while (i <= (*data)->num_philos)
 	{
 		(*data)->forks[i] = malloc(sizeof(pthread_mutex_t));
@@ -44,7 +44,7 @@ int	init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
 			return (EXIT_FAILURE);
 		}
 		i++;
-	}
+	}*/
 	(*data)->t_to_die = t_die;
 	(*data)->t_to_eat = t_eat;
 	(*data)->t_to_sleep = t_sleep;
