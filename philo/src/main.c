@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/27 21:46:25 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/28 22:06:04 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,3 +119,4 @@ int	main(int argc, char *argv[])
 		pthread_create(data->philos[i]->tid, NULL, work_philo, (void *)data->philos[i]);
 	ft_exit(data);
 }
+

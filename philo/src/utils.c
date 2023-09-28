@@ -72,3 +72,4 @@ void	*ft_exit(t_data *data)
 	free(data);
 	exit (EXIT_SUCCESS);
 }
+
