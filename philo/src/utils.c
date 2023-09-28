@@ -65,10 +65,20 @@ void	*ft_exit(t_data *data)
 			pthread_mutex_destroy(&data->forks[i]);
 	}
 	pthread_mutex_destroy(data->mut_write);
+	pthread_mutex_destroy(data->mut_eat);
 	if (data->forks)
 		free (data->forks);
 	if (data->mut_write)
 		free(data->mut_write);
+	if (data->mut_eat)
+		free(data->mut_eat);
+	i = 0;
+	/*while (i <= data->num_philos)
+	{
+		free(data->philos[i]);
+		i++;
+	}*/
+	/*free(data->philos); */
 	free(data);
 	exit (EXIT_SUCCESS);
 }

@@ -114,6 +114,7 @@ int	main(int argc, char *argv[])
 		i++;
 	}
 	pthread_mutex_init(data->mut_write, NULL);
+	pthread_mutex_init(data->mut_eat, NULL);
 	pthread_create(&data->controller, NULL, exit_checker, (void *)data);
 	for (int i = 0; i < data->num_philos ; i++)
 		pthread_create(data->philos[i]->tid, NULL, work_philo, (void *)data->philos[i]);
