@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/28 22:06:04 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/09/28 22:15:56 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	*exit_checker(void *data)
 		{
 			if (d->t_to_die < d->t_to_eat)
 			{
-				pthread_mutex_unlock(d->forks[d->philos[i]->id]);
-				pthread_mutex_unlock(d->forks[(d->philos[i]->id + 1)
+				pthread_mutex_unlock(&d->forks[d->philos[i]->id]);
+				pthread_mutex_unlock(&d->forks[(d->philos[i]->id + 1)
 					% d->num_philos]);
 				d->philos[i]->is_die = 1;
 				break ;
@@ -110,7 +110,7 @@ int	main(int argc, char *argv[])
 	data->start_time = get_time();
 	while (i <= data->num_philos)
 	{
-		pthread_mutex_init(data->forks[i], NULL);
+		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
 	pthread_mutex_init(data->mut_write, NULL);
