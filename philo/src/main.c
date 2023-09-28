@@ -80,7 +80,7 @@ void	*exit_checker(void *data)
 	print_status(d->philos[i]->id, d, DIE, RED_);
 	ft_exit(d);
 	return ((void *)0);
-}                                                               ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+}
 
 int	main(int argc, char *argv[])
 {
