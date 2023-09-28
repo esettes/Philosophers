@@ -55,7 +55,7 @@ void	*ft_exit(t_data *data)
 	while (i < data->num_philos)
 	{
 		if (*data->philos[i]->tid)
-			pthread_detach(*data->philos[i]->tid);
+			pthread_join(*data->philos[i]->tid);
 		i++;
 	}
 	i = 0;
