@@ -3,6 +3,7 @@
 int	f_error(char *str, t_data *data)
 {
 	(void)data;
+	(void)str;
 	if (data)
 		ft_exit(data);
 	return (1);
@@ -55,7 +56,7 @@ void	*ft_exit(t_data *data)
 	while (i < data->num_philos)
 	{
 		if (*data->philos[i]->tid)
-			pthread_detach(*data->philos[i]->tid);
+			pthread_join(*data->philos[i]->tid, NULL);
 		i++;
 	}
 	i = 0;
@@ -80,6 +81,6 @@ void	*ft_exit(t_data *data)
 	}*/
 	/*free(data->philos); */
 	free(data);
-	exit (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 

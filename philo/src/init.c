@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/02 21:33:33 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/02 21:59:17 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
 		return (EXIT_FAILURE);
 	}
 	(*data)->num_philos = n_philos;
-	(*data)->forks = malloc(sizeof(pthread_mutex_t *) * ((*data)->num_philos));
+	(*data)->forks = malloc(sizeof(pthread_mutex_t *) * ((*data)->num_philos + 1));
 	(*data)->mut_write = malloc(sizeof(pthread_mutex_t));
 	(*data)->mut_eat = malloc(sizeof(pthread_mutex_t));
 	//(*data)->controller = malloc(sizeof(pthread_t));
@@ -34,7 +34,7 @@ int	init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
 	}
-	/*(*data)->forks[(*data)->num_philos] = NULL;
+	(*data)->forks[(*data)->num_philos] = NULL;
 	while (i <= (*data)->num_philos)
 	{
 		(*data)->forks[i] = malloc(sizeof(pthread_mutex_t));
@@ -44,7 +44,7 @@ int	init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
 			return (EXIT_FAILURE);
 		}
 		i++;
-	}*/
+	}
 	(*data)->t_to_die = t_die;
 	(*data)->t_to_eat = t_eat;
 	(*data)->t_to_sleep = t_sleep;
@@ -73,7 +73,6 @@ static int	set_philo(t_philo *philo, int id, t_data **data)
 int	init_philos(t_data *data)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	data->philos = malloc(sizeof(t_philo *) * (data->num_philos + 1));

@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/28 22:15:56 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/02 21:59:33 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	*work_philo(void *philo)
 {
 	t_philo		*ph;
-	u_int64_t	curr_time;
 
 	ph = (t_philo *)philo;
 
@@ -35,7 +34,10 @@ static int	all_philos_eats_many_times(t_philo *p, int n)
 	while (i < n)
 	{
 		if (p[i].times_eaten >= p[i].data->many_times_to_eat)
+		{
+			p[i].is_die = 1;
 			pthread_detach(*p[i].tid);
+		}
 		else
 			return (0);
 		i++;
