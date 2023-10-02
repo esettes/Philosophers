@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/02 22:15:24 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/03 00:09:36 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void		print_status(int id, t_data *data, char *act, char *col);
 int			init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
 						u_int64_t t_die, int many_times_to_eat);
 int			init_philos(t_data *data);
-void		*ft_exit(t_data *data);
+void		*ft_exit(t_data **data);
 
 void		p_sleep(t_philo *ph);
 void		p_eat(t_philo *ph);

@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/02 22:17:00 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/03 00:09:21 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
 		return (EXIT_FAILURE);
 	}
 	(*data)->num_philos = n_philos;
-	(*data)->forks = malloc(sizeof(pthread_mutex_t *) * ((*data)->num_philos));
+	(*data)->forks = malloc(sizeof(pthread_mutex_t) * ((*data)->num_philos));
 	(*data)->mut_write = malloc(sizeof(pthread_mutex_t));
 	(*data)->mut_eat = malloc(sizeof(pthread_mutex_t));
 	//(*data)->controller = malloc(sizeof(pthread_t));
@@ -52,7 +52,7 @@ int	init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
 	return (EXIT_SUCCESS);
 }
 
-static int	set_philo(t_philo *philo, int id, t_data **data)
+/*static int	set_philo(t_philo *philo, int id, t_data **data)
 {
 	philo->id = id;
 	philo->data = *data;
@@ -68,25 +68,38 @@ static int	set_philo(t_philo *philo, int id, t_data **data)
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
-}
+}*/
 
 int	init_philos(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->philos = malloc(sizeof(t_philo *) * (data->num_philos));
-	//data->philos[data->num_philos] = NULL;
-	while (i <= data->num_philos)
-	{
-		if (set_philo(&data->philos[i], i, &data) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		i++;
-	}
+	data->philos = malloc(sizeof(t_philo) * (data->num_philos));
 	if (!data->philos)
 	{
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
+	}
+	//data->philos[data->num_philos] = NULL;
+	while (i < data->num_philos)
+	{
+		// if (set_philo(&data->philos[i], i, &data) == EXIT_FAILURE)
+		// 	return (EXIT_FAILURE);
+		data->philos[i].id = i;
+		data->philos[i].data = data;
+		data->philos[i].times_eaten = 0;
+		data->philos[i].start_eating = 0;
+		data->philos[i].is_die = 0;
+		data->philos[i].r_fork = 0;
+		data->philos[i].l_fork = 0;
+		data->philos[i].tid = malloc(sizeof(pthread_t));
+		if (!data->philos[i].tid)
+		{
+			ft_putendlc_fd(RED_, ALLOC_ERR, 1);
+			return (EXIT_FAILURE);
+		}
+		i++;
 	}
 	/*i = data->num_philos - 1;
 	while (i >= 0)

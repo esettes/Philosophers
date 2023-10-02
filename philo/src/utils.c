@@ -5,7 +5,7 @@ int	f_error(char *str, t_data *data)
 	(void)data;
 	(void)str;
 	if (data)
-		ft_exit(data);
+		ft_exit(&data);
 	return (1);
 }
 
@@ -47,32 +47,37 @@ void	print_status(int id, t_data *data, char *act, char *col)
 	pthread_mutex_unlock(data->mut_write);
 }
 
-void	*ft_exit(t_data *data)
+void	ft_freedata(t_data *data)
+{
+	free (data);
+}
+
+void	*ft_exit(t_data **data)
 {
 	int	i;
 
 	i = 0;
-	pthread_join(data->controller, NULL);
-	while (i < data->num_philos)
+	pthread_join((*data)->controller, NULL);
+	while (i < (*data)->num_philos)
 	{
-		//if (*data->philos[i].tid)
-			pthread_join(*data->philos[i].tid, NULL);
+		if ((*data)->philos[i].tid)
+			pthread_detach(*(*data)->philos[i].tid);
 		i++;
 	}
 	i = 0;
-	while (++i < data->num_philos)
+	while (++i < (*data)->num_philos)
 	{
-		if (&data->forks[i])
-			pthread_mutex_destroy(&data->forks[i]);
+		if (&(*data)->forks[i])
+			pthread_mutex_destroy(&(*data)->forks[i]);
 	}
-	pthread_mutex_destroy(data->mut_write);
-	pthread_mutex_destroy(data->mut_eat);
-	if (data->forks)
-		free (data->forks);
-	if (data->mut_write)
-		free(data->mut_write);
-	if (data->mut_eat)
-		free(data->mut_eat);
+	pthread_mutex_destroy((*data)->mut_write);
+	pthread_mutex_destroy((*data)->mut_eat);
+	if ((*data)->forks)
+		free ((*data)->forks);
+	if ((*data)->mut_write)
+		free((*data)->mut_write);
+	if ((*data)->mut_eat)
+		free((*data)->mut_eat);
 	i = 0;
 	/*while (i <= data->num_philos)
 	{
@@ -80,7 +85,7 @@ void	*ft_exit(t_data *data)
 		i++;
 	}*/
 	/*free(data->philos); */
-	free(data);
+	ft_freedata(*data);
 	return (EXIT_SUCCESS);
 }
 
