@@ -28,7 +28,7 @@ int	init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
 	(*data)->forks = malloc(sizeof(pthread_mutex_t *) * ((*data)->num_philos));
 	(*data)->mut_write = malloc(sizeof(pthread_mutex_t));
 	(*data)->mut_eat = malloc(sizeof(pthread_mutex_t));
-	(*data)->controller = malloc(sizeof(pthread_t));
+	//(*data)->controller = malloc(sizeof(pthread_t));
 	if (!(*data)->forks || !(*data)->mut_write || !(*data)->mut_eat)
 	{
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);

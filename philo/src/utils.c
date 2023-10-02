@@ -62,7 +62,7 @@ void	*ft_exit(t_data *data)
 	while (++i < data->num_philos)
 	{
 		if (&data->forks[i])
-			pthread_mutex_destroy(&data->forks[i]);
+			pthread_mutex_destroy(data->forks[i]);
 	}
 	pthread_mutex_destroy(data->mut_write);
 	pthread_mutex_destroy(data->mut_eat);
