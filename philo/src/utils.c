@@ -55,15 +55,15 @@ void	*ft_exit(t_data *data)
 	pthread_join(data->controller, NULL);
 	while (i < data->num_philos)
 	{
-		if (*data->philos[i]->tid)
-			pthread_join(*data->philos[i]->tid, NULL);
+		//if (*data->philos[i].tid)
+			pthread_join(*data->philos[i].tid, NULL);
 		i++;
 	}
 	i = 0;
 	while (++i < data->num_philos)
 	{
 		if (&data->forks[i])
-			pthread_mutex_destroy(data->forks[i]);
+			pthread_mutex_destroy(&data->forks[i]);
 	}
 	pthread_mutex_destroy(data->mut_write);
 	pthread_mutex_destroy(data->mut_eat);

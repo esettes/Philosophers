@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/02 21:59:33 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/02 22:29:52 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	all_philos_eats_many_times(t_philo *p, int n)
 		if (p[i].times_eaten >= p[i].data->many_times_to_eat)
 		{
 			p[i].is_die = 1;
-			pthread_detach(*p[i].tid);
+			//pthread_detach(*p[i].tid);
 		}
 		else
 			return (0);
@@ -61,33 +61,33 @@ void	*exit_checker(void *data)
 		{
 			if (d->t_to_die < d->t_to_eat)
 			{
-				pthread_mutex_unlock(d->forks[d->philos[i]->id]);
-				pthread_mutex_unlock(d->forks[(d->philos[i]->id + 1)
+				pthread_mutex_unlock(&d->forks[d->philos[i].id]);
+				pthread_mutex_unlock(&d->forks[(d->philos[i].id + 1)
 					% d->num_philos]);
-				d->philos[i]->is_die = 1;
+				d->philos[i].is_die = 1;
 				break ;
 			}
-			if (all_philos_eats_many_times(*d->philos, d->num_philos) == 1)
+			if (all_philos_eats_many_times(d->philos, d->num_philos) == 1)
 			{
-				d->philos[i]->is_die = 1;
+				d->philos[i].is_die = 1;
 				break ;
 			}
 			curr_time = get_time() - d->start_time;
 			pthread_mutex_lock(d->mut_eat);
-			aux = d->philos[i]->start_eating;
+			aux = d->philos[i].start_eating;
 			pthread_mutex_unlock(d->mut_eat);
-			if ((curr_time) > (d->philos[i]->start_eating + d->t_to_die))
+			if ((curr_time) > (d->philos[i].start_eating + d->t_to_die))
 			{
-				print_status(d->philos[i]->id, d, "died for many time for last eat", RED_);
-				d->philos[i]->is_die = 1;
+				print_status(d->philos[i].id, d, "died for many time for last eat", RED_);
+				d->philos[i].is_die = 1;
 				break ;
 			}
 			i++;
 		}
-		if (d->philos[i]->is_die == 1)
+		if (d->philos[i].is_die == 1)
 			break ;
 	}
-	print_status(d->philos[i]->id, d, DIE, RED_);
+	print_status(d->philos[i].id, d, DIE, RED_);
 	ft_exit(d);
 	return ((void *)0);
 }
@@ -112,14 +112,14 @@ int	main(int argc, char *argv[])
 	data->start_time = get_time();
 	while (i <= data->num_philos)
 	{
-		pthread_mutex_init(data->forks[i], NULL);
+		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
 	pthread_mutex_init(data->mut_write, NULL);
 	pthread_mutex_init(data->mut_eat, NULL);
 	pthread_create(&data->controller, NULL, exit_checker, (void *)data);
 	for (int i = 0; i < data->num_philos ; i++)
-		pthread_create(data->philos[i]->tid, NULL, work_philo, (void *)data->philos[i]);
+		pthread_create(data->philos[i].tid, NULL, work_philo, &data->philos[i]);
 	ft_exit(data);
 }
 

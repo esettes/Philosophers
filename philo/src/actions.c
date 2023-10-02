@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 21:16:58 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/28 22:15:11 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/02 22:19:01 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	p_eat(t_philo *ph)
 {
 	while (1)
 	{
-		take_forks(ph, ph->data->forks[ph->id], ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
+		take_forks(ph, &ph->data->forks[ph->id], &ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
 		if (ph->r_fork == 1 && ph->l_fork == 1)
 		{
 			pthread_mutex_lock(ph->data->mut_eat);
@@ -90,8 +90,8 @@ void	p_eat(t_philo *ph)
 			pthread_mutex_unlock(ph->data->mut_eat);
 			print_status(ph->id, ph->data, EAT, VIOLET_);
 			f_usleep(ph->data->t_to_eat);
-			pthread_mutex_unlock(ph->data->forks[ph->id]);
-			pthread_mutex_unlock(ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
+			pthread_mutex_unlock(&ph->data->forks[ph->id]);
+			pthread_mutex_unlock(&ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
 			ph->r_fork = 0;
 			ph->l_fork = 0;
 			ph->times_eaten++;
