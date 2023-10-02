@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/03 00:16:30 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/03 00:31:40 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	all_philos_eats_many_times(t_philo *p, int n)
 		if (p[i].times_eaten >= p[i].data->many_times_to_eat)
 		{
 			p[i].is_die = 1;
-			pthread_detach(*p[i].tid);
+			//pthread_detach(*p[i].tid);
 		}
 		else
 			return (0);
@@ -91,7 +91,7 @@ void	*exit_checker(void *data)
 			break ;
 	}
 	print_status(d->philos[i].id, d, DIE, RED_);
-	ft_exit(&d);
+	//ft_exit(&d);
 	return ((void *)0);
 }
 
@@ -123,5 +123,7 @@ int	main(int argc, char *argv[])
 	pthread_create(&data->controller, NULL, exit_checker, (void *)data);
 	for (int i = 0; i < data->num_philos ; i++)
 		pthread_create(data->philos[i].tid, NULL, work_philo, &data->philos[i]);
+	pthread_join(data->controller, NULL);
 	ft_exit(&data);
+	f_usleep(500);
 }

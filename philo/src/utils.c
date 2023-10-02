@@ -57,7 +57,7 @@ void	*ft_exit(t_data **data)
 	int	i;
 
 	i = 0;
-	pthread_join((*data)->controller, NULL);
+	
 	while (i < (*data)->num_philos)
 	{
 		if ((*data)->philos[i].tid)
