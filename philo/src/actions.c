@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 21:16:58 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/02 22:19:01 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/04 21:25:03 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ static void	take_forks(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *for
 	}
 	else
 	{
-		if (pthread_mutex_lock(fork1) == 0)
-		{
-			ph->r_fork = 1;
-			print_status(ph->id, ph->data, FORK, YELLOW_);
-		}
-		if (pthread_mutex_lock(fork2) == 0 && ph->r_fork == 1)
+		if (pthread_mutex_lock(fork2) == 0)
 		{
 			ph->l_fork = 1;
+			print_status(ph->id, ph->data, FORK, YELLOW_);
+		}
+		if (pthread_mutex_lock(fork1) == 0 && ph->l_fork == 1)
+		{
+			ph->r_fork = 1;
 			print_status(ph->id, ph->data, FORK, YELLOW_);
 		}
 	}
@@ -83,6 +83,8 @@ void	p_eat(t_philo *ph)
 	while (1)
 	{
 		take_forks(ph, &ph->data->forks[ph->id], &ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
+		if (ph->data->end_routine == 1)
+			break ;
 		if (ph->r_fork == 1 && ph->l_fork == 1)
 		{
 			pthread_mutex_lock(ph->data->mut_eat);

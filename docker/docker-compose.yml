@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  philo:
+    container_name: p_container
+    image: philo:latest
+    volumes:
+      - ../philo:/home
+    stdin_open: true
+    tty: true
