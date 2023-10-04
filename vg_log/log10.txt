@@ -1,0 +1,91 @@
+==1585== Memcheck, a memory error detector
+==1585== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1585== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
+==1585== Command: ./philo 7 100 100 850 5
+==1585== Parent PID: 15
+==1585== 
+==1585== 
+==1585== Process terminating with default action of signal 2 (SIGINT)
+==1585==    at 0x492F19F: clock_nanosleep@@GLIBC_2.17 (clock_nanosleep.c:48)
+==1585==    by 0x4934982: nanosleep (nanosleep.c:27)
+==1585==    by 0x495F694: usleep (usleep.c:32)
+==1585==    by 0x10A333: f_usleep (utils.c:27)
+==1585==    by 0x1094CF: p_eat (actions.c:94)
+==1585==    by 0x109A19: work_philo (main.c:23)
+==1585==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==1585==    by 0x4968A2E: clone (clone.S:95)
+==1585== 
+==1585== HEAP SUMMARY:
+==1585==     in use at exit: 3,135 bytes in 22 blocks
+==1585==   total heap usage: 918 allocs, 896 frees, 6,247 bytes allocated
+==1585== 
+==1585== 2 bytes in 1 blocks are still reachable in loss record 1 of 10
+==1585==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==1585==    by 0x10A084: ft_itoa (num_conv.c:38)
+==1585==    by 0x10A37D: print_status (utils.c:38)
+==1585==    by 0x109A4A: work_philo (main.c:27)
+==1585==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==1585==    by 0x4968A2E: clone (clone.S:95)
+==1585== 
+==1585== 5 bytes in 1 blocks are still reachable in loss record 2 of 10
+==1585==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==1585==    by 0x10A084: ft_itoa (num_conv.c:38)
+==1585==    by 0x10A399: print_status (utils.c:39)
+==1585==    by 0x109A4A: work_philo (main.c:27)
+==1585==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==1585==    by 0x4968A2E: clone (clone.S:95)
+==1585== 
+==1585== 40 bytes in 1 blocks are still reachable in loss record 3 of 10
+==1585==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==1585==    by 0x109743: init_data (init.c:29)
+==1585==    by 0x109DCD: main (main.c:115)
+==1585== 
+==1585== 40 bytes in 1 blocks are still reachable in loss record 4 of 10
+==1585==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==1585==    by 0x109758: init_data (init.c:30)
+==1585==    by 0x109DCD: main (main.c:115)
+==1585== 
+==1585== 56 bytes in 7 blocks are still reachable in loss record 5 of 10
+==1585==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==1585==    by 0x109999: init_philos (init.c:105)
+==1585==    by 0x109DE9: main (main.c:118)
+==1585== 
+==1585== 88 bytes in 1 blocks are still reachable in loss record 6 of 10
+==1585==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==1585==    by 0x109CFE: main (main.c:108)
+==1585== 
+==1585== 272 bytes in 1 blocks are possibly lost in loss record 7 of 10
+==1585==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==1585==    by 0x4012D16: allocate_dtv (dl-tls.c:343)
+==1585==    by 0x4012D16: _dl_allocate_tls (dl-tls.c:589)
+==1585==    by 0x4853B81: allocate_stack (allocatestack.c:622)
+==1585==    by 0x4853B81: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
+==1585==    by 0x109E50: main (main.c:132)
+==1585== 
+==1585== 280 bytes in 1 blocks are still reachable in loss record 8 of 10
+==1585==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==1585==    by 0x10972E: init_data (init.c:28)
+==1585==    by 0x109DCD: main (main.c:115)
+==1585== 
+==1585== 448 bytes in 1 blocks are still reachable in loss record 9 of 10
+==1585==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==1585==    by 0x109885: init_philos (init.c:87)
+==1585==    by 0x109DE9: main (main.c:118)
+==1585== 
+==1585== 1,904 bytes in 7 blocks are possibly lost in loss record 10 of 10
+==1585==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==1585==    by 0x4012D16: allocate_dtv (dl-tls.c:343)
+==1585==    by 0x4012D16: _dl_allocate_tls (dl-tls.c:589)
+==1585==    by 0x4853B81: allocate_stack (allocatestack.c:622)
+==1585==    by 0x4853B81: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
+==1585==    by 0x109E9A: main (main.c:134)
+==1585== 
+==1585== LEAK SUMMARY:
+==1585==    definitely lost: 0 bytes in 0 blocks
+==1585==    indirectly lost: 0 bytes in 0 blocks
+==1585==      possibly lost: 2,176 bytes in 8 blocks
+==1585==    still reachable: 959 bytes in 14 blocks
+==1585==         suppressed: 0 bytes in 0 blocks
+==1585== 
+==1585== For lists of detected and suppressed errors, rerun with: -s
+==1585== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

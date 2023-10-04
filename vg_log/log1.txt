@@ -1,0 +1,1296 @@
+==152== Memcheck, a memory error detector
+==152== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==152== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
+==152== Command: ./philo 7 100 100 350 5
+==152== Parent PID: 15
+==152== 
+==152== Invalid write of size 8
+==152==    at 0x4854F04: pthread_mutex_init (pthread_mutex_init.c:89)
+==152==    by 0x109DA9: main (main.c:119)
+==152==  Address 0x4a44218 is 24 bytes after a block of size 288 in arena "client"
+==152== 
+==152== Invalid write of size 8
+==152==    at 0x4854F0E: pthread_mutex_init (pthread_mutex_init.c:89)
+==152==    by 0x109DA9: main (main.c:119)
+==152==  Address 0x4a441f8 is 0 bytes after a block of size 280 alloc'd
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid write of size 8
+==152==    at 0x4854F11: pthread_mutex_init (pthread_mutex_init.c:89)
+==152==    by 0x109DA9: main (main.c:119)
+==152==  Address 0x4a44208 is 16 bytes after a block of size 280 alloc'd
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid write of size 4
+==152==    at 0x4854F15: pthread_mutex_init (pthread_mutex_init.c:89)
+==152==    by 0x109DA9: main (main.c:119)
+==152==  Address 0x4a44208 is 16 bytes after a block of size 280 alloc'd
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x109EE7: main (main.c:138)
+==152==  Address 0x4a44068 is 40 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x109E98: main (main.c:140)
+==152==  Address 0x4a44048 is 8 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x109EBC: main (main.c:141)
+==152==  Address 0x4a44048 is 8 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4854FF0: pthread_mutex_destroy (pthread_mutex_destroy.c:32)
+==152==    by 0x109EDE: main (main.c:141)
+==152==  Address 0x4a44118 is 56 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4854FF7: pthread_mutex_destroy (pthread_mutex_destroy.c:34)
+==152==    by 0x109EDE: main (main.c:141)
+==152==  Address 0x4a44114 is 52 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Thread 4:
+==152== Invalid read of size 8
+==152==    at 0x1094D1: p_eat (actions.c:93)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44048 is 8 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856F95: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==152==    by 0x1094F7: p_eat (actions.c:93)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44118 is 56 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid write of size 4
+==152==    at 0x4856EA7: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
+==152==    by 0x1094F7: p_eat (actions.c:93)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44110 is 48 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856EC8: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
+==152==    by 0x1094F7: p_eat (actions.c:93)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44114 is 52 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856ECC: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
+==152==    by 0x1094F7: p_eat (actions.c:93)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44118 is 56 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856EB7: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
+==152==    by 0x1094F7: p_eat (actions.c:93)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44108 is 40 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Syscall param futex(futex) points to unaddressable byte(s)
+==152==    at 0x4856F09: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
+==152==    by 0x1094F7: p_eat (actions.c:93)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44108 is 40 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Thread 6:
+==152== Invalid read of size 8
+==152==    at 0x1094FF: p_eat (actions.c:94)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44048 is 8 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x109514: p_eat (actions.c:94)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44068 is 40 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856F95: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==152==    by 0x109539: p_eat (actions.c:94)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44190 is 176 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid write of size 4
+==152==    at 0x4856EA7: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
+==152==    by 0x109539: p_eat (actions.c:94)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44188 is 168 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856EC8: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
+==152==    by 0x109539: p_eat (actions.c:94)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a4418c is 172 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856ECC: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
+==152==    by 0x109539: p_eat (actions.c:94)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44190 is 176 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856EB7: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
+==152==    by 0x109539: p_eat (actions.c:94)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44180 is 160 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Syscall param futex(futex) points to unaddressable byte(s)
+==152==    at 0x4856F09: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
+==152==    by 0x109539: p_eat (actions.c:94)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44180 is 160 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Thread 8:
+==152== Invalid read of size 8
+==152==    at 0x10A267: print_status (utils.c:35)
+==152==    by 0x109255: p_sleep (actions.c:22)
+==152==    by 0x109571: p_eat (actions.c:98)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44050 is 16 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4855760: pthread_mutex_lock (pthread_mutex_lock.c:67)
+==152==    by 0x10A272: print_status (utils.c:35)
+==152==    by 0x109255: p_sleep (actions.c:22)
+==152==    by 0x109571: p_eat (actions.c:98)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x485503D: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==152==    by 0x10A272: print_status (utils.c:35)
+==152==    by 0x109255: p_sleep (actions.c:22)
+==152==    by 0x109571: p_eat (actions.c:98)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x10A28D: print_status (utils.c:37)
+==152==    by 0x109255: p_sleep (actions.c:22)
+==152==    by 0x109571: p_eat (actions.c:98)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44070 is 48 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Thread 7:
+==152== Invalid read of size 4
+==152==    at 0x4855848: pthread_mutex_lock (pthread_mutex_lock.c:80)
+==152==    by 0x1092A7: take_forks (actions.c:56)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44188 is 168 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x48557AB: pthread_mutex_lock (pthread_mutex_lock.c:161)
+==152==    by 0x1092A7: take_forks (actions.c:56)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a4418c is 172 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid write of size 4
+==152==    at 0x48557AF: pthread_mutex_lock (pthread_mutex_lock.c:159)
+==152==    by 0x1092A7: take_forks (actions.c:56)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44188 is 168 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x10A267: print_status (utils.c:35)
+==152==    by 0x1092DA: take_forks (actions.c:59)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44050 is 16 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4855760: pthread_mutex_lock (pthread_mutex_lock.c:67)
+==152==    by 0x10A272: print_status (utils.c:35)
+==152==    by 0x1092DA: take_forks (actions.c:59)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x485503D: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==152==    by 0x10A272: print_status (utils.c:35)
+==152==    by 0x1092DA: take_forks (actions.c:59)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x10A28D: print_status (utils.c:37)
+==152==    by 0x1092DA: take_forks (actions.c:59)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44070 is 48 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Thread 3:
+==152== Invalid read of size 4
+==152==    at 0x4855848: pthread_mutex_lock (pthread_mutex_lock.c:80)
+==152==    by 0x1092E6: take_forks (actions.c:61)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44110 is 48 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x48557AB: pthread_mutex_lock (pthread_mutex_lock.c:161)
+==152==    by 0x1092E6: take_forks (actions.c:61)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44114 is 52 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid write of size 4
+==152==    at 0x48557AF: pthread_mutex_lock (pthread_mutex_lock.c:159)
+==152==    by 0x1092E6: take_forks (actions.c:61)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44110 is 48 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x10A267: print_status (utils.c:35)
+==152==    by 0x10932F: take_forks (actions.c:64)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44050 is 16 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4855760: pthread_mutex_lock (pthread_mutex_lock.c:67)
+==152==    by 0x10A272: print_status (utils.c:35)
+==152==    by 0x10932F: take_forks (actions.c:64)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x485503D: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==152==    by 0x10A272: print_status (utils.c:35)
+==152==    by 0x10932F: take_forks (actions.c:64)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x10A28D: print_status (utils.c:37)
+==152==    by 0x10932F: take_forks (actions.c:64)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44070 is 48 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Thread 9:
+==152== Invalid read of size 8
+==152==    at 0x10A342: print_status (utils.c:47)
+==152==    by 0x1092DA: take_forks (actions.c:59)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44050 is 16 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856F95: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==152==    by 0x10A34D: print_status (utils.c:47)
+==152==    by 0x1092DA: take_forks (actions.c:59)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856ED0: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:45)
+==152==    by 0x10A34D: print_status (utils.c:47)
+==152==    by 0x1092DA: take_forks (actions.c:59)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4855760: pthread_mutex_lock (pthread_mutex_lock.c:67)
+==152==    by 0x1092E6: take_forks (actions.c:61)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a440f0 is 16 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x485578E: pthread_mutex_lock (pthread_mutex_lock.c:80)
+==152==    by 0x1092E6: take_forks (actions.c:61)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a440e0 is 0 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4855830: pthread_mutex_lock (pthread_mutex_lock.c:80)
+==152==    by 0x1092E6: take_forks (actions.c:61)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a440f0 is 16 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x485583E: pthread_mutex_lock (pthread_mutex_lock.c:80)
+==152==  Address 0x4a440e0 is 0 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x485CE0F: __lll_lock_wait (lowlevellock.c:48)
+==152==    by 0x4855842: pthread_mutex_lock (pthread_mutex_lock.c:80)
+==152==    by 0x1092E6: take_forks (actions.c:61)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a440e0 is 0 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Syscall param futex(futex) points to unaddressable byte(s)
+==152==    at 0x485CE2B: __lll_lock_wait (lowlevellock.c:52)
+==152==    by 0x4855842: pthread_mutex_lock (pthread_mutex_lock.c:80)
+==152==    by 0x1092E6: take_forks (actions.c:61)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a440e0 is 0 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Thread 8:
+==152== Invalid read of size 8
+==152==    at 0x10A342: print_status (utils.c:47)
+==152==    by 0x109255: p_sleep (actions.c:22)
+==152==    by 0x109571: p_eat (actions.c:98)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44050 is 16 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856F95: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==152==    by 0x10A34D: print_status (utils.c:47)
+==152==    by 0x109255: p_sleep (actions.c:22)
+==152==    by 0x109571: p_eat (actions.c:98)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856ED0: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:45)
+==152==    by 0x10A34D: print_status (utils.c:47)
+==152==    by 0x109255: p_sleep (actions.c:22)
+==152==    by 0x109571: p_eat (actions.c:98)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x10925D: p_sleep (actions.c:23)
+==152==    by 0x109571: p_eat (actions.c:98)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44088 is 72 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Thread 5:
+==152== Invalid read of size 4
+==152==    at 0x4855798: pthread_mutex_lock (pthread_mutex_lock.c:81)
+==152==    by 0x1092E6: take_forks (actions.c:61)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44160 is 128 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x10A342: print_status (utils.c:47)
+==152==    by 0x10932F: take_forks (actions.c:64)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44050 is 16 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856F95: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==152==    by 0x10A34D: print_status (utils.c:47)
+==152==    by 0x10932F: take_forks (actions.c:64)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856ED0: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:45)
+==152==    by 0x10A34D: print_status (utils.c:47)
+==152==    by 0x10932F: take_forks (actions.c:64)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x109468: p_eat (actions.c:88)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44058 is 24 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4855760: pthread_mutex_lock (pthread_mutex_lock.c:67)
+==152==    by 0x109473: p_eat (actions.c:88)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a442c0 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A466: ft_exit (utils.c:80)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x10975D: init_data (init.c:30)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x485503D: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==152==    by 0x109473: p_eat (actions.c:88)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a442c0 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A466: ft_exit (utils.c:80)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x10975D: init_data (init.c:30)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x109488: p_eat (actions.c:90)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44058 is 24 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856F95: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==152==    by 0x109493: p_eat (actions.c:90)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a442c0 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A466: ft_exit (utils.c:80)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x10975D: init_data (init.c:30)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856ED0: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:45)
+==152==    by 0x109493: p_eat (actions.c:90)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a442c0 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A466: ft_exit (utils.c:80)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x10975D: init_data (init.c:30)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x10A267: print_status (utils.c:35)
+==152==    by 0x1094B6: p_eat (actions.c:91)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44050 is 16 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4855760: pthread_mutex_lock (pthread_mutex_lock.c:67)
+==152==    by 0x10A272: print_status (utils.c:35)
+==152==    by 0x1094B6: p_eat (actions.c:91)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x485503D: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==152==    by 0x10A272: print_status (utils.c:35)
+==152==    by 0x1094B6: p_eat (actions.c:91)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x10A28D: print_status (utils.c:37)
+==152==    by 0x1094B6: p_eat (actions.c:91)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44070 is 48 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Thread 7:
+==152== Invalid read of size 8
+==152==    at 0x10A342: print_status (utils.c:47)
+==152==    by 0x1094B6: p_eat (actions.c:91)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44050 is 16 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856F95: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==152==    by 0x10A34D: print_status (utils.c:47)
+==152==    by 0x1094B6: p_eat (actions.c:91)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856ED0: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:45)
+==152==    by 0x10A34D: print_status (utils.c:47)
+==152==    by 0x1094B6: p_eat (actions.c:91)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x1094BE: p_eat (actions.c:92)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44080 is 64 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Thread 8:
+==152== Invalid read of size 8
+==152==    at 0x10A267: print_status (utils.c:35)
+==152==    by 0x1099D9: work_philo (main.c:25)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44050 is 16 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4855760: pthread_mutex_lock (pthread_mutex_lock.c:67)
+==152==    by 0x10A272: print_status (utils.c:35)
+==152==    by 0x1099D9: work_philo (main.c:25)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x485503D: __pthread_mutex_lock_full (pthread_mutex_lock.c:175)
+==152==    by 0x10A272: print_status (utils.c:35)
+==152==    by 0x1099D9: work_philo (main.c:25)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x10A28D: print_status (utils.c:37)
+==152==    by 0x1099D9: work_philo (main.c:25)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44070 is 48 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Thread 6:
+==152== Invalid read of size 8
+==152==    at 0x10A342: print_status (utils.c:47)
+==152==    by 0x1099D9: work_philo (main.c:25)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44050 is 16 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856F95: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==152==    by 0x10A34D: print_status (utils.c:47)
+==152==    by 0x1099D9: work_philo (main.c:25)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4856ED0: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:45)
+==152==    by 0x10A34D: print_status (utils.c:47)
+==152==    by 0x1099D9: work_philo (main.c:25)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44250 is 16 bytes inside a block of size 40 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A443: ft_exit (utils.c:78)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109748: init_data (init.c:29)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x1093D7: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44048 is 8 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x1093EC: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44068 is 40 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 8
+==152==    at 0x109412: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44048 is 8 bytes inside a block of size 88 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A368: ft_freedata (utils.c:52)
+==152==    by 0x109E8A: main (main.c:133)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x1096C1: init_data (init.c:21)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4855760: pthread_mutex_lock (pthread_mutex_lock.c:67)
+==152==    by 0x109340: take_forks (actions.c:69)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44190 is 176 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== Invalid read of size 4
+==152==    at 0x4855830: pthread_mutex_lock (pthread_mutex_lock.c:80)
+==152==    by 0x109340: take_forks (actions.c:69)
+==152==    by 0x109440: p_eat (actions.c:85)
+==152==    by 0x1099B6: work_philo (main.c:23)
+==152==    by 0x4852EA6: start_thread (pthread_create.c:477)
+==152==    by 0x4968A2E: clone (clone.S:95)
+==152==  Address 0x4a44190 is 176 bytes inside a block of size 280 free'd
+==152==    at 0x48399AB: free (vg_replace_malloc.c:538)
+==152==    by 0x10A420: ft_exit (utils.c:76)
+==152==    by 0x109E7E: main (main.c:132)
+==152==  Block was alloc'd at
+==152==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==152==    by 0x109733: init_data (init.c:28)
+==152==    by 0x109D42: main (main.c:111)
+==152== 
+==152== 
+==152== xtree memory report: /home/xtmemory.kcg.152
+==152== HEAP SUMMARY:
+==152==     in use at exit: 2,408 bytes in 15 blocks
+==152==   total heap usage: 72 allocs, 57 frees, 3,284 bytes allocated
+==152== 
+==152== xtree leak report: /home/xtleak.kcg.152
+==152== LEAK SUMMARY:
+==152==    definitely lost: 0 bytes in 0 blocks
+==152==    indirectly lost: 0 bytes in 0 blocks
+==152==      possibly lost: 1,904 bytes in 7 blocks
+==152==    still reachable: 504 bytes in 8 blocks
+==152==         suppressed: 0 bytes in 0 blocks
+==152== 
+==152== For lists of detected and suppressed errors, rerun with: -s
+==152== ERROR SUMMARY: 269 errors from 86 contexts (suppressed: 0 from 0)

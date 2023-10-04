@@ -1,0 +1,97 @@
+# callgrind format
+version: 1
+creator: xtree-1
+pid: 152
+cmd: ./philo 7 100 100 350 5
+
+positions: line
+event: RB : Reachable Bytes
+event: PB : Possibly lost Bytes
+event: IB : Indirectly lost Bytes
+event: DB : Definitely lost Bytes (direct plus indirect)
+event: DIB : Definitely Indirectly lost Bytes (subset of DB)
+event: RBk : reachable Blocks
+event: PBk : Possibly lost Blocks
+event: IBk : Indirectly lost Blocks
+event: DBk : Definitely lost Blocks
+event: iRB : increase Reachable Bytes
+event: iPB : increase Possibly lost Bytes
+event: iIB : increase Indirectly lost Bytes
+event: iDB : increase Definitely lost Bytes
+event: iDIB : increase Definitely Indirectly lost Bytes
+event: iRBk : increase reachable Blocks
+event: iPBk : increase Possibly lost Blocks
+event: iIBk : increase Indirectly lost Blocks
+event: iDBk : increase Definitely lost Blocks
+event: dRB : decrease Reachable Bytes
+event: dPB : decrease Possibly lost Bytes
+event: dIB : decrease Indirectly lost Bytes
+event: dDB : decrease Definitely lost Bytes
+event: dDIB : decrease Definitely Indirectly lost Bytes
+event: dRBk : decrease reachable Blocks
+event: dPBk : decrease Possibly lost Blocks
+event: dIBk : decrease Indirectly lost Blocks
+event: dDBk : decrease Definitely lost Blocks
+events: RB  PB  IB  DB  DIB  RBk  PBk  IBk  DBk  iRB  iPB  iIB  iDB  iDIB  iRBk  iPBk  iIBk  iDBk  dRB  dPB  dIB  dDB  dDIB  dRBk  dPBk  dIBk  dDBk 
+fl=(1) /home/src/main.c
+fn=(1) main
+114
+cfi=(2) /home/src/init.c
+cfn=(2) init_philos
+calls=0 96
+114 56 0 0 0 0 7 0 0 0 56 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 0 0
+fl=(2)
+fn=(2)
+96
+cfi=(3) ./coregrind/m_replacemalloc/vg_replace_malloc.c
+cfn=(3) malloc
+calls=0 307
+96 56 0 0 0 0 7 0 0 0 56 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 0 0
+fl=(3)
+fn=(3)
+307 56 0 0 0 0 7 0 0 0 56 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 0 0
+
+fl=(1)
+fn=(1)
+114
+cfi=(2)
+cfn=(2)
+calls=0 78
+114 448 0 0 0 0 1 0 0 0 448 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0
+fl=(2)
+fn=(2)
+78
+cfi=(3)
+cfn=(3)
+calls=0 307
+78 448 0 0 0 0 1 0 0 0 448 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0
+fl=(3)
+fn=(3)
+307 448 0 0 0 0 1 0 0 0 448 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0
+
+fl=(1)
+fn=(1)
+130
+cfi=(4) ./nptl/allocatestack.c
+cfn=(4) pthread_create@@GLIBC_2.2.5
+calls=0 622
+130 0 1904 0 0 0 0 7 0 0 0 1904 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 0
+fl=(4)
+fn=(4)
+622
+cfi=(5) ./elf/../elf/dl-tls.c
+cfn=(5) _dl_allocate_tls
+calls=0 343
+622 0 1904 0 0 0 0 7 0 0 0 1904 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 0
+fl=(5)
+fn=(5)
+343
+cfi=(3)
+cfn=(6) calloc
+calls=0 760
+343 0 1904 0 0 0 0 7 0 0 0 1904 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 0
+fl=(3)
+fn=(6)
+760 0 1904 0 0 0 0 7 0 0 0 1904 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 0
+
+totals: 504 1904 0 0 0 8 7 0 0 504 1904 0 0 0 8 7 0 0 0 0 0 0 0 0 0 0 0

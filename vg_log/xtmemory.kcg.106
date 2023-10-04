@@ -1,0 +1,15 @@
+# callgrind format
+version: 1
+creator: xtree-1
+pid: 106
+cmd: ./philo 7 100 100 350 5
+
+positions: line
+event: curB : currently allocated Bytes
+event: curBk : currently allocated Blocks
+event: totB : total allocated Bytes
+event: totBk : total allocated Blocks
+event: totFdB : total Freed Bytes
+event: totFdBk : total Freed Blocks
+events: curB  curBk  totB  totBk  totFdB  totFdBk 
+totals: (null)
