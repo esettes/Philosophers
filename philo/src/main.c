@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/09 23:22:46 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/10 00:15:50 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*work_philo(void *philo)
 	while (ph->is_die == 0 && ph->data->end_routine == 0)
 	{
 		p_eat(ph);
-		if (ph->is_die == 1 || ph->data->end_routine == 1)
+		if (ph->data->end_routine == 1)
 			break ;
 		//p_think(ph);
 		print_status(ph->id, ph->data, THINK, RESET_);
@@ -29,10 +29,48 @@ void	*work_philo(void *philo)
 	return ((void *)0);
 }
 
-static int	all_philos_eats_many_times(pthread_mutex_t *mut, t_philo **p, int n, int start)
+// static int	all_philos_eats_many_times(pthread_mutex_t *mut, t_philo **p, int n, int start)
+// {
+// //	int	i;
+// 	size_t	eats;
+
+// 	//i = 0;
+// 	eats = 0;
+// 	while (start < n)
+// 	{
+// 		//if (p[i]->is_die == 0)
+// 		//{
+// 			pthread_mutex_lock(mut);
+// 			//eats = p[i]->times_eaten;
+// 			if (p == NULL)
+// 			{
+// 				ft_putendlc_fd(GREEN_, "Error: all_philos_eats_many_times", 1);
+// 			}
+// 			t_philo *aux = p[start];
+// 			printf("aux->times_eaten: %zu\n", aux->times_eaten);
+// 			eats = aux->times_eaten;
+// 			printf("start: %d\n", start);
+// 			printf("p: %p\n", p[start]);
+// 			printf("aux: %p\n", aux);
+// 			printf("eats: %zu\n", eats);
+// 			pthread_mutex_unlock(mut);
+// 			if (eats >= p[start]->data->many_times_to_eat)
+// 			{
+// 				p[start]->is_die = 1;
+// 			}
+// 			else
+// 				return (0);
+// 		//}
+// 		start++;
+// 	}
+	
+// 	return (1);
+// }
+
+static int	all_philos_eats_many_times(pthread_mutex_t *mut, t_philo *p, int n, int start)
 {
 //	int	i;
-	size_t	eats;
+	u_int64_t	eats;
 
 	//i = 0;
 	eats = 0;
@@ -46,17 +84,12 @@ static int	all_philos_eats_many_times(pthread_mutex_t *mut, t_philo **p, int n, 
 			{
 				ft_putendlc_fd(GREEN_, "Error: all_philos_eats_many_times", 1);
 			}
-			t_philo *aux = p[start];
-			printf("aux->times_eaten: %zu\n", aux->times_eaten);
-			eats = aux->times_eaten;
-			printf("start: %d\n", start);
-			printf("p: %p\n", p[start]);
-			printf("aux: %p\n", aux);
-			printf("eats: %zu\n", eats);
+			t_philo aux = p[start];
+			eats = aux.times_eaten;
 			pthread_mutex_unlock(mut);
-			if (eats >= p[start]->data->many_times_to_eat)
+			if (eats >= p[start].data->many_times_to_eat)
 			{
-				p[start]->is_die = 1;
+				p[start].is_die = 1;
 			}
 			else
 				return (0);
@@ -66,6 +99,7 @@ static int	all_philos_eats_many_times(pthread_mutex_t *mut, t_philo **p, int n, 
 	
 	return (1);
 }
+
 
 void	*exit_checker(void *data)
 {
@@ -90,7 +124,7 @@ void	*exit_checker(void *data)
 				d->end_routine = 1;
 				break ;
 			}
-			if (all_philos_eats_many_times(d->mut_write ,&d->philos, d->num_philos,  i) == 1)
+			if (all_philos_eats_many_times(d->mut_write ,d->philos, d->num_philos,  i) == 1)
 			{
 				d->end_routine = 1;
 				break ;
@@ -159,7 +193,7 @@ int	main(int argc, char *argv[])
 	while (i < data->num_philos)
 	{
 		if (data->philos[i].tid)
-			pthread_detach(*data->philos[i].tid);
+			pthread_join(*data->philos[i].tid, NULL);
 		i++;
 	}
 	pthread_join(data->controller, NULL);
@@ -176,7 +210,8 @@ int	main(int argc, char *argv[])
 	{
 		//if (&data->forks[i])
 			pthread_mutex_destroy(&data->forks[i]);
-			free(&data->forks[i]);
+			//free(&data->forks[i]);
+			free(data->philos[i].tid);
 		i++;
 	}
 	
