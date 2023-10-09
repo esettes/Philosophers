@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/10 00:15:50 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/10 00:27:25 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,20 @@
 void	*work_philo(void *philo)
 {
 	t_philo		*ph;
+	size_t		end;
+	size_t		die;
 
 	ph = (t_philo *)philo;
-
-	while (ph->is_die == 0 && ph->data->end_routine == 0)
+	end = 0;
+	die = 0;
+	while (die == 0 && end == 0)
 	{
+		pthread_mutex_lock(ph->data->mut_write);
+		end = ph->data->end_routine;
+		die = ph->is_die;
+		pthread_mutex_unlock(ph->data->mut_write);
 		p_eat(ph);
-		if (ph->data->end_routine == 1)
+		if (die == 1 || end == 1)
 			break ;
 		//p_think(ph);
 		print_status(ph->id, ph->data, THINK, RESET_);
@@ -71,25 +78,24 @@ static int	all_philos_eats_many_times(pthread_mutex_t *mut, t_philo *p, int n, i
 {
 //	int	i;
 	u_int64_t	eats;
+	size_t		die;
 
 	//i = 0;
 	eats = 0;
+	die = 0;
 	while (start < n)
 	{
 		//if (p[i]->is_die == 0)
 		//{
 			pthread_mutex_lock(mut);
 			//eats = p[i]->times_eaten;
-			if (p == NULL)
-			{
-				ft_putendlc_fd(GREEN_, "Error: all_philos_eats_many_times", 1);
-			}
-			t_philo aux = p[start];
-			eats = aux.times_eaten;
+			//t_philo aux = p[start];
+			eats = p[start].times_eaten;
+			die = p[start].is_die;
 			pthread_mutex_unlock(mut);
 			if (eats >= p[start].data->many_times_to_eat)
 			{
-				p[start].is_die = 1;
+				die = 1;
 			}
 			else
 				return (0);
@@ -199,12 +205,12 @@ int	main(int argc, char *argv[])
 	pthread_join(data->controller, NULL);
 	i = 0;
 
-	while (i < data->num_philos)
-	{
-		if (data->philos[i].is_die == 0)
-			i = 0;
-		i ++;
-	}
+	// while (i < data->num_philos)
+	// {
+	// 	if (data->philos[i].is_die == 0)
+	// 		i = 0;
+	// 	i ++;
+	// }
 	i = 0;
 	while (i < data->num_philos)
 	{
@@ -228,5 +234,5 @@ int	main(int argc, char *argv[])
 	
 
 	
-	f_usleep(500);
+	//f_usleep(500);
 }

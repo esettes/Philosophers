@@ -32,9 +32,13 @@ void	print_status(int id, t_data *data, char *act, char *col)
 {
 	char	*time_;
 	char	*p_id;
-	if (data->end_routine == 1)
-	 	return ;
 	pthread_mutex_lock(data->mut_write);
+	if (data->end_routine == 1)
+	{
+		pthread_mutex_unlock(data->mut_write);
+		return ;
+	}
+	
 	p_id = ft_itoa(id);
 	time_ = ft_itoa(get_time() - data->start_time);
 	ft_putstrc_fd(col, time_, 1);
