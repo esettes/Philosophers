@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:46:30 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/04 21:23:41 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/09 23:22:46 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,39 @@ void	*work_philo(void *philo)
 	return ((void *)0);
 }
 
-static int	all_philos_eats_many_times(t_philo **p, int n)
+static int	all_philos_eats_many_times(pthread_mutex_t *mut, t_philo **p, int n, int start)
 {
-	int	i;
+//	int	i;
+	size_t	eats;
 
-	i = 0;
-	while (i < n)
+	//i = 0;
+	eats = 0;
+	while (start < n)
 	{
-		if (p[i]->times_eaten >= p[i]->data->many_times_to_eat)
-		{
-			p[i]->is_die = 1;
-			//pthread_detach(*p[i].tid);
-		}
-		else
-			return (0);
-		i++;
+		//if (p[i]->is_die == 0)
+		//{
+			pthread_mutex_lock(mut);
+			//eats = p[i]->times_eaten;
+			if (p == NULL)
+			{
+				ft_putendlc_fd(GREEN_, "Error: all_philos_eats_many_times", 1);
+			}
+			t_philo *aux = p[start];
+			printf("aux->times_eaten: %zu\n", aux->times_eaten);
+			eats = aux->times_eaten;
+			printf("start: %d\n", start);
+			printf("p: %p\n", p[start]);
+			printf("aux: %p\n", aux);
+			printf("eats: %zu\n", eats);
+			pthread_mutex_unlock(mut);
+			if (eats >= p[start]->data->many_times_to_eat)
+			{
+				p[start]->is_die = 1;
+			}
+			else
+				return (0);
+		//}
+		start++;
 	}
 	
 	return (1);
@@ -72,7 +90,7 @@ void	*exit_checker(void *data)
 				d->end_routine = 1;
 				break ;
 			}
-			if (all_philos_eats_many_times(&d->philos, d->num_philos) == 1)
+			if (all_philos_eats_many_times(d->mut_write ,&d->philos, d->num_philos,  i) == 1)
 			{
 				d->end_routine = 1;
 				break ;
@@ -153,18 +171,20 @@ int	main(int argc, char *argv[])
 			i = 0;
 		i ++;
 	}
-	// i = 0;
-	// while (i < data->num_philos)
-	// {
-	// 	if (&data->forks[i])
-	// 		pthread_mutex_destroy(&data->forks[i]);
-	// 	i++;
-	// }
+	i = 0;
+	while (i < data->num_philos)
+	{
+		//if (&data->forks[i])
+			pthread_mutex_destroy(&data->forks[i]);
+			free(&data->forks[i]);
+		i++;
+	}
 	
 	
 	//ft_exit(&data);
 	pthread_mutex_destroy(data->mut_write);
 	pthread_mutex_destroy(data->mut_eat);
+	//free(data->controller);
 	free(data->forks);
 	free(data->mut_write);
 	free(data->mut_eat);
