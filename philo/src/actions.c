@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 21:16:58 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/10 21:18:17 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/10 22:48:32 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,44 +50,54 @@ static void	take_forks(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *for
 	// 		print_status(ph->id, ph->data, FORK, YELLOW_);
 	// 	}
 	// }
-	if (ph->id % 2 == 0)
+	
+	while (ph->l_fork == 0 || ph->r_fork == 0)
 	{
-		f_usleep(10);
-		if (pthread_mutex_lock(fork1) == 0)
+		if (ph->id % 2 == 0)
 		{
-			ph->r_fork = 1;
-			print_status(ph->id, ph->data, FORK, YELLOW_);
+			f_usleep(5);
+			if (pthread_mutex_lock(fork1) == 0)
+			{
+				ph->r_fork = 1;
+				print_status(ph->id, ph->data, FORK, YELLOW_);
+			}
+			if (pthread_mutex_lock(fork2) == 0 && ph->r_fork == 1)
+			{
+				ph->l_fork = 1;
+				print_status(ph->id, ph->data, FORK, YELLOW_);
+			}
 		}
-		if (pthread_mutex_lock(fork2) == 0 && ph->r_fork == 1)
+		else
 		{
-			ph->l_fork = 1;
-			print_status(ph->id, ph->data, FORK, YELLOW_);
+			if (pthread_mutex_lock(fork2) == 0)
+			{
+				ph->l_fork = 1;
+				print_status(ph->id, ph->data, FORK, YELLOW_);
+			}
+			if (pthread_mutex_lock(fork1) == 0 && ph->l_fork == 1)
+			{
+				ph->r_fork = 1;
+				print_status(ph->id, ph->data, FORK, YELLOW_);
+			}
 		}
 	}
-	else
-	{
-		if (pthread_mutex_lock(fork2) == 0)
-		{
-			ph->l_fork = 1;
-			print_status(ph->id, ph->data, FORK, YELLOW_);
-		}
-		if (pthread_mutex_lock(fork1) == 0 && ph->l_fork == 1)
-		{
-			ph->r_fork = 1;
-			print_status(ph->id, ph->data, FORK, YELLOW_);
-		}
-	}
+	
 }
 void	p_eat(t_philo *ph)
 {
 	size_t	end;
+	size_t	die;
 
 	end = 0;
-	while (end == 0)
+	die = 0;
+	while (end == 0 || die == 0)
 	{
 		pthread_mutex_lock(ph->data->mut_write);
 		end = ph->data->end_routine;
+		die = ph->is_die;
 		pthread_mutex_unlock(ph->data->mut_write);
+		if (die == 1 || end == 1)
+			break ;
 		//if (get_mutex_val(&ph->data->mut_write, ph->data->end_routine) == 1)
 		// if (end == 1)
 		// {

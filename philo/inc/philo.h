@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/10 21:29:29 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/10 22:32:45 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_data
 {
 	t_philo			*philos;
 	size_t			end_routine;
+	size_t			start;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*mut_write;
 	pthread_mutex_t	*mut_start;
