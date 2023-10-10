@@ -34,12 +34,12 @@ void	print_status(int id, t_data *data, char *act, char *col)
 	char	*p_id;
 	size_t	end;
 
-	pthread_mutex_lock(data->mut_write);
+	pthread_mutex_lock(&data->mut_end);
 	end = data->end_routine;
-	pthread_mutex_unlock(data->mut_write);
+	pthread_mutex_unlock(&data->mut_end);
 	if (end == 1)
 		return ;
-	pthread_mutex_lock(data->mut_write);
+	pthread_mutex_lock(&data->mut_write);
 	p_id = ft_itoa(id);
 	time_ = ft_itoa(get_time() - data->start_time);
 	ft_putstrc_fd(col, time_, 1);
@@ -49,7 +49,7 @@ void	print_status(int id, t_data *data, char *act, char *col)
 	free(p_id);
 	ft_putstrc_fd(col, " ", 1);
 	ft_putendlc_fd(col, act, 1);
-	pthread_mutex_unlock(data->mut_write);
+	pthread_mutex_unlock(&data->mut_write);
 }
 
 void	ft_freedata(t_data *data)
