@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/10 00:05:54 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:29:29 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_data
 	size_t			end_routine;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*mut_write;
-	pthread_mutex_t	*mut_eat;
+	pthread_mutex_t	*mut_start;
 	pthread_t		controller;
 	int				num_philos;
 	uint64_t		start_time;
@@ -88,5 +88,8 @@ void		p_eat(t_philo *ph);
 void		p_think(t_philo *ph);
 
 void		ft_freedata(t_data *data);
+
+uint64_t	get_mutex_val(pthread_mutex_t *mut, uint64_t val);
+void		set_mutex_val(pthread_mutex_t *mut, uint64_t *val, uint64_t new);
 
 #endif
