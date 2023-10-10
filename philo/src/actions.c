@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 21:16:58 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/10 23:55:54 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/11 00:11:25 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,7 @@ void	p_sleep(t_philo *ph)
 }
 static void	take_forks(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2)
 {
-	// if (ph->id % 2 == 0)
-	// {
-	// 	if (pthread_mutex_lock(fork2) == 0)
-	// 	{
-	// 		ph->l_fork = 1;
-	// 		print_status(ph->id, ph->data, FORK, YELLOW_);
-	// 	}
-	// 	if (pthread_mutex_lock(fork1) == 0 && ph->l_fork == 1)
-	// 	{
-	// 		ph->r_fork = 1;
-	// 		print_status(ph->id, ph->data, FORK, YELLOW_);
-	// 	}
-	// }
-	// else
-	// {
-	// 	if (pthread_mutex_lock(fork1) == 0)
-	// 	{
-	// 		ph->r_fork = 1;
-	// 		print_status(ph->id, ph->data, FORK, YELLOW_);
-	// 	}
-	// 	if (pthread_mutex_lock(fork2) == 0 && ph->r_fork == 1)
-	// 	{
-	// 		ph->l_fork = 1;
-	// 		print_status(ph->id, ph->data, FORK, YELLOW_);
-	// 	}
-	// }
-	
+
 	// while (ph->l_fork == 0 || ph->r_fork == 0)
 	// {
 		if (ph->id % 2 == 0)
@@ -109,10 +83,10 @@ void	p_eat(t_philo *ph)
 		take_forks(ph, &ph->data->forks[ph->id], &ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
 		if (ph->r_fork == 1 && ph->l_fork == 1)
 		{
-			pthread_mutex_lock(&ph->data->mut_eat);
+			pthread_mutex_lock(&ph->mut);
 			ph->start_eating = get_time();
 			ph->times_eaten++;
-			pthread_mutex_unlock(&ph->data->mut_eat);
+			pthread_mutex_unlock(&ph->mut);
 			print_status(ph->id, ph->data, EAT, VIOLET_);
 			f_usleep(ph->data->t_to_eat);
 			pthread_mutex_unlock(&ph->data->forks[ph->id]);
