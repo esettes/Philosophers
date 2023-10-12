@@ -5,80 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 22:06:57 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/11 00:13:32 by iostancu         ###   ########.fr       */
+/*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
+/*   Updated: 2023/10/13 00:35:44 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
-		u_int64_t t_die, int many_times_to_eat)
+int	init_data(t_data **data, int philos, u_int64_t sleep, u_int64_t eat,
+		u_int64_t die, int times_to_eat)
 {
 	int	i;
 
 	i = 0;
-	//(*data) = malloc(sizeof(t_data));
+	(*data) = malloc(sizeof(t_data));
 	if (!*data)
 	{
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
 	}
-	(*data)->num_philos = n_philos;
+	(*data)->num_philos = philos;
 	(*data)->forks = malloc(sizeof(pthread_mutex_t) * ((*data)->num_philos));
-	//(*data)->mut_write = malloc(sizeof(pthread_mutex_t));
-	//(*data)->mut_start = malloc(sizeof(pthread_mutex_t));
-	//(*data)->controller = malloc(sizeof(pthread_t));
-	if (!(*data)->forks)// || !(*data)->mut_write || !(*data)->mut_start)
+	if (!(*data)->forks)
 	{
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
 	}
-	/*(*data)->forks[(*data)->num_philos] = NULL;
-	while (i <= (*data)->num_philos)
-	{
-		(*data)->forks[i] = malloc(sizeof(pthread_mutex_t));
-		if (!(*data)->forks[i])
-		{
-			ft_putendlc_fd(RED_, ALLOC_ERR, 1);
-			return (EXIT_FAILURE);
-		}
-		i++;
-	}*/
 	while (i < (*data)->num_philos)
 	{
 		if (pthread_mutex_init(&(*data)->forks[i], NULL) != 0)
 		{
-			ft_putendlc_fd(RED_, "Mutex init error", 1);
+			ft_putendlc_fd(RED_, "Forks init error", 1);
 			return (EXIT_FAILURE);
 		}
 		i++;
 	}
-	(*data)->end_routine = 0;
-	(*data)->t_to_die = t_die;
-	(*data)->t_to_eat = t_eat;
-	(*data)->t_to_sleep = t_sleep;
-	(*data)->many_times_to_eat = many_times_to_eat;
+	(*data)->t_to_die = die;
+	(*data)->t_to_eat = eat;
+	(*data)->t_to_sleep = sleep;
+	(*data)->many_times_to_eat = times_to_eat;
 	return (EXIT_SUCCESS);
 }
-
-/*static int	set_philo(t_philo *philo, int id, t_data **data)
-{
-	philo->id = id;
-	philo->data = *data;
-	philo->times_eaten = 0;
-	philo->start_eating = 0;
-	philo->is_die = 0;
-	philo->r_fork = 0;
-	philo->l_fork = 0;
-	philo->tid = malloc(sizeof(pthread_t));
-	if (!philo->tid)
-	{
-		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}*/
 
 int	init_philos(t_data *data)
 {
@@ -91,12 +58,9 @@ int	init_philos(t_data *data)
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
 	}
-	//data->philos[data->num_philos] = NULL;
 	while (i < data->num_philos)
 	{
-		// if (set_philo(&data->philos[i], i, &data) == EXIT_FAILURE)
-		// 	return (EXIT_FAILURE);
-		data->philos[i].id = i;
+		data->philos[i].id = i + 1;
 		data->philos[i].data = data;
 		data->philos[i].times_eaten = 0;
 		data->philos[i].start_eating = 0;
@@ -112,13 +76,17 @@ int	init_philos(t_data *data)
 		}
 		i++;
 	}
-	/*i = data->num_philos - 1;
-	while (i >= 0)
-	{
-		if (set_philo(data->philos[i], i, &data) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		i--;
-	}*/
 	return (EXIT_SUCCESS);
 }
 
+void	init_forks(t_data *data, pthread_mutex_t **forks)
+{
+	int	i;
+	
+	i = 0;
+	while (i < data->num_philos)
+	{
+		data->philos[i].r_fork = forks[i];
+		data->philos[i].l_fork = forks[(i + 1) % data->num_philos];
+	}
+}

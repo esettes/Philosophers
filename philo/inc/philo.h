@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/27 23:45:28 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/11 00:09:24 by iostancu         ###   ########.fr       */
+/*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
+/*   Updated: 2023/10/13 00:48:47 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,62 +37,56 @@
 
 struct	s_data;
 
-/**
- * eat --> sleep --> think
- */
 typedef struct s_philo
 {
-	struct s_data	*data;
-	pthread_t		*tid;
-	int				id;
-	u_int64_t		start_eating;
-	size_t			r_fork;
-	size_t			l_fork;
-	u_int64_t		times_eaten;
-	size_t			is_die;
-	pthread_mutex_t	mut;
+	struct s_data		*data;
+	pthread_t			*tid;
+	int					id;
+	pthread_mutex_t		*r_fork;
+	pthread_mutex_t		*l_fork;
+	uint64_t			times_eaten;
+	size_t				is_die;
+	uint64_t			start_eating;
+	pthread_mutex_t		mut;
 }				t_philo;
 
 typedef struct s_data
 {
 	t_philo			*philos;
-	size_t			end_routine;
 	pthread_mutex_t	*forks;
+	pthread_t		controller;
 	pthread_mutex_t	mut_write;
 	pthread_mutex_t	mut_start;
-	pthread_mutex_t	mut_eat;
-	pthread_mutex_t	mut_end;
-	pthread_t		controller;
 	int				num_philos;
 	uint64_t		start_time;
-	u_int64_t		t_to_die;
-	u_int64_t		t_to_eat;
-	u_int64_t		t_to_sleep;
-	u_int64_t		many_times_to_eat;
+	uint64_t		t_to_die;
+	uint64_t		t_to_eat;
+	uint64_t		t_to_sleep;
+	uint64_t		many_times_to_eat;
 }				t_data;
 
-void		ft_putendlc_fd(char *color, char *s, int fd);
+void		init_forks(t_data *data, pthread_mutex_t **forks);
+int			init_data(t_data **data, int philos, u_int64_t sleep, u_int64_t eat,
+					u_int64_t die, int times_to_eat);
+/**
+ * @brief Philo's id start with 1
+ * 
+ * @param data 
+ * @return int 0 if success, 1 if an error occurs wih allocation
+ */
+int			init_philos(t_data *data);
+
+void	p_eat(t_philo *ph);
+
+uint64_t	ft_atoi(const char *str);
+char		*ft_itoa(uint64_t n);
+
 void		ft_putstrc_fd(char *color, char *s, int fd);
-
-char		*ft_itoa(u_int64_t n);
-u_int64_t	ft_atoi(const char *str);
-
-u_int64_t	get_time(void);
-int			f_usleep(u_int64_t time);
+void		ft_putendlc_fd(char *color, char *s, int fd);
 void		print_status(int id, t_data *data, char *act, char *col);
 
-int			init_data(t_data **data, int n_philos, u_int64_t t_sleep, u_int64_t t_eat,
-						u_int64_t t_die, int many_times_to_eat);
-int			init_philos(t_data *data);
-void		*ft_exit(t_data **data);
-
-void		p_sleep(t_philo *ph);
-void		p_eat(t_philo *ph);
-void		p_think(t_philo *ph);
-
-void		ft_freedata(t_data *data);
-
-uint64_t	get_mutex_val(pthread_mutex_t *mut, uint64_t val);
-void		set_mutex_val(pthread_mutex_t *mut, uint64_t *val, uint64_t new);
+void		ft_exit(t_data **data);
+uint64_t	get_time(void);
+int			f_usleep(uint64_t time);
 
 #endif

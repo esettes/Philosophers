@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/06 21:24:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/27 21:56:55 by iostancu         ###   ########.fr       */
+/*   Created: 2023/10/12 22:19:59 by iostancu          #+#    #+#             */
+/*   Updated: 2023/10/13 00:06:06 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static size_t	count_dec(u_int64_t n)
+static size_t	count_dec(uint64_t n)
 {
 	size_t	count;
 
@@ -25,12 +25,12 @@ static size_t	count_dec(u_int64_t n)
 	return (count);
 }
 
-char	*ft_itoa(u_int64_t n)
+char	*ft_itoa(uint64_t n)
 {
 	char		*a;
 	size_t		count;
 	size_t		aux;
-	u_int64_t	long_n;
+	uint64_t	long_n;
 
 	long_n = n;
 	count = count_dec(n);
@@ -48,15 +48,17 @@ char	*ft_itoa(u_int64_t n)
 	return (a);
 }
 
-u_int64_t	ft_atoi(const char *str)
+uint64_t	ft_atoi(const char *str)
 {
 	int			i;
 	int			sign;
-	u_int64_t	res;
+	uint64_t	res;
 
 	i = 0;
 	sign = 1;
 	res = 0;
+	if (!str)
+		return (0);
 	while ((str[i] > 8 && str[i] < 14) || str[i] == ' ')
 		i++;
 	if (str[i] == '-')

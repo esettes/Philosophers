@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 22:08:34 by iostancu          #+#    #+#             */
-/*   Updated: 2023/09/27 21:56:36 by iostancu         ###   ########.fr       */
+/*   Created: 2023/10/12 22:20:25 by iostancu          #+#    #+#             */
+/*   Updated: 2023/10/13 00:38:32 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,28 @@ void	ft_putendlc_fd(char *color, char *s, int fd)
 		write (fd, s++, 1);
 	write (fd, "\n", 1);
 	color = "\x1b[0m";
+}
+
+void	print_status(int id, t_data *data, char *act, char *col)
+{
+	char	*time_;
+	char	*p_id;
+	//size_t	end;
+
+	//pthread_mutex_lock(&data->mut_end);
+	//end = data->end_routine;
+	//pthread_mutex_unlock(&data->mut_end);
+	//if (end == 1)
+	//	return ;
+	pthread_mutex_lock(&data->mut_write);
+	p_id = ft_itoa(id);
+	time_ = ft_itoa(get_time() - data->start_time);
+	ft_putstrc_fd(col, time_, 1);
+	free(time_);
+	ft_putstrc_fd(col, " ", 1);
+	ft_putstrc_fd(col, p_id, 1);
+	free(p_id);
+	ft_putstrc_fd(col, " ", 1);
+	ft_putendlc_fd(col, act, 1);
+	pthread_mutex_unlock(&data->mut_write);
 }
