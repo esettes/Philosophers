@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/13 00:48:47 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/13 01:01:22 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_data
 	pthread_t		controller;
 	pthread_mutex_t	mut_write;
 	pthread_mutex_t	mut_start;
+	pthread_mutex_t	mut;
+	size_t			end_routine;
 	int				num_philos;
 	uint64_t		start_time;
 	uint64_t		t_to_die;
@@ -76,7 +78,7 @@ int			init_data(t_data **data, int philos, u_int64_t sleep, u_int64_t eat,
  */
 int			init_philos(t_data *data);
 
-void	p_eat(t_philo *ph);
+void		p_eat(t_philo *ph);
 
 uint64_t	ft_atoi(const char *str);
 char		*ft_itoa(uint64_t n);

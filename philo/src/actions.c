@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/13 00:47:32 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/13 01:04:23 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ void	p_eat(t_philo *ph)
 		pthread_mutex_unlock(ph->r_fork);
 		pthread_mutex_unlock(ph->l_fork);
 	}
+	if (ph->data->end_routine == 1)
+		return ;
 	p_sleep(ph);
 }
