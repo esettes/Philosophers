@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:11:44 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/13 22:19:06 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/13 23:56:02 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,19 @@ void	*work_philo(void *philo)
 	pthread_mutex_unlock(&ph->data->mut_start);
 	while (end == 0 && die == 0)
 	{
-		pthread_mutex_lock(&ph->mut);
-		die = ph->is_die;
-		pthread_mutex_unlock(&ph->mut);
-		if (die == 1)
+		// pthread_mutex_lock(ph->mut);
+		// die = ph->is_die;
+		// pthread_mutex_unlock(ph->mut);
+		
+		if (is_philo_die(ph))
 			break ;
 		pthread_mutex_lock(&ph->data->mut);
 		end = ph->data->end_routine;
 		pthread_mutex_unlock(&ph->data->mut);
 		if (end == 1)
 			break ;
-		p_eat(ph);
+		if (p_eat(ph))
+			break ;
 		print_status(ph->id, ph->data, THINK, RESET_);
 	}
 	return ((void *)0);
@@ -43,21 +45,24 @@ void	*work_philo(void *philo)
 
 static int	all_philos_eats_many_times(t_philo *p, int n)
 {
-	u_int64_t	eats;
+	uint64_t	eats;
+	
 	int			i;
 
 	eats = 0;
 	i = 0;
 	while (i < n)
 	{
-		pthread_mutex_lock(&p[i].mut);
-		eats = p[i].times_eaten;
-		pthread_mutex_unlock(&p[i].mut);
+		// pthread_mutex_lock(&p[i].m_eat);
+		// eats = p[i].times_eaten;
+		// pthread_mutex_unlock(&p[i].m_eat);
+		eats = get_num_of_meals(&p[i]);
 		if (eats >= p[i].data->many_times_to_eat)
 		{
-			pthread_mutex_lock(&p[i].mut);
+			pthread_mutex_lock(p[i].mut);
 			p[i].is_die = 1;
-			pthread_mutex_unlock(&p[i].mut);
+			pthread_mutex_unlock(p[i].mut);
+			//set_mutex_val(p[i].mut, &p[i].is_die, 1);
 		}
 		else
 			return (0);
@@ -71,6 +76,8 @@ void	*exit_checker(void *data)
 	t_data		*d;
 	int			i;
 	size_t		end;
+	uint64_t	curr_time;
+	uint64_t	aux;
 
 	d = (t_data *)data;
 	i = 0;
@@ -80,13 +87,20 @@ void	*exit_checker(void *data)
 		i = 0;
 		while (i < d->num_philos)
 		{
-			// pthread_mutex_lock(&d->mut_write);
-			// ft_putendlc_fd(BLUE_, "Hiii", 1);
-			// pthread_mutex_unlock(&d->mut_write);
 			if (all_philos_eats_many_times(d->philos, d->num_philos) == 1)
 			{
 				end = 1;
 				print_status(d->philos[i].id, d, " All philos eats many times", GREEN_);
+				break ;
+			}
+			curr_time = get_time() - d->start_time;
+			pthread_mutex_lock(&d->philos[i].m_eat);
+			aux = d->philos[i].start_eating;
+			pthread_mutex_unlock(&d->philos[i].m_eat);
+			if ((curr_time) > (aux + d->t_to_die))
+			{
+				print_status(d->philos[i].id, d, "died for many time for last eat", RED_);
+				end = 1;
 				break ;
 			}
 			i++;
@@ -96,7 +110,6 @@ void	*exit_checker(void *data)
 			pthread_mutex_lock(&d->mut);
 			d->end_routine = end;
 			pthread_mutex_unlock(&d->mut);
-			print_status(d->philos[i].id, d, " hello", GREEN_);
 			break ;
 		}
 	}
