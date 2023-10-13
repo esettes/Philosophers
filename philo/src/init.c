@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/13 00:58:54 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/13 22:18:59 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	init_philos(t_data *data)
 	}
 	while (i < data->num_philos)
 	{
-		data->philos[i].id = i + 1;
+		data->philos[i].id = i;
 		data->philos[i].data = data;
 		data->philos[i].times_eaten = 0;
 		data->philos[i].start_eating = 0;
@@ -80,14 +80,3 @@ int	init_philos(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
-void	init_forks(t_data *data, pthread_mutex_t **forks)
-{
-	int	i;
-	
-	i = 0;
-	while (i < data->num_philos)
-	{
-		data->philos[i].r_fork = forks[i];
-		data->philos[i].l_fork = forks[(i + 1) % data->num_philos];
-	}
-}

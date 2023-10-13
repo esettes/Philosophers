@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:11:44 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/13 01:06:18 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/13 22:19:06 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void	*exit_checker(void *data)
 		i = 0;
 		while (i < d->num_philos)
 		{
-			pthread_mutex_lock(&d->mut_write);
-			ft_putendlc_fd(BLUE_, "Hiii", 1);
-			pthread_mutex_unlock(&d->mut_write);
+			// pthread_mutex_lock(&d->mut_write);
+			// ft_putendlc_fd(BLUE_, "Hiii", 1);
+			// pthread_mutex_unlock(&d->mut_write);
 			if (all_philos_eats_many_times(d->philos, d->num_philos) == 1)
 			{
 				end = 1;
@@ -122,7 +122,6 @@ int	main(int argc, char *argv[])
 		ft_exit(&data);
 	else
 	{
-		init_forks(data, &data->forks);
 		pthread_mutex_init(&data->mut_write, NULL);
 		pthread_mutex_init(&data->mut, NULL);
 		pthread_mutex_init(&data->mut_start, NULL);

@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/13 00:44:15 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/13 22:19:42 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@ void	ft_exit(t_data **data)
 			pthread_mutex_destroy(&(*data)->forks[i]);
 		//if (&(*data)->philos[i].mut)
 		pthread_mutex_destroy(&(*data)->philos[i].mut);
-		//free((*data)->philos[i].tid);
+		free((*data)->philos[i].tid);
 		i++;
 	}
-	
 	if ((*data)->forks != NULL)
 		free((*data)->forks);
 	if ((*data)->philos != NULL)
