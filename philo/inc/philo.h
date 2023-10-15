@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/13 23:53:34 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/15 22:13:17 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ void		ft_exit(t_data **data);
 uint64_t	get_time(void);
 int			f_usleep(uint64_t time);
 
-uint64_t	get_mutex_val(t_philo *ph, uint64_t val);
+uint64_t	get_mutex_val(pthread_mutex_t *mut, uint64_t val);
 void		set_mutex_val(pthread_mutex_t *mut, uint64_t *val, uint64_t new);
 
-uint64_t	is_philo_die(t_philo *ph);
+uint64_t	is_philo_die(t_philo *ph, void *opc);
 uint64_t	get_num_of_meals(t_philo *ph);
 
 #endif

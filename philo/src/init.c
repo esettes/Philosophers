@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/13 23:51:05 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/15 22:10:51 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,18 @@ int	init_philos(t_data *data)
 	}
 	while (i < data->num_philos)
 	{
+		
 		data->philos[i].id = i;
 		data->philos[i].data = data;
 		data->philos[i].times_eaten = 0;
 		data->philos[i].start_eating = 0;
 		data->philos[i].is_die = 0;
 		data->philos[i].mut = malloc(sizeof(pthread_mutex_t));
+		if (!data->philos[i].mut)
+		{
+			ft_putendlc_fd(RED_, ALLOC_ERR, 1);
+			return (EXIT_FAILURE);
+		}
 		pthread_mutex_init(data->philos[i].mut, NULL);
 		pthread_mutex_init(&data->philos[i].m_eat, NULL);
 		data->philos[i].tid = malloc(sizeof(pthread_t));
