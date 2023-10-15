@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:11:44 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/15 22:16:38 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:41:56 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,16 @@ void	*work_philo(void *philo)
 	die = 0;
 	pthread_mutex_lock(&ph->data->mut_start);
 	pthread_mutex_unlock(&ph->data->mut_start);
-	while (end == 0 && die == 0)
+	while (1)
 	{
 		if (is_philo_die(ph, NULL))
 			break ;
-		end = get_mutex_val(&ph->data->mut, ph->data->end_routine);
-		if (end == 1)
-			break ;
+		// pthread_mutex_lock(&ph->data->mut);
+		// end = ph->data->end_routine;
+		// pthread_mutex_unlock(&ph->data->mut);
+		//end = get_mutex_val(&ph->data->mut, ph->data->end_routine);
+		// if (end == 1)
+		// 	break ;
 		if (p_eat(ph))
 			break ;
 		//print_status(ph->id, ph->data, THINK, RESET_);

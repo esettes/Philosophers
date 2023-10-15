@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/15 22:03:23 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:41:13 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ int	p_eat(t_philo *ph)
 	pthread_mutex_lock(&ph->data->mut);
 	end = ph->data->end_routine;
 	pthread_mutex_unlock(&ph->data->mut);
+	pthread_mutex_lock(ph->mut);
 	if (end == 1 )
 		return (1);
+	
 	if (ph->id % 2 == 0)
 	{
 		pthread_mutex_lock(&ph->data->forks[ph->id]);
@@ -58,7 +60,6 @@ int	p_eat(t_philo *ph)
 	f_usleep(ph->data->t_to_eat);
 	if (ph->id % 2 == 0)
 	{
-		
 		pthread_mutex_unlock(&ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
 		pthread_mutex_unlock(&ph->data->forks[ph->id]);
 	}
@@ -66,10 +67,8 @@ int	p_eat(t_philo *ph)
 	{
 		pthread_mutex_unlock(&ph->data->forks[ph->id]);
 		pthread_mutex_unlock(&ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
-		
-		
 	}
-
+	pthread_mutex_unlock(ph->mut);
 	/*
 	pthread_mutex_lock(&ph->data->forks[ph->id]);
 	print_status(ph->id, ph->data, FORK, YELLOW_);
@@ -87,7 +86,6 @@ int	p_eat(t_philo *ph)
 	pthread_mutex_unlock(&ph->data->forks[ph->id]);
 	pthread_mutex_unlock(&ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
 	*/
-	
 	pthread_mutex_lock(&ph->data->mut);
 	end = ph->data->end_routine;
 	pthread_mutex_unlock(&ph->data->mut);
