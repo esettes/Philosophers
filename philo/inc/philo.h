@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/15 22:13:17 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/18 00:49:51 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_data
 	pthread_mutex_t	mut_start;
 	pthread_mutex_t	mut;
 	size_t			end_routine;
+	size_t			write_end;
 	int				num_philos;
 	uint64_t		start_time;
 	uint64_t		t_to_die;
@@ -76,7 +77,7 @@ int			init_data(t_data **data, int philos, u_int64_t sleep, u_int64_t eat,
  */
 int			init_philos(t_data *data);
 
-int		p_eat(t_philo *ph);
+void		p_eat(t_philo *ph);
 
 uint64_t	ft_atoi(const char *str);
 char		*ft_itoa(uint64_t n);
@@ -84,6 +85,7 @@ char		*ft_itoa(uint64_t n);
 void		ft_putstrc_fd(char *color, char *s, int fd);
 void		ft_putendlc_fd(char *color, char *s, int fd);
 void		print_status(int id, t_data *data, char *act, char *col);
+void		print_die(int id, t_data *data, char *act, char *col);
 
 void		ft_exit(t_data **data);
 uint64_t	get_time(void);
@@ -91,8 +93,12 @@ int			f_usleep(uint64_t time);
 
 uint64_t	get_mutex_val(pthread_mutex_t *mut, uint64_t val);
 void		set_mutex_val(pthread_mutex_t *mut, uint64_t *val, uint64_t new);
+void		set_died_philo(t_philo *ph);
 
 uint64_t	is_philo_die(t_philo *ph, void *opc);
 uint64_t	get_num_of_meals(t_philo *ph);
+
+void	finish_routine(t_data *data, size_t *end, int ph_id);
+void	set_all_philos_as_died(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/15 22:10:51 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/17 23:11:56 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	init_data(t_data **data, int philos, u_int64_t sleep, u_int64_t eat,
 		i++;
 	}
 	(*data)->end_routine = 0;
+	(*data)->write_end = 0;
 	(*data)->t_to_die = die;
 	(*data)->t_to_eat = eat;
 	(*data)->t_to_sleep = sleep;

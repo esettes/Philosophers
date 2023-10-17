@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/17 22:52:50 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/17 23:54:40 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,13 @@ void	p_think(t_philo *ph)
 
 void	p_sleep(t_philo *ph)
 {
-	print_status(ph->id, ph->data, SLEEP, CYAN_);
+	print_status(ph->id, ph->data, SLEEP, VIOLET_);
 	f_usleep(ph->data->t_to_sleep);
 }
 
-int	p_eat(t_philo *ph)
+void	p_eat(t_philo *ph)
 {
-	size_t	end;
-
-	end = 0;
-	pthread_mutex_lock(&ph->data->mut);
-	end = ph->data->end_routine;
-	pthread_mutex_unlock(&ph->data->mut);
 	pthread_mutex_lock(ph->mut);
-	if (end == 1)
-		return (1);
-	
 	if (ph->id % 2 == 0)
 	{
 		pthread_mutex_lock(&ph->data->forks[ph->id]);
@@ -51,7 +42,7 @@ int	p_eat(t_philo *ph)
 	}
 	ph->start_eating = get_time();
 	ph->times_eaten++;
-	print_status(ph->id, ph->data, EAT, VIOLET_);
+	print_status(ph->id, ph->data, EAT, BLUE_);
 	f_usleep(ph->data->t_to_eat);
 	if (ph->id % 2 == 0)
 	{
@@ -64,31 +55,6 @@ int	p_eat(t_philo *ph)
 		pthread_mutex_unlock(&ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
 	}
 	pthread_mutex_unlock(ph->mut);
-	/*
-	pthread_mutex_lock(&ph->data->forks[ph->id]);
-	print_status(ph->id, ph->data, FORK, YELLOW_);
-	pthread_mutex_lock(&ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
-	print_status(ph->id, ph->data, FORK, YELLOW_);
-	
-	pthread_mutex_lock(ph->mut);
-	ph->start_eating = get_time();
-	ph->times_eaten++;
-	pthread_mutex_unlock(ph->mut);
-	
-	print_status(ph->id, ph->data, EAT, VIOLET_);
-	f_usleep(ph->data->t_to_eat);
-	
-	pthread_mutex_unlock(&ph->data->forks[ph->id]);
-	pthread_mutex_unlock(&ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
-	*/
-	pthread_mutex_lock(&ph->data->mut);
-	end = ph->data->end_routine;
-	pthread_mutex_unlock(&ph->data->mut);
-	// end = get_mutex_val(&ph->data->mut, ph->data->end_routine);
-	if (end == 1 )
-		return (1);
-	
 	p_sleep(ph);
-	p_think(ph);
-	return (0);
+	//p_think(ph);
 }

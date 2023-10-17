@@ -6,11 +6,21 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/15 22:03:40 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/18 00:50:42 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	finish_routine(t_data *data, size_t *end, int ph_id)
+{
+	*end = 1;
+	print_die(ph_id, data, DIE, RED_);
+	pthread_mutex_lock(&data->mut_write);
+	data->end_routine = 1;
+	pthread_mutex_unlock(&data->mut_write);
+	set_all_philos_as_died(data);
+}
 
 void	ft_exit(t_data **data)
 {
