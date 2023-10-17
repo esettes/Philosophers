@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/15 23:41:13 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/17 22:52:50 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	p_eat(t_philo *ph)
 	end = ph->data->end_routine;
 	pthread_mutex_unlock(&ph->data->mut);
 	pthread_mutex_lock(ph->mut);
-	if (end == 1 )
+	if (end == 1)
 		return (1);
 	
 	if (ph->id % 2 == 0)
@@ -49,13 +49,8 @@ int	p_eat(t_philo *ph)
 		pthread_mutex_lock(&ph->data->forks[ph->id]);
 		print_status(ph->id, ph->data, FORK, YELLOW_);
 	}
-	pthread_mutex_lock(&ph->m_eat);
 	ph->start_eating = get_time();
-	pthread_mutex_unlock(&ph->m_eat);
-	//set_mutex_val(&ph->m_eat, &ph->start_eating, get_time());
-	pthread_mutex_lock(&ph->m_eat);
 	ph->times_eaten++;
-	pthread_mutex_unlock(&ph->m_eat);
 	print_status(ph->id, ph->data, EAT, VIOLET_);
 	f_usleep(ph->data->t_to_eat);
 	if (ph->id % 2 == 0)
