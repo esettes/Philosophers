@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/18 22:30:41 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/18 23:25:30 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	p_eat(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2)
 		pthread_mutex_lock(fork1);
 		print_status(ph->id, ph->data, FORK, YELLOW_);
 	}
-	ph->start_eating = get_time();// - ph->data->start_time;
+	ph->start_eating = get_time();
 
 	ph->times_eaten++;
 	
