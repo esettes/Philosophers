@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:11:44 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/18 21:13:35 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/18 22:32:01 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*work_philo(void *philo)
 		die = ph->is_die;
 		pthread_mutex_unlock(&ph->data->mut_write);
 
-		p_eat(ph);
+		p_eat(ph, &ph->data->forks[ph->id], &ph->data->forks[(ph->id + 1) % ph->data->num_philos]);
 		print_status(ph->id, ph->data, THINK, RESET_);
 	}
 	return ((void *)0);
@@ -81,10 +81,10 @@ static int	all_philos_eats_many_times(t_philo *p, uint64_t n, uint64_t eats)
 	if (count == n)
 	{
 		//set_all_philos_as_died(p[i].data);
-		pthread_mutex_lock(&p[i].data->mut_write);
-		ft_putstrc_fd(GREEN_, "Times eaten: ", 1);
-		ft_putendlc_fd(GREEN_, ft_itoa(count), 1);
-		pthread_mutex_unlock(&p[i].data->mut_write);
+		// pthread_mutex_lock(&p[i].data->mut_write);
+		// ft_putstrc_fd(GREEN_, "Times eaten: ", 1);
+		// ft_putendlc_fd(GREEN_, ft_itoa(count), 1);
+		// pthread_mutex_unlock(&p[i].data->mut_write);
 		
 		return (1);
 	}
@@ -97,13 +97,14 @@ void	*exit_checker(void *data)
 	int			i;
 	size_t		end;
 	uint64_t	curr_time;
-	uint64_t	aux;
+	uint64_t	start_eat;
 
 	d = (t_data *)data;
 	i = 0;
 	end = 0;
-	d->start_time = get_time();
 	//pthread_mutex_unlock(&d->mut_start);
+	//d->start_time = get_time();
+	
 	while (end == 0)
 	{
 		i = 0;
@@ -117,15 +118,30 @@ void	*exit_checker(void *data)
 				print_status(d->philos[i].id, d, " All philos eats many times", GREEN_);
 				break ;
 			}
-			curr_time = get_time() - d->start_time;
 			pthread_mutex_lock(d->philos[i].mut);
-			aux = d->philos[i].start_eating;
+			start_eat = d->philos[i].start_eating;// - d->start_time;
 			pthread_mutex_unlock(d->philos[i].mut);
-			pthread_mutex_lock(&d->mut_write);
-			ft_putstrc_fd(RED_, "time eating: ", 1);
-			ft_putendlc_fd(RED_, ft_itoa(aux + d->t_to_die), 1);
-			pthread_mutex_unlock(&d->mut_write);
-			if ((curr_time) > (aux + d->t_to_die))
+			curr_time = get_time();// - d->start_time;
+
+
+
+			
+			//  pthread_mutex_lock(&d->mut_write);
+			// // ft_putstrc_fd(RED_, "philo id > ", 1);
+			// ft_putstrc_fd(RED_, ft_itoa(d->philos[i].id), 1);
+			// ft_putstrc_fd(RED_, " ", 1);
+			// // ft_putstrc_fd(RED_, "start eating: ", 1);
+			// // ft_putendlc_fd(RED_, ft_itoa(start_eat), 1);
+			// // ft_putstrc_fd(RED_, "curr time: ", 1);
+			// // ft_putendlc_fd(RED_, ft_itoa(curr_time), 1);
+			// // ft_putstrc_fd(RED_, ">>>>> time from last eat: ", 1);
+			// ft_putendlc_fd(RED_, ft_itoa(curr_time - start_eat), 1);
+			// pthread_mutex_unlock(&d->mut_write);
+
+
+
+			
+			if (curr_time - start_eat > d->t_to_die) //(curr_time) > (start_eat + d->t_to_die))
 			{
 				print_status(d->philos[i].id, d, "died for many time for last eat", RED_);
 				end = 1;
@@ -180,7 +196,7 @@ int	main(int argc, char *argv[])
 			pthread_create(data->philos[i].tid, NULL, work_philo, &data->philos[i]);
 			i++;
 		}
-		//data->start_time = get_time();
+		data->start_time = get_time();
 		//ft_putstrc_fd(GREEN_, "start time: ", 1);
 		//ft_putendlc_fd(GREEN_, ft_itoa(data->start_time), 1);
 		pthread_create(&data->controller, NULL, exit_checker, (void *)data);
