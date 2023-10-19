@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/19 23:25:23 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/19 23:30:27 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_data
 int			init_data(t_data **data, int philos, u_int64_t die, u_int64_t eat,
 					u_int64_t sleep, int times_to_eat);
 /**
- * @brief Philo's id start with 1
+ * @brief Philo's id start with 0
  * 
  * @param data 
  * @return int 0 if success, 1 if an error occurs wih allocation
