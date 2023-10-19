@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/18 23:32:51 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/19 22:32:07 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ int	f_usleep(uint64_t time)
 
 	start = get_time();
 	while ((get_time() - start) < time)
-		usleep(100);
+		usleep(81);
 	return (0);
 }
