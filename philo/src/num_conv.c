@@ -6,11 +6,25 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:19:59 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/13 00:06:06 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/19 22:59:51 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static int	is_valid_arg(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!(str[i] >= '0' && str[i] <= '9'))
+			return (EXIT_FAILURE);
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
 
 static size_t	count_dec(uint64_t n)
 {
@@ -58,6 +72,8 @@ uint64_t	ft_atoi(const char *str)
 	sign = 1;
 	res = 0;
 	if (!str)
+		return (0);
+	if (is_valid_arg((char *)str) == EXIT_FAILURE)
 		return (0);
 	while ((str[i] > 8 && str[i] < 14) || str[i] == ' ')
 		i++;

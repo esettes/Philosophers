@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/19 22:32:07 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/19 23:18:15 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	finish_routine(t_data *data, size_t *end, int ph_id)
 	set_all_philos_as_died(data);
 }
 
-void	ft_exit(t_data **data)
+void	ft_exit(t_data **data, int mut)
 {
 	int	i;
 
@@ -31,11 +31,12 @@ void	ft_exit(t_data **data)
 	{
 		if (&(*data)->forks[i] != NULL)
 			pthread_mutex_destroy(&(*data)->forks[i]);
-		//if (&(*data)->philos[i].mut)
-		pthread_mutex_destroy((*data)->philos[i].mut);
-		pthread_mutex_destroy(&(*data)->philos[i].m_eat);
-		free((*data)->philos[i].tid);
-		free((*data)->philos[i].mut);
+		if (mut)
+		{
+			pthread_mutex_destroy((*data)->philos[i].mut);
+			free((*data)->philos[i].tid);
+			free((*data)->philos[i].mut);
+		}
 		i++;
 	}
 	if ((*data)->forks != NULL)
@@ -51,7 +52,7 @@ int	f_error(char *str, t_data *data)
 	(void)data;
 	(void)str;
 	if (data)
-		ft_exit(&data);
+		ft_exit(&data, 1);
 	return (1);
 }
 

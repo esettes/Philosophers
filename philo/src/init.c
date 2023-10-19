@@ -6,14 +6,14 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/18 23:18:19 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/19 23:11:44 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_data(t_data **data, int philos, u_int64_t sleep, u_int64_t eat,
-		u_int64_t die, int times_to_eat)
+int	init_data(t_data **data, int philos, u_int64_t die, u_int64_t eat,
+		u_int64_t sleep, int times_to_eat)
 {
 	int	i;
 
@@ -34,12 +34,11 @@ int	init_data(t_data **data, int philos, u_int64_t sleep, u_int64_t eat,
 	while (i < (*data)->num_philos)
 	{
 		if (pthread_mutex_init(&(*data)->forks[i], NULL) != 0)
-		{
-			ft_putendlc_fd(RED_, "Forks init error", 1);
 			return (EXIT_FAILURE);
-		}
 		i++;
 	}
+	if (!(eat > 0) || !(die > 0) || !(sleep > 0))
+		return (EXIT_FAILURE);
 	(*data)->end_routine = 0;
 	(*data)->write_end = 0;
 	(*data)->t_to_die = die;
@@ -62,29 +61,23 @@ int	init_philos(t_data *data)
 	}
 	while (i < data->num_philos)
 	{
-		
 		data->philos[i].id = i;
 		data->philos[i].data = data;
 		data->philos[i].times_eaten = 0;
 		data->philos[i].start_eating = get_time();
-		data->philos[i].finish_eat = get_time();
 		data->philos[i].is_die = 0;
 		data->philos[i].mut = malloc(sizeof(pthread_mutex_t));
-		if (!data->philos[i].mut)
+		data->philos[i].tid = malloc(sizeof(pthread_t));
+		if (!data->philos[i].mut || !data->philos[i].tid)
 		{
 			ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 			return (EXIT_FAILURE);
 		}
 		pthread_mutex_init(data->philos[i].mut, NULL);
-		pthread_mutex_init(&data->philos[i].m_eat, NULL);
-		data->philos[i].tid = malloc(sizeof(pthread_t));
-		if (!data->philos[i].tid)
-		{
-			ft_putendlc_fd(RED_, ALLOC_ERR, 1);
-			return (EXIT_FAILURE);
-		}
 		i++;
 	}
+	if (data->t_to_die == 0 || data->t_to_eat == 0 || data->t_to_sleep == 0 || data->num_philos <= 1)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 

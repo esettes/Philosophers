@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/18 23:16:18 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/19 23:14:52 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ typedef struct s_data
 	uint64_t		many_times_to_eat;
 }				t_data;
 
-int			init_data(t_data **data, int philos, u_int64_t sleep, u_int64_t eat,
-					u_int64_t die, int times_to_eat);
+int			init_data(t_data **data, int philos, u_int64_t die, u_int64_t eat,
+					u_int64_t sleep, int times_to_eat);
 /**
  * @brief Philo's id start with 1
  * 
@@ -88,7 +88,7 @@ void		ft_putendlc_fd(char *color, char *s, int fd);
 void		print_status(int id, t_data *data, char *act, char *col);
 void		print_die(int id, t_data *data, char *act, char *col);
 
-void		ft_exit(t_data **data);
+void		ft_exit(t_data **data, int mut);
 uint64_t	get_time(void);
 int			f_usleep(uint64_t time);
 

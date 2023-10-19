@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:20:25 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/18 20:10:56 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/19 22:45:12 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,6 @@ void	print_status(int id, t_data *data, char *act, char *col)
 	char	*p_id;
 	size_t	end;
 
-	// pthread_mutex_lock(&data->mut);
-	
-	// // if (data->write_end == 1)
-	// // 	end = 0;
-	// pthread_mutex_unlock(&data->mut);
-	// // if (end == 1)
-	// // 	return ;
 	pthread_mutex_lock(&data->mut_write);
 	end = data->end_routine;
 	if (end == 1)
