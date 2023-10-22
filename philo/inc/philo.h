@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/19 23:30:27 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/22 21:53:36 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ struct	s_data;
 
 typedef struct s_philo
 {
-	struct s_data		*data;
-	pthread_t			*tid;
-	int					id;
-	uint64_t			times_eaten;
-	size_t				is_die;
-	uint64_t			start_eating;
-	pthread_mutex_t		*mut;
+	struct s_data	*data;
+	pthread_t		*tid;
+	int				id;
+	uint64_t		times_eaten;
+	size_t			is_die;
+	uint64_t		start_eating;
+	pthread_mutex_t	*mut;
 }				t_philo;
 
 typedef struct s_data
@@ -62,11 +62,11 @@ typedef struct s_data
 	uint64_t		t_to_die;
 	uint64_t		t_to_eat;
 	uint64_t		t_to_sleep;
-	uint64_t		many_times_to_eat;
+	uint64_t		times_to_eat;
 }				t_data;
 
 int			init_data(t_data **data, int philos, u_int64_t die, u_int64_t eat,
-					u_int64_t sleep, int times_to_eat);
+				u_int64_t sleep, int times_to_eat);
 /**
  * @brief Philo's id start with 0
  * 
@@ -93,7 +93,7 @@ void		set_died_philo(t_philo *ph);
 
 uint64_t	get_num_of_meals(t_philo *ph);
 
-void	finish_routine(t_data *data, size_t *end, int ph_id);
-void	set_all_philos_as_died(t_data *data);
+void		finish_routine(t_data *data, size_t *end, int ph_id);
+void		set_all_philos_as_died(t_data *data);
 
 #endif

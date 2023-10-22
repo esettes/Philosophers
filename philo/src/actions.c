@@ -6,11 +6,26 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/19 23:21:02 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/22 21:47:42 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	take_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2);
+static void	leave_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2);
+void		p_sleep(t_philo *ph);
+
+void	p_eat(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
+{
+	take_forks(ph, f1, f2);
+	ph->start_eating = get_time();
+	ph->times_eaten++;
+	print_status(ph->id, ph->data, EAT, BLUE_);
+	f_usleep(ph->data->t_to_eat);
+	leave_forks(ph, f1, f2);
+	p_sleep(ph);
+}
 
 void	p_think(t_philo *ph)
 {
@@ -23,37 +38,36 @@ void	p_sleep(t_philo *ph)
 	f_usleep(ph->data->t_to_sleep);
 }
 
-void	p_eat(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2)
+static void	take_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
 {
 	pthread_mutex_lock(ph->mut);
 	if (ph->id % 2 == 0)
 	{
-		pthread_mutex_lock(fork1);
+		pthread_mutex_lock(f1);
 		print_status(ph->id, ph->data, FORK, YELLOW_);
-		pthread_mutex_lock(fork2);
+		pthread_mutex_lock(f2);
 		print_status(ph->id, ph->data, FORK, YELLOW_);
 	}
 	else
 	{
-		pthread_mutex_lock(fork2);
+		pthread_mutex_lock(f2);
 		print_status(ph->id, ph->data, FORK, YELLOW_);
-		pthread_mutex_lock(fork1);
+		pthread_mutex_lock(f1);
 		print_status(ph->id, ph->data, FORK, YELLOW_);
-	}
-	ph->start_eating = get_time();
-	ph->times_eaten++;
-	print_status(ph->id, ph->data, EAT, BLUE_);
-	f_usleep(ph->data->t_to_eat);
-	if (ph->id % 2 == 0)
-	{
-		pthread_mutex_unlock(fork2);
-		pthread_mutex_unlock(fork1);
-	}
-	else
-	{
-		pthread_mutex_unlock(fork1);
-		pthread_mutex_unlock(fork2);
 	}
 	pthread_mutex_unlock(ph->mut);
-	p_sleep(ph);
+}
+
+static void	leave_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
+{
+	if (ph->id % 2 == 0)
+	{
+		pthread_mutex_unlock(f2);
+		pthread_mutex_unlock(f1);
+	}
+	else
+	{
+		pthread_mutex_unlock(f1);
+		pthread_mutex_unlock(f2);
+	}
 }

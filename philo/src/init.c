@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/19 23:28:36 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/22 21:53:46 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	init_data(t_data **data, int philos, u_int64_t die, u_int64_t eat,
 	(*data)->t_to_die = die;
 	(*data)->t_to_eat = eat;
 	(*data)->t_to_sleep = sleep;
-	(*data)->many_times_to_eat = times_to_eat;
+	(*data)->times_to_eat = times_to_eat;
 	return (EXIT_SUCCESS);
 }
 
@@ -73,7 +73,8 @@ int	init_philos(t_data *data)
 		pthread_mutex_init(data->philos[i].mut, NULL);
 		i++;
 	}
-	if (data->t_to_die == 0 || data->t_to_eat == 0 || data->t_to_sleep == 0 || data->num_philos <= 1)
+	if (data->t_to_die <= 0 || data->t_to_eat <= 0 || data->t_to_sleep <= 0
+		|| data->num_philos > 200 || data->times_to_eat < 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

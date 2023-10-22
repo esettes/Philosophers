@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/19 23:18:15 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/22 20:54:58 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ uint64_t	get_time(void)
 int	f_usleep(uint64_t time)
 {
 	uint64_t	start;
-
 	start = get_time();
 	while ((get_time() - start) < time)
 		usleep(81);

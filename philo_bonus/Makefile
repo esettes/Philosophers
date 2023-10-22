@@ -5,7 +5,7 @@ LWHITE	= \033[2;37m
 RESET	= \033[0m
 GREY	= \033[1;30m
 
-NAME	= philo
+NAME	= philo_bonus
 
 OS		=	$(shell uname -s)
 
@@ -18,7 +18,7 @@ OBJS	= $(addprefix $(OBJDIR), $(SRCNAMES:.c=.o))
 HEADERS	= -I include -I ./inc/
 
 CC	= gcc
-CFLAGS	= -Wall -Wextra -Werror -pthread #-fsanitize=thread # -Ofast
+CFLAGS	= -O3 -Wall -Wextra -Werror -pthread -fsanitize=thread # -Ofast -fno-omit-frame-pointer
 
 ifeq ($(OS), Linux)
 	VALGRIND = valgrind --tool=memcheck --leak-check=full --track-origins=yes -s
