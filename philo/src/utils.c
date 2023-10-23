@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/22 22:00:30 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/23 22:33:48 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	finish_routine(t_data *data, size_t *end, int ph_id)
 {
 	*end = 1;
+	pthread_mutex_unlock(&data->forks[ph_id]);
+	pthread_mutex_unlock(&data->forks[(ph_id + 1) % data->num_philos]);
 	print_die(ph_id, data, DIE, RED_);
 	pthread_mutex_lock(&data->mut_write);
 	data->end_routine = 1;

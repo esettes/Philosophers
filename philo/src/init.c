@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:46 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/23 22:47:26 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int	init_philos(t_data *data)
 		pthread_mutex_init(data->philos[i].mut, NULL);
 		i++;
 	}
-	if (data->t_to_die <= 0 || data->t_to_eat <= 0 || data->t_to_sleep <= 0
-		|| data->num_philos > 200 || data->times_to_eat < 0)
+	if (data->t_to_die < 0 || data->t_to_eat < 0 || data->t_to_sleep < 0
+		|| data->num_philos > 600 || data->times_to_eat < 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

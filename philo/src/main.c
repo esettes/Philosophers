@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:11:44 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/23 22:04:48 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/23 22:46:18 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	*exit_checker(void *data)
 	d = (t_data *)data;
 	i = 0;
 	end = 0;
-	//d->start_time = get_time();
 	while (end == 0)
 	{
 		i = -1;
@@ -96,25 +95,11 @@ void	*exit_checker(void *data)
 			start_eat = d->philos[i].start_eating;
 			pthread_mutex_unlock(d->philos[i].mut);
 			curr_time = get_time();
-			
-			//usleep(10);
-			// pthread_mutex_lock(&d->mut_write);
-			// ft_putstrc_fd(RED_, "[", 1);
-			// ft_putstrc_fd(RED_, ft_itoa(i), 1);
-			// ft_putstrc_fd(RED_, "] dead time: ", 1);
-			// ft_putendlc_fd(RED_, ft_itoa(curr_time - start_eat), 1);
-			// pthread_mutex_unlock(&d->mut_write);
 			if ((curr_time - start_eat) > d->t_to_die)
 			{
-				pthread_mutex_lock(&d->mut_write);
-				ft_putstrc_fd(GREEN_, "dead time: ", 1);
-				ft_putendlc_fd(GREEN_, ft_itoa(curr_time - start_eat), 1);
-				pthread_mutex_unlock(&d->mut_write);
 				end = 1;
 				break ;
 			}
-			//usleep(10000);
-			//i++;
 		}
 		if (end == 1)
 		{
@@ -123,6 +108,20 @@ void	*exit_checker(void *data)
 		}
 	}
 	return ((void *)0);
+}
+
+int is_correct_input(char *argv[])
+{
+	int i;
+
+	i = 1;
+	while (argv[i])
+	{
+		if (is_valid_arg(argv[i]) != 0)
+			return (EXIT_FAILURE);
+		i++;
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	main(int argc, char *argv[])
@@ -136,6 +135,9 @@ int	main(int argc, char *argv[])
 		ft_putstrc_fd(YELLOW_, "./philo [n_philos] [die_time] [eat_time] ", 1);
 		ft_putendlc_fd(YELLOW_, "[sleep_time] opc[times_to_eat]", 1);
 	}
+	/** look if is correct input */
+	if (is_correct_input(argv) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if (init_data(&data, ft_atoi(argv[1]), ft_atoi(argv[2]), ft_atoi(argv[3]),
 			ft_atoi(argv[4]), ft_atoi(argv[5])) == EXIT_FAILURE)
 		ft_exit(&data, 0);

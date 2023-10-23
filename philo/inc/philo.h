@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/22 21:53:36 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/23 22:44:52 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void		p_eat(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2);
 
 uint64_t	ft_atoi(const char *str);
 char		*ft_itoa(uint64_t n);
+int			is_valid_arg(char *str);
 
 void		ft_putstrc_fd(char *color, char *s, int fd);
 void		ft_putendlc_fd(char *color, char *s, int fd);

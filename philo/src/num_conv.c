@@ -6,13 +6,13 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:19:59 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/19 22:59:51 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/23 22:44:32 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	is_valid_arg(char *str)
+int	is_valid_arg(char *str)
 {
 	int	i;
 
