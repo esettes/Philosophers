@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:11:44 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/22 21:59:23 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/23 22:04:48 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ void	*exit_checker(void *data)
 	d = (t_data *)data;
 	i = 0;
 	end = 0;
-	d->start_time = get_time();
+	//d->start_time = get_time();
 	while (end == 0)
 	{
-		i = 0;
-		while (i < d->num_philos)
+		i = -1;
+		while (++i < d->num_philos)
 		{
 			if (d->times_to_eat != 0 && all_philos_eats_many_times
 				(d->philos, (uint64_t)d->num_philos, d->times_to_eat) == 1)
@@ -96,12 +96,25 @@ void	*exit_checker(void *data)
 			start_eat = d->philos[i].start_eating;
 			pthread_mutex_unlock(d->philos[i].mut);
 			curr_time = get_time();
+			
+			//usleep(10);
+			// pthread_mutex_lock(&d->mut_write);
+			// ft_putstrc_fd(RED_, "[", 1);
+			// ft_putstrc_fd(RED_, ft_itoa(i), 1);
+			// ft_putstrc_fd(RED_, "] dead time: ", 1);
+			// ft_putendlc_fd(RED_, ft_itoa(curr_time - start_eat), 1);
+			// pthread_mutex_unlock(&d->mut_write);
 			if ((curr_time - start_eat) > d->t_to_die)
 			{
+				pthread_mutex_lock(&d->mut_write);
+				ft_putstrc_fd(GREEN_, "dead time: ", 1);
+				ft_putendlc_fd(GREEN_, ft_itoa(curr_time - start_eat), 1);
+				pthread_mutex_unlock(&d->mut_write);
 				end = 1;
 				break ;
 			}
-			i++;
+			//usleep(10000);
+			//i++;
 		}
 		if (end == 1)
 		{
@@ -134,9 +147,11 @@ int	main(int argc, char *argv[])
 		pthread_mutex_init(&data->mut, NULL);
 		pthread_mutex_init(&data->mut_start, NULL);
 		pthread_mutex_lock(&data->mut_start);
+		
 		while (++i < data->num_philos)
 			pthread_create(data->philos[i].tid, NULL, work_philo,
 				&data->philos[i]);
+		data->start_time = get_time();
 		pthread_create(&data->controller, NULL, exit_checker, (void *)data);
 		pthread_mutex_unlock(&data->mut_start);
 		i = -1;
