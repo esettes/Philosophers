@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/23 22:33:48 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/24 23:21:23 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 void	finish_routine(t_data *data, size_t *end, int ph_id)
 {
 	*end = 1;
+	ft_putstrc_fd(GREEN_, "philo: ", 1);
+	ft_putstrc_fd(GREEN_, ft_itoa(ph_id), 1);
+	ft_putendlc_fd(GREEN_, " Finish", 1);
+	set_all_philos_as_died(data);
 	pthread_mutex_unlock(&data->forks[ph_id]);
 	pthread_mutex_unlock(&data->forks[(ph_id + 1) % data->num_philos]);
 	print_die(ph_id, data, DIE, RED_);
 	pthread_mutex_lock(&data->mut_write);
 	data->end_routine = 1;
 	pthread_mutex_unlock(&data->mut_write);
-	set_all_philos_as_died(data);
+	
 }
 
 void	ft_exit(t_data **data, int mut)

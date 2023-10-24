@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:11:44 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/23 22:46:18 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/24 23:32:31 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ void	*work_philo(void *philo)
 		pthread_mutex_unlock(&ph->data->mut_write);
 		p_eat(ph, &ph->data->forks[ph->id], &ph->data->forks[(ph->id + 1)
 			% ph->data->num_philos]);
+		ft_putstrc_fd(GREEN_, "before die: ", 1);
+		ft_putendlc_fd(GREEN_, ft_itoa(die), 1);
 		print_status(ph->id, ph->data, THINK, RESET_);
+		ft_putstrc_fd(GREEN_, "die: ", 1);
+		ft_putendlc_fd(GREEN_, ft_itoa(die), 1);
 	}
 	return ((void *)0);
 }
@@ -69,7 +73,7 @@ static int	all_philos_eats_many_times(t_philo *p, uint64_t n, uint64_t eats)
 	return (0);
 }
 
-void	*exit_checker(void *data)
+void	*exit_checker(void *data) /** SUPERVISOR ROUTINE */
 {
 	t_data		*d;
 	int			i;
@@ -97,6 +101,8 @@ void	*exit_checker(void *data)
 			curr_time = get_time();
 			if ((curr_time - start_eat) > d->t_to_die)
 			{
+				ft_putstrc_fd(RED_, "Many time: ", 1);
+				ft_putendlc_fd(RED_, ft_itoa(curr_time - start_eat), 1);
 				end = 1;
 				break ;
 			}
@@ -107,6 +113,7 @@ void	*exit_checker(void *data)
 			break ;
 		}
 	}
+	printf("end: %zu\n", end);
 	return ((void *)0);
 }
 
@@ -134,6 +141,7 @@ int	main(int argc, char *argv[])
 	{
 		ft_putstrc_fd(YELLOW_, "./philo [n_philos] [die_time] [eat_time] ", 1);
 		ft_putendlc_fd(YELLOW_, "[sleep_time] opc[times_to_eat]", 1);
+		return (EXIT_FAILURE);
 	}
 	/** look if is correct input */
 	if (is_correct_input(argv) == EXIT_FAILURE)
@@ -157,6 +165,7 @@ int	main(int argc, char *argv[])
 		pthread_create(&data->controller, NULL, exit_checker, (void *)data);
 		pthread_mutex_unlock(&data->mut_start);
 		i = -1;
+		
 		while (++i < data->num_philos)
 			pthread_join(*data->philos[i].tid, NULL);
 		pthread_join(data->controller, NULL);
