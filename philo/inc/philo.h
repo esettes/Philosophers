@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/23 22:44:52 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:09:19 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,13 @@ typedef struct s_data
 	uint64_t		times_to_eat;
 }				t_data;
 
-int			init_data(t_data **data, int philos, u_int64_t die, u_int64_t eat,
-				u_int64_t sleep, int times_to_eat);
-/**
- * @brief Philo's id start with 0
- * 
- * @param data 
- * @return int 0 if success, 1 if an error occurs wih allocation
- */
-int			init_philos(t_data *data);
+int			init_program(t_data **data, int argc, char *argv[]);
+void		init_mutexes(t_data *data);
 
 void		p_eat(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2);
 
 uint64_t	ft_atoi(const char *str);
 char		*ft_itoa(uint64_t n);
-int			is_valid_arg(char *str);
 
 void		ft_putstrc_fd(char *color, char *s, int fd);
 void		ft_putendlc_fd(char *color, char *s, int fd);
@@ -90,7 +82,9 @@ void		ft_exit(t_data **data, int mut);
 uint64_t	get_time(void);
 int			f_usleep(uint64_t time);
 
-void		set_died_philo(t_philo *ph);
+void		set_all_philos_as_died(t_data *data);
+int			all_philos_eats_many_times(t_philo *p, uint64_t n, uint64_t eats);
+int			is_correct_input(int argc, char *argv[]);
 
 uint64_t	get_num_of_meals(t_philo *ph);
 

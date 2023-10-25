@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/25 20:14:52 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/25 23:06:40 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	take_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
 	if (end == 1)
 		return ;
 	if (ph->id % 2 != 0)
-		f_usleep(9);
+		f_usleep(10);
 	pthread_mutex_lock(f1);
 	print_status(ph->id, ph->data, FORK, YELLOW_);
 	pthread_mutex_lock(f2);

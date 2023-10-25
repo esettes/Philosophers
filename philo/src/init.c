@@ -6,57 +6,78 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/23 22:47:26 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:09:00 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_data(t_data **data, int philos, u_int64_t die, u_int64_t eat,
-		u_int64_t sleep, int times_to_eat)
+static int	init_data(t_data **data, char *argv[]);
+static int	init_philos(t_data *data);
+
+int	init_program(t_data **data, int argc, char *argv[])
+{
+	if (is_correct_input(argc, argv) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (init_data(data, argv) == EXIT_FAILURE)
+	{
+		ft_exit(data, 0);
+		return (EXIT_FAILURE);
+	}
+	if (init_philos(*data) == EXIT_FAILURE)
+	{
+		ft_exit(data, 0);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+void	init_mutexes(t_data *data)
+{
+	pthread_mutex_init(&data->mut_write, NULL);
+	pthread_mutex_init(&data->mut, NULL);
+	pthread_mutex_init(&data->mut_start, NULL);
+	pthread_mutex_lock(&data->mut_start);
+}
+
+static int	init_data(t_data **data, char *argv[])
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	(*data) = malloc(sizeof(t_data));
 	if (!*data)
 	{
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
 	}
-	(*data)->num_philos = philos;
+	(*data)->num_philos = ft_atoi(argv[1]);
 	(*data)->forks = malloc(sizeof(pthread_mutex_t) * ((*data)->num_philos));
 	if (!(*data)->forks)
 	{
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
 	}
-	while (i < (*data)->num_philos)
-	{
+	while (++i < (*data)->num_philos)
 		if (pthread_mutex_init(&(*data)->forks[i], NULL) != 0)
 			return (EXIT_FAILURE);
-		i++;
-	}
 	(*data)->end_routine = 0;
-	(*data)->t_to_die = die;
-	(*data)->t_to_eat = eat;
-	(*data)->t_to_sleep = sleep;
-	(*data)->times_to_eat = times_to_eat;
+	(*data)->t_to_die = ft_atoi(argv[2]);
+	(*data)->t_to_eat = ft_atoi(argv[3]);
+	(*data)->t_to_sleep = ft_atoi(argv[4]);
+	(*data)->times_to_eat = ft_atoi(argv[5]);
 	return (EXIT_SUCCESS);
 }
 
-int	init_philos(t_data *data)
+static int	init_philos(t_data *data)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	data->philos = malloc(sizeof(t_philo) * (data->num_philos));
 	if (!data->philos)
-	{
-		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
-	}
-	while (i < data->num_philos)
+	while (++i < data->num_philos)
 	{
 		data->philos[i].id = i;
 		data->philos[i].data = data;
@@ -66,12 +87,8 @@ int	init_philos(t_data *data)
 		data->philos[i].mut = malloc(sizeof(pthread_mutex_t));
 		data->philos[i].tid = malloc(sizeof(pthread_t));
 		if (!data->philos[i].mut || !data->philos[i].tid)
-		{
-			ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 			return (EXIT_FAILURE);
-		}
 		pthread_mutex_init(data->philos[i].mut, NULL);
-		i++;
 	}
 	if (data->t_to_die < 0 || data->t_to_eat < 0 || data->t_to_sleep < 0
 		|| data->num_philos > 600 || data->times_to_eat < 0)
