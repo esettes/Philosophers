@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/24 23:21:23 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:48:10 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,25 @@
 
 void	finish_routine(t_data *data, size_t *end, int ph_id)
 {
+	int	i;
+
+	i = 0;
 	*end = 1;
+	set_all_philos_as_died(data);
+	while (i < data->num_philos)
+	{
+		ft_putstrc_fd(VIOLET_, "philo: ", 1);
+		ft_putstrc_fd(VIOLET_, ft_itoa(ph_id), 1);
+		ft_putstrc_fd(VIOLET_, " is die: ", 1);
+		ft_putendlc_fd(VIOLET_, ft_itoa(data->philos[i].is_die), 1);
+		i++;
+	}
 	ft_putstrc_fd(GREEN_, "philo: ", 1);
 	ft_putstrc_fd(GREEN_, ft_itoa(ph_id), 1);
 	ft_putendlc_fd(GREEN_, " Finish", 1);
-	set_all_philos_as_died(data);
-	pthread_mutex_unlock(&data->forks[ph_id]);
-	pthread_mutex_unlock(&data->forks[(ph_id + 1) % data->num_philos]);
+	
+	printf("mutex last fork unlock: %i \n", pthread_mutex_unlock(&data->forks[ph_id]));
+	printf("mutex last fork unlock: %i \n", pthread_mutex_unlock(&data->forks[(ph_id + 1) % data->num_philos]));
 	print_die(ph_id, data, DIE, RED_);
 	pthread_mutex_lock(&data->mut_write);
 	data->end_routine = 1;

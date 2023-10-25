@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:11:44 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/24 23:32:31 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:53:24 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,15 @@ void	*work_philo(void *philo)
 	pthread_mutex_unlock(&ph->data->mut_start);
 	while (die == 0)
 	{
-		pthread_mutex_lock(&ph->data->mut_write);
+		printf("get die lock: %i \n", pthread_mutex_lock(&ph->data->mut_write));
 		die = ph->is_die;
-		pthread_mutex_unlock(&ph->data->mut_write);
+		printf("get die unlock: %i \n", pthread_mutex_unlock(&ph->data->mut_write));
 		p_eat(ph, &ph->data->forks[ph->id], &ph->data->forks[(ph->id + 1)
 			% ph->data->num_philos]);
+		ft_putstrc_fd(BLUE_, "philo: ", 1);
+		ft_putstrc_fd(BLUE_, ft_itoa(ph->id), 1);
+		ft_putstrc_fd(BLUE_, " is_die: ", 1);
+		ft_putendlc_fd(BLUE_, ft_itoa(ph->is_die), 1);
 		ft_putstrc_fd(GREEN_, "before die: ", 1);
 		ft_putendlc_fd(GREEN_, ft_itoa(die), 1);
 		print_status(ph->id, ph->data, THINK, RESET_);
@@ -44,7 +48,14 @@ void	set_all_philos_as_died(t_data *data)
 	i = 0;
 	while (i < data->num_philos)
 	{
-		set_died_philo(&data->philos[i]);
+		// set_died_philo(&data->philos[i]);
+		pthread_mutex_lock(&data->mut_write);
+		data->philos[i].is_die = 1;
+		ft_putstrc_fd(BLUE_, "philo ", 1);
+		ft_putstrc_fd(BLUE_, ft_itoa(data->philos[i].id), 1);
+		ft_putstrc_fd(BLUE_, "is_die: ", 1);
+		ft_putendlc_fd(BLUE_, ft_itoa(data->philos[i].is_die), 1);
+		pthread_mutex_unlock(&data->mut_write);
 		i++;
 	}
 }
