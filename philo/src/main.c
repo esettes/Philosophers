@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:11:44 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/25 22:55:11 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/10/26 21:18:17 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		*philo_work(void *philo);
 void		*controller_work(void *data);
-int	init_program(t_data **data, int argc, char *argv[]);
+int			init_program(t_data **data, int argc, char *argv[]);
 
 int	main(int argc, char *argv[])
 {

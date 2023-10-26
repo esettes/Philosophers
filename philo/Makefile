@@ -18,8 +18,8 @@ OBJS	= $(addprefix $(OBJDIR), $(SRCNAMES:.c=.o))
 HEADERS	= -I include -I ./inc/
 
 CC	= clang
-CFLAGS	= -O3 -Wall -Wextra -Werror -pthread \
-			#-g3 -fsanitize=thread \
+CFLAGS	= -g3 -Wall -Wextra -Werror -pthread \
+			-fsanitize=address \
 			#-fsanitize=undefined,memory \
 			-fno-omit-frame-pointer
 
