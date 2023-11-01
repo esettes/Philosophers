@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/25 22:09:19 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/01 23:44:03 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void		print_die(int id, t_data *data, char *act, char *col);
 
 void		ft_exit(t_data **data, int mut);
 uint64_t	get_time(void);
-int			f_usleep(uint64_t time);
+int			f_usleep(t_data data, uint64_t time);
 
 void		set_all_philos_as_died(t_data *data);
 int			all_philos_eats_many_times(t_philo *p, uint64_t n, uint64_t eats);

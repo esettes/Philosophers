@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/26 21:14:02 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/02 00:08:01 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	p_eat(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
 	ph->times_eaten++;
 	pthread_mutex_unlock(ph->mut);
 	print_status(ph->id, ph->data, EAT, BLUE_);
-	f_usleep(ph->data->t_to_eat);
+	f_usleep(*ph->data, ph->data->t_to_eat);
 	leave_forks(f1, f2);
 	p_sleep(ph);
 }
@@ -37,7 +37,7 @@ void	p_think(t_philo *ph)
 void	p_sleep(t_philo *ph)
 {
 	print_status(ph->id, ph->data, SLEEP, VIOLET_);
-	f_usleep(ph->data->t_to_sleep);
+	f_usleep(*ph->data, ph->data->t_to_sleep);
 }
 
 static void	take_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
@@ -50,7 +50,7 @@ static void	take_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
 	if (end == 1)
 		return ;
 	if (ph->id % 2 != 0)
-		f_usleep(10);
+		f_usleep(*ph->data, 10);
 	pthread_mutex_lock(f1);
 	print_status(ph->id, ph->data, FORK, YELLOW_);
 	pthread_mutex_lock(f2);
