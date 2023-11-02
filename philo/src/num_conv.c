@@ -6,13 +6,13 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:19:59 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/25 20:30:14 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/02 23:12:04 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static size_t	count_dec(uint64_t n)
+static size_t	count_dec(unsigned long n)
 {
 	size_t	count;
 
@@ -25,12 +25,12 @@ static size_t	count_dec(uint64_t n)
 	return (count);
 }
 
-char	*ft_itoa(uint64_t n)
+char	*ft_itoa(unsigned long int n)
 {
-	char		*a;
-	size_t		count;
-	size_t		aux;
-	uint64_t	long_n;
+	char				*a;
+	size_t				count;
+	size_t				aux;
+	unsigned long int	long_n;
 
 	long_n = n;
 	count = count_dec(n);
@@ -48,7 +48,7 @@ char	*ft_itoa(uint64_t n)
 	return (a);
 }
 
-uint64_t	ft_atoi(const char *str)
+unsigned long	ft_atoi(const char *str)
 {
 	int			i;
 	int			sign;
@@ -68,7 +68,11 @@ uint64_t	ft_atoi(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = res * 10 + str[i] - '0';
+		if ((res * sign) > ULONG_MAX || (res * sign) < 0)
+			return (ULONG_MAX);
 		i++;
 	}
+	if (res * sign < 0)
+		return (0);
 	return (res * sign);
 }

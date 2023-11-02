@@ -10,12 +10,18 @@ NAME	= philo
 OS		=	$(shell uname -s)
 
 SRCDIR	= ./src/
-SRCNAMES	= $(shell ls $(SRCDIR) | grep -E ".+\.c")
+SRCNAMES	=	actions.c \
+				fd_utils.c \
+				init.c \
+				main.c \
+				num_conv.c \
+				utils_2.c \
+				utils.c
 SRC	= $(addprefix $(SRCDIR), $(SRCNAMES))
 OBJDIR	= ./src/obj/
 OBJS	= $(addprefix $(OBJDIR), $(SRCNAMES:.c=.o))
 
-HEADERS	= -I include -I ./inc/
+HEADERS	= -I include -I ./inc
 
 CC	= clang
 CFLAGS	= -O3 -Wall -Wextra -Werror -pthread \

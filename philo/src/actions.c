@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/02 00:08:01 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/02 23:46:19 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	p_think(t_philo *ph)
 void	p_sleep(t_philo *ph)
 {
 	print_status(ph->id, ph->data, SLEEP, VIOLET_);
+	if (ph->data->end_routine != 0)
+		return ;
 	f_usleep(*ph->data, ph->data->t_to_sleep);
 }
 
@@ -52,8 +54,12 @@ static void	take_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
 	if (ph->id % 2 != 0)
 		f_usleep(*ph->data, 10);
 	pthread_mutex_lock(f1);
+	ph->data->eat_forks[ph->id] = 1;
+	pthread_mutex_unlock(f1);
 	print_status(ph->id, ph->data, FORK, YELLOW_);
 	pthread_mutex_lock(f2);
+	ph->data->eat_forks[(ph->id + 1) % ph->data->num_philos] = 1;
+	pthread_mutex_unlock(f2);
 	print_status(ph->id, ph->data, FORK, YELLOW_);
 }
 

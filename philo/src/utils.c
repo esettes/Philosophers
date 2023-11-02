@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/02 00:10:16 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/02 23:18:41 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	f_error(char *str, t_data *data)
 	return (1);
 }
 
-uint64_t	get_time(void)
+unsigned long int	get_time(void)
 {
 	struct timeval	curr_time;
 
@@ -68,9 +68,9 @@ uint64_t	get_time(void)
 	return ((curr_time.tv_sec * (u_int64_t)1000) + (curr_time.tv_usec / 1000));
 }
 
-int	f_usleep(t_data data, uint64_t time)
+int	f_usleep(t_data data, unsigned long int time)
 {
-	uint64_t	start;
+	unsigned long int	start;
 
 	start = get_time();
 	while ((get_time() - start) < time)
@@ -79,6 +79,5 @@ int	f_usleep(t_data data, uint64_t time)
 			return (1);
 		usleep(81);
 	}
-	(void)data;
 	return (0);
 }

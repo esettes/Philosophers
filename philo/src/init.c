@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
-/*   Updated: 2023/10/25 22:09:00 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/02 23:43:52 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,18 @@ static int	init_data(t_data **data, char *argv[])
 	}
 	(*data)->num_philos = ft_atoi(argv[1]);
 	(*data)->forks = malloc(sizeof(pthread_mutex_t) * ((*data)->num_philos));
-	if (!(*data)->forks)
+	(*data)->eat_forks = malloc(sizeof(size_t) * ((*data)->num_philos));
+	if (!(*data)->forks || !(*data)->eat_forks)
 	{
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
 	}
 	while (++i < (*data)->num_philos)
+	{
+		(*data)->eat_forks[i] = 0;
 		if (pthread_mutex_init(&(*data)->forks[i], NULL) != 0)
 			return (EXIT_FAILURE);
+	}
 	(*data)->end_routine = 0;
 	(*data)->t_to_die = ft_atoi(argv[2]);
 	(*data)->t_to_eat = ft_atoi(argv[3]);
@@ -86,6 +90,10 @@ static int	init_philos(t_data *data)
 		data->philos[i].is_die = 0;
 		data->philos[i].mut = malloc(sizeof(pthread_mutex_t));
 		data->philos[i].tid = malloc(sizeof(pthread_t));
+		data->philos[i].r_fork = malloc(sizeof(size_t));
+		data->philos[i].l_fork = malloc(sizeof(size_t));
+		*data->philos[i].r_fork = 0;
+		*data->philos[i].l_fork = 0;
 		if (!data->philos[i].mut || !data->philos[i].tid)
 			return (EXIT_FAILURE);
 		pthread_mutex_init(data->philos[i].mut, NULL);
