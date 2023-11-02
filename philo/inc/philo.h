@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/02 23:35:17 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/02 23:58:13 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct s_philo
 	unsigned long int	times_eaten;
 	size_t				is_die;
 	unsigned long int	start_eating;
-	size_t				*r_fork;
-	size_t				*l_fork;
+	size_t				r_fork;
+	size_t				l_fork;
 	pthread_mutex_t		*mut;
 }				t_philo;
 

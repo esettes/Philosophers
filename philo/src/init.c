@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/02 23:43:52 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/02 23:58:37 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,8 @@ static int	init_philos(t_data *data)
 		data->philos[i].is_die = 0;
 		data->philos[i].mut = malloc(sizeof(pthread_mutex_t));
 		data->philos[i].tid = malloc(sizeof(pthread_t));
-		data->philos[i].r_fork = malloc(sizeof(size_t));
-		data->philos[i].l_fork = malloc(sizeof(size_t));
-		*data->philos[i].r_fork = 0;
-		*data->philos[i].l_fork = 0;
+		data->philos[i].r_fork = 0;
+		data->philos[i].l_fork = 0;
 		if (!data->philos[i].mut || !data->philos[i].tid)
 			return (EXIT_FAILURE);
 		pthread_mutex_init(data->philos[i].mut, NULL);
