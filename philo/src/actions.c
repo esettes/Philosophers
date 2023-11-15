@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/02 23:58:25 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/15 21:01:13 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,13 @@ void	p_think(t_philo *ph)
 
 void	p_sleep(t_philo *ph)
 {
+	size_t	end;
+	
+	pthread_mutex_lock(&ph->data->mut_write);
+	end = ph->data->end_routine;
+	pthread_mutex_unlock(&ph->data->mut_write);
 	print_status(ph->id, ph->data, SLEEP, VIOLET_);
-	if (ph->data->end_routine != 0)
+	if (end != 0)
 		return ;
 	f_usleep(*ph->data, ph->data->t_to_sleep);
 }
