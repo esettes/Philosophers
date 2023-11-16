@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/16 18:34:10 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:27:15 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	take_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2);
 static void	leave_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2);
+static void	take_a_fork(t_philo *ph, int id, pthread_mutex_t *f);
 void		p_sleep(t_philo *ph);
 
 void	p_eat(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
@@ -27,11 +28,6 @@ void	p_eat(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
 	f_usleep(ph->data, ph->data->t_to_eat);
 	leave_forks(ph, f1, f2);
 	p_sleep(ph);
-}
-
-void	p_think(t_philo *ph)
-{
-	print_status(ph->id, ph->data, THINK, RESET_);
 }
 
 void	p_sleep(t_philo *ph)
@@ -58,32 +54,8 @@ static void	take_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
 		return ;
 	if (ph->id % 2 != 0)
 		f_usleep(ph->data, 10);
-	pthread_mutex_lock(f1);
-	ph->r_fork = ph->data->eat_forks[ph->id];
-	pthread_mutex_unlock(f1);
-	while (ph->r_fork != 0)
-	{
-		pthread_mutex_lock(f1);
-		ph->r_fork = ph->data->eat_forks[ph->id];
-		pthread_mutex_unlock(f1);
-	}
-	pthread_mutex_lock(f1);
-	ph->data->eat_forks[ph->id] = 1;
-	pthread_mutex_unlock(f1);
-	print_status(ph->id, ph->data, FORK, YELLOW_);
-	pthread_mutex_lock(f2);
-	ph->l_fork = ph->data->eat_forks[(ph->id + 1) % ph->data->num_philos];
-	pthread_mutex_unlock(f2);
-	while (ph->l_fork != 0)
-	{
-		pthread_mutex_lock(f2);
-		ph->l_fork = ph->data->eat_forks[(ph->id + 1) % ph->data->num_philos];
-		pthread_mutex_unlock(f2);
-	}
-	pthread_mutex_lock(f2);
-	ph->data->eat_forks[(ph->id + 1) % ph->data->num_philos] = 1;
-	pthread_mutex_unlock(f2);
-	print_status(ph->id, ph->data, FORK, YELLOW_);
+	take_a_fork(ph, ph->id, f1);
+	take_a_fork(ph, (ph->id + 1) % ph->data->num_philos, f2);
 }
 
 static void	leave_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
@@ -94,4 +66,21 @@ static void	leave_forks(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
 	pthread_mutex_lock(f2);
 	ph->data->eat_forks[(ph->id + 1) % ph->data->num_philos] = 0;
 	pthread_mutex_unlock(f2);
+}
+
+static void	take_a_fork(t_philo *ph, int id, pthread_mutex_t *f)
+{
+	pthread_mutex_lock(f);
+	ph->r_fork = ph->data->eat_forks[id];
+	pthread_mutex_unlock(f);
+	while (ph->r_fork != 0)
+	{
+		pthread_mutex_lock(f);
+		ph->r_fork = ph->data->eat_forks[id];
+		pthread_mutex_unlock(f);
+	}
+	pthread_mutex_lock(f);
+	ph->data->eat_forks[id] = 1;
+	pthread_mutex_unlock(f);
+	print_status(ph->id, ph->data, FORK, YELLOW_);
 }
