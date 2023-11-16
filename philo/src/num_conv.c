@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:19:59 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/02 23:12:04 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:06:33 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ unsigned long	ft_atoi(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = res * 10 + str[i] - '0';
-		if ((res * sign) > ULONG_MAX || (res * sign) < 0)
-			return (ULONG_MAX);
+		printf("res: %llu\n", res);
+		if ((res * sign) > 1999 || (res * sign) < 0)
+			return (1999);
 		i++;
 	}
 	if (res * sign < 0)

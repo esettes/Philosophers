@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/15 22:48:13 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:16:02 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	finish_routine(t_data *data, size_t *end, int ph_id)
 	print_die(ph_id, data, DIE, RED_);
 	pthread_mutex_unlock(&data->forks[ph_id]);
 	pthread_mutex_unlock(&data->forks[(ph_id + 1) % data->num_philos]);
-	
-	
+	data->eat_forks[ph_id] = 0;
+	data->eat_forks[(ph_id + 1) % data->num_philos] = 0;
 }
 
 void	ft_exit(t_data **data, int mut)
@@ -71,14 +71,14 @@ unsigned long int	get_time(void)
 	return ((curr_time.tv_sec * (u_int64_t)1000) + (curr_time.tv_usec / 1000));
 }
 
-int	f_usleep(t_data data, unsigned long int time)
+int	f_usleep(t_data *data, unsigned long int time)
 {
 	unsigned long int	start;
 	size_t				end;
 
-	pthread_mutex_lock(&data.mut_write);
-	end = data.end_routine;
-	pthread_mutex_unlock(&data.mut_write);
+	pthread_mutex_lock(&data->mut_write);
+	end = data->end_routine;
+	pthread_mutex_unlock(&data->mut_write);
 	start = get_time();
 	while ((get_time() - start) < time)
 	{

@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/02 23:58:37 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:09:01 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	init_program(t_data **data, int argc, char *argv[])
 		ft_exit(data, 0);
 		return (EXIT_FAILURE);
 	}
+	printf("num_philos: %d\n", (*data)->num_philos);
+	printf("t_to_die: %lu\n", (*data)->t_to_die);
+	printf("t_to_eat: %lu\n", (*data)->t_to_eat);
+	printf("t_to_sleep: %lu\n", (*data)->t_to_sleep);
+	printf("times_to_eat: %lu\n", (*data)->times_to_eat);
 	if (init_philos(*data) == EXIT_FAILURE)
 	{
 		ft_exit(data, 0);
@@ -97,7 +102,7 @@ static int	init_philos(t_data *data)
 		pthread_mutex_init(data->philos[i].mut, NULL);
 	}
 	if (data->t_to_die < 0 || data->t_to_eat < 0 || data->t_to_sleep < 0
-		|| data->num_philos > 600 || data->times_to_eat < 0)
+		|| data->times_to_eat < 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

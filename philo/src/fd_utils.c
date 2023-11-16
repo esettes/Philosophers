@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:20:25 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/15 21:02:41 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:41:09 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ void	print_status(int id, t_data *data, char *act, char *col)
 
 	pthread_mutex_lock(&data->mut_write);
 	end = data->end_routine;
-	pthread_mutex_unlock(&data->mut_write);
+	//pthread_mutex_unlock(&data->mut_write);
 	if (end == 1)
 	{
-		//pthread_mutex_unlock(&data->mut_write);
+		pthread_mutex_unlock(&data->mut_write);
 		return ;
 	}
 	p_id = ft_itoa(id);
 	time_ = ft_itoa(get_time() - data->start_time);
-	pthread_mutex_lock(&data->mut_write);
+	//pthread_mutex_lock(&data->mut_write);
 	ft_putstrc_fd(col, time_, 1);
 	ft_putstrc_fd(col, " ", 1);
 	ft_putstrc_fd(col, p_id, 1);

@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:11:44 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/15 20:56:20 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:36:11 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	main(int argc, char *argv[])
 		pthread_create(&data->controller, NULL, controller_work, (void *)data);
 		pthread_mutex_unlock(&data->mut_start);
 		i = -1;
-		// while (++i < data->num_philos)
-		// 	printf ("finish thread: %i\n", pthread_join(*data->philos[i].tid, NULL));
+		while (++i < data->num_philos)
+			pthread_join(*data->philos[i].tid, NULL);
 		pthread_join(data->controller, NULL);
 		pthread_mutex_destroy(&data->mut_write);
 		pthread_mutex_destroy(&data->mut_start);
