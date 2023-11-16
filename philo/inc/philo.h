@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:13:09 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/16 19:28:14 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:31:31 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,30 +69,32 @@ typedef struct s_data
 	unsigned long int	times_to_eat;
 }				t_data;
 
-int			init_program(t_data **data, int argc, char *argv[]);
-void		init_mutexes(t_data *data);
+int					init_program(t_data **data, int argc, char *argv[]);
+void				init_mutexes(t_data *data);
 
-void		p_eat(t_philo *ph, pthread_mutex_t *fork1, pthread_mutex_t *fork2);
+void				p_eat(t_philo *ph, pthread_mutex_t *fork1,
+						pthread_mutex_t *fork2);
 
 unsigned long int	ft_atoi(const char *str);
 char				*ft_itoa(unsigned long int n);
 
-void		ft_putstrc_fd(char *color, char *s, int fd);
-void		ft_putendlc_fd(char *color, char *s, int fd);
-void		print_status(int id, t_data *data, char *act, char *col);
-void		print_die(int id, t_data *data, char *act, char *col);
+void				ft_putstrc_fd(char *color, char *s, int fd);
+void				ft_putendlc_fd(char *color, char *s, int fd);
+void				print_status(int id, t_data *data, char *act, char *col);
+void				print_die(int id, t_data *data, char *act, char *col);
 
-void		ft_exit(t_data **data, int mut);
+void				ft_exit(t_data **data, int mut);
 unsigned long int	get_time(void);
-int			f_usleep(t_data *data, unsigned long int time);
+int					f_usleep(t_data *data, unsigned long int time);
 
-void		set_all_philos_as_died(t_data *data);
-int			all_philos_eats_many_times(t_philo *p, unsigned long int n, unsigned long int eats);
-int			is_correct_input(int argc, char *argv[]);
+void				set_all_philos_as_died(t_data *data);
+int					all_philos_eats_many_times(t_philo *p, unsigned long int n,
+						unsigned long int eats);
+int					is_correct_input(int argc, char *argv[]);
 
 unsigned long int	get_num_of_meals(t_philo *ph);
 
-void		finish_routine(t_data *data, size_t *end, int ph_id);
-void		set_all_philos_as_died(t_data *data);
+void				finish_routine(t_data *data, size_t *end, int ph_id);
+void				set_all_philos_as_died(t_data *data);
 
 #endif

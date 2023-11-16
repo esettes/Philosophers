@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:21:43 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/16 19:09:01 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:33:07 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,14 @@ static int	init_data(t_data **data, char *argv[])
 
 	i = -1;
 	(*data) = malloc(sizeof(t_data));
-	if (!*data)
+	(*data)->forks = malloc(sizeof(pthread_mutex_t) * ((*data)->num_philos));
+	(*data)->eat_forks = malloc(sizeof(size_t) * ((*data)->num_philos));
+	if (!*data || !(*data)->forks || !(*data)->eat_forks)
 	{
 		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
 		return (EXIT_FAILURE);
 	}
 	(*data)->num_philos = ft_atoi(argv[1]);
-	(*data)->forks = malloc(sizeof(pthread_mutex_t) * ((*data)->num_philos));
-	(*data)->eat_forks = malloc(sizeof(size_t) * ((*data)->num_philos));
-	if (!(*data)->forks || !(*data)->eat_forks)
-	{
-		ft_putendlc_fd(RED_, ALLOC_ERR, 1);
-		return (EXIT_FAILURE);
-	}
 	while (++i < (*data)->num_philos)
 	{
 		(*data)->eat_forks[i] = 0;

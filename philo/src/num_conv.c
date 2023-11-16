@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:19:59 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/16 19:06:33 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:34:53 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,5 @@ unsigned long	ft_atoi(const char *str)
 			return (1999);
 		i++;
 	}
-	if (res * sign < 0)
-		return (0);
 	return (res * sign);
 }

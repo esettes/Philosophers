@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 00:09:07 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/16 19:27:15 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:31:58 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	p_eat(t_philo *ph, pthread_mutex_t *f1, pthread_mutex_t *f2)
 void	p_sleep(t_philo *ph)
 {
 	size_t	end;
-	
+
 	pthread_mutex_lock(&ph->data->mut_write);
 	end = ph->data->end_routine;
 	pthread_mutex_unlock(&ph->data->mut_write);
