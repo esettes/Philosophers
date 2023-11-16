@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:11:44 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/16 18:36:11 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:36:56 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int argc, char *argv[])
 	int		i;
 
 	i = -1;
-	printf("unsigned long int max: %lu\n", ULONG_MAX);
 	if (init_program(&data, argc, argv) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	else

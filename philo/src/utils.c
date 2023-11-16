@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/16 19:34:22 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:21:27 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	f_usleep(t_data *data, unsigned long int time)
 	{
 		if (end != 0)
 			return (1);
-		usleep(81);
+		usleep(500);
 	}
 	return (0);
 }

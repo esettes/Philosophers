@@ -25,7 +25,7 @@ HEADERS	= -I include -I ./inc
 
 CC	= clang
 CFLAGS	= -O3 -Wall -Wextra -Werror -pthread \
-			#-fsanitize=thread \
+			#-fsanitize=leak \
 			#-fsanitize=undefined,memory \
 			-fno-omit-frame-pointer
 
