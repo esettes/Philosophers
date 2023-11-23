@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:28:37 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/16 20:21:27 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/23 21:15:14 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ void	finish_routine(t_data *data, size_t *end, int ph_id)
 	print_die(ph_id, data, DIE, RED_);
 	pthread_mutex_unlock(&data->forks[ph_id]);
 	pthread_mutex_unlock(&data->forks[(ph_id + 1) % data->num_philos]);
+	pthread_mutex_lock(&data->forks[ph_id]);
 	data->eat_forks[ph_id] = 0;
+	pthread_mutex_unlock(&data->forks[ph_id]);
+	pthread_mutex_lock(&data->forks[(ph_id + 1) % data->num_philos]);
 	data->eat_forks[(ph_id + 1) % data->num_philos] = 0;
+	pthread_mutex_unlock(&data->forks[(ph_id + 1) % data->num_philos]);
 }
 
 void	ft_exit(t_data **data, int mut)

@@ -6,7 +6,7 @@
 /*   By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:20:25 by iostancu          #+#    #+#             */
-/*   Updated: 2023/11/16 19:32:06 by iostancu         ###   ########.fr       */
+/*   Updated: 2023/11/23 21:17:14 by iostancu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ void	print_die(int id, t_data *data, char *act, char *col)
 	char	*time_;
 	char	*p_id;
 
+	if (data->times_to_eat > 0)
+	{
+		return ;
+	}
 	pthread_mutex_lock(&data->mut_write);
 	p_id = ft_itoa(id);
 	time_ = ft_itoa(get_time() - data->start_time);

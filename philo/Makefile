@@ -24,14 +24,7 @@ OBJS	= $(addprefix $(OBJDIR), $(SRCNAMES:.c=.o))
 HEADERS	= -I include -I ./inc
 
 CC	= clang
-CFLAGS	= -O3 -Wall -Wextra -Werror -pthread \
-			#-fsanitize=leak \
-			#-fsanitize=undefined,memory \
-			-fno-omit-frame-pointer
-
-ifeq ($(OS), Linux)
-	VALGRIND = valgrind --tool=memcheck --leak-check=full --track-origins=yes -s
-endif
+CFLAGS	= -O3 -Wall -Wextra -Werror -pthread -fsanitize=address
 
 all: obj  $(NAME)
 
@@ -48,11 +41,6 @@ $(NAME):	$(OBJS)
 	@ $(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 	@echo "${LWHITE}$(NAME) ${LGREEN}✓$(RESET)"
 	@echo "${GREY}Compilation ${GREEN}[OK]$(RESET)"
-
-LD_DEBUG=all
-
-n:
-	@norminette ./src/*.c ./inc/*.h ./bonus/src/*.c ./bonus/inc/*.h
 
 dbgfiles:
 	@rm -rf *.dSYM
